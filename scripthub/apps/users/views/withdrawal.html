@@ -1,0 +1,188 @@
+{if $smarty.session.user.power_elite_author  == 'true' || $smarty.session.user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $smarty.session.user.power_elite_author  == 'true'}power-elite-author{/if}{if $smarty.session.user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h2 class="page-title">Withdrawal </h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+</div>
+{else}
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h1 class="page-title">Withdrawal </h1>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+{/if}
+<div id="content">
+       <div class="container">
+	 {$errorMessage}
+	<div class="content-s">
+		<div class="content-box">
+		  <h2 class="decorator">{$lang.your_balance}</h2>
+          <p>
+        {$lang.your_total_balance_is}: <strong>${$user.total|string_format:"%.2f"}</strong>. 
+        {$lang.withdraw_earning}
+        </p>
+        <div class="general_table_border">
+        <table class="general_table" cellspacing="0" cellpadding="0">
+	        <thead>
+	          <tr>
+	            <th class="sprite_vert">{$lang.your_balance}</th>
+	            <th class="sprite_vert"></th>
+	          </tr>
+	        </thead>
+	        <tr>
+	          <td>{$lang.current_balance_deposit}</td>
+	          <td>{$currency.symbol}{$user.deposit|string_format:"%.2f"}</td>
+	        </tr>
+	        <tfoot>
+	        <tr style="background-color:#D2D1D0;">
+	          <td>{$lang.current_balance_earning}</td>
+	          <td>{$currency.symbol}{$user.earning|string_format:"%.2f"}</td>
+	        </tr>
+	        </tfoot>
+	      </table>
+	      </div>
+	     </div>
+<div class="content-box">
+<h2>{$lang.make_payment_request}</h2>
+<p>{$lang.payment_info}</p>
+<form class="horizontal-form" action="" method="post">
+  <fieldset>
+    <div class="input-group">
+      <label for="amount">{$lang.amount}</label>
+      <div class="inputs">
+        <input checked="checked" id="maximum_at_period_end_false" name="maximum_at_period_end" value="false" type="radio">
+        <input class="inline" id="amount" name="amount" value="{$user.earning|string_format:"%.2f"}" type="text">
+          <br>
+          <label for="maximum_at_period_end_true">
+            <input id="maximum_at_period_end_true" name="maximum_at_period_end" value="true" type="radio">
+            <strong class="strong">{$lang.all_earning}</strong>
+             {$lang.available_at} {$date.day} {$lang.monthArr[$date.month]} {$date.year} 23:59:59
+          </label>
+          <br>
+          <small>If you choose the <strong>{$lang.all_earning}</strong> option, you must still meet the minimum withdrawal amounts below.  Your withdrawal request will not be processed unless it meets the minimum requirements.</small>
+          <div class="notice hidden" id="all-earnings-notice">
+            Please note that the <strong>All earnings</strong> request must be renewed each month.<br>
+            This means clicking it will not result in automatic withdrawals for future months.
+          </div>
+      </div>
+    </div>
+    <div class="input-group">
+      <label for="service_paypal">Payment Method</label>
+      <div class="inputs">
+        <label for="service_paypal">
+          <input id="service_paypal" name="service" value="paypal" type="radio">
+          PayPal
+          <small>Minimum $50.00</small>
+        </label>
+        <br>
+        <label for="service_moneybookers">
+          <input id="service_moneybookers" name="service" value="moneybookers" type="radio">
+          Skrill (Moneybookers)
+          <small>Minimum $50.00</small>
+        </label>
+        <br>
+        <label for="service_payoneer">
+          <input id="service_payoneer" name="service" value="payoneer" type="radio">
+          Payoneer Prepaid MasterCard® or Global Bank Transfer (Payoneer)
+        </label>
+        <br>
+        <label for="service_swift">
+          <input id="service_swift" name="service" value="swift" type="radio">
+          International Transfer (SWIFT)
+          <small>Minimum $50.00</small>
+        </label>
+      </div>
+    </div>
+    <div class="input-group hidden dependent paypal-skrill">
+      <label for="payment_email_address">Paypal / Skrill username</label>
+      <div id="payment_email_address_field" class="inputs">
+        <input id="payment_email_address" name="payment_email_address" value="" type="text">
+      </div>
+    </div>
+    <div class="input-group hidden dependent paypal-skrill">
+      <label for="payment_email_address_confirmation">Confirm Paypal / Skrill username</label>
+      <div class="inputs">
+        <input id="payment_email_address_confirmation" name="payment_email_address_confirmation" value="" type="text">
+      </div>
+    </div>
+      <div id="payoneer-notice" class="payoneer input-group hidden dependent">
+        <label>Payoneer Account</label>
+        <div class="inputs">
+          <div class="notice">
+             For Payoneer please <a href="/support/"> contact</a>
+          </div>
+        </div>
+      </div>
+    <div class="input-group">
+      <label for="taxable_australian_resident">Taxation</label>
+      <div class="inputs">
+        <label for="taxable_australian_resident">
+          <input id="taxable_australian_resident" name="taxable_australian_resident" value="true" type="checkbox">
+          <strong>I am an Australian Resident for Taxation Purposes.</strong>
+        </label>
+        <div id="taxation-details" class="hidden dependent">
+          <label for="hobbyist_true">
+            <input checked="checked" id="hobbyist_true" name="hobbyist" value="true" type="radio">
+            I am an author as a hobby and have another main source of income.
+          </label>
+          <label for="hobbyist_false">
+            <input id="hobbyist_false" name="hobbyist" value="false" type="radio">
+            I am not an author as a hobby and/or this is my main source of income.
+          </label>
+        </div>
+      </div>
+    </div>
+    <div class="tax-number input-group hidden dependent">
+      <label for="abn">ABN</label>
+      <div class="inputs">
+        <input id="abn" name="abn" value="" type="text">
+      </div>
+    </div>
+    <div class="tax-number input-group hidden dependent">
+      <label for="acn">ACN</label>
+      <div class="inputs">
+        <input id="acn" name="acn" value="" type="text">
+      </div>
+    </div>
+  </fieldset>
+  <div class="swift-notice notice hidden dependent">
+    Please note that a $35.00 transaction fee is charged on all International Transfers (SWIFT).<br><br>
+    {$domain} cannot be held responsible for delays, extra costs or financial loss that arises from being provided incorrect account information, so please ensure that you double check the details with your financial institution prior to submitting a request for a SWIFT Wire Transfer.
+    <br><br>
+    <input id="swift-transaction-fee" value="35.00" type="hidden">
+    <input id="max-withdrawal-amount-less-fee" value="-35.00" type="hidden">
+   For International Transfer please <a href="/{$languageURL}support/">contact</a>
+  </div>
+
+  <div class="form-submit"><input type="hidden" name="submit" value="submit" />
+<button type="submit" class="btn-icon submit">{$lang.submit_request}</button>
+</div>
+
+</form>
+  </div>
+		</div>
+	<div class="sidebar-l sidebar-right">
+		<h2 class="box-heading">Sell Your Work and Earn Cash!</h2>
+	<div class="content-box">
+      <p>Think you could make fantastic items to sell on {$domain}?</p>
+      <p>Become an {$domain} author and you can put your digital goods up for sale, earning 50-70% of each transaction. Find out how you can <a href="/make_money/become_an_author">Start Selling</a>!</p>
+    </div>
+	</div> 
+      </div>
+  </div> 

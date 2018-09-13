@@ -1,0 +1,560 @@
+{if $smarty.session.user.power_elite_author  == 'true' || $smarty.session.user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $smarty.session.user.power_elite_author  == 'true'}power-elite-author{/if}{if $smarty.session.user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h2 class="page-title">Edit Profile</h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+</div>
+{else}
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h1 class="page-title">Edit Profile</h1>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+{/if}  
+    <div id="content">
+      <div class="container">
+	  		{$errorMessage}
+    <div class="sidebar-l" id="ziper">
+     <div class="basic-user-info">
+				{if $smarty.session.user.avatar != ''}
+                 <img class="img-border" src="{$data_server}/uploads/users/{$smarty.session.user.user_id}/A_{$smarty.session.user.avatar}" height="80" width="80" style="margin-top:15px">
+				 {else}
+                 <img class="img-border" src="{$data_server}img/default-user.jpg" height="80" width="80" style="margin-top:15px">
+				{/if}
+  <p>
+  <h2>{$smarty.session.user.username}</h2>
+  {if $smarty.session.user.country_id != '0'}
+	 Country: {$smarty.session.user.country.name}<br>
+  {/if}
+     Balance: {$currency.symbol}{$smarty.session.user.total|string_format:"%.2f"}<br>
+     Member Since {$smarty.session.user.register_datetime|date_format:"%B %Y"}<br>
+
+  {if $smarty.session.user.last_login_datetime != ''}
+     Last sign in: {$smarty.session.user.last_login_datetime|date_format:"%H:%M %e %B %Y"}<br>
+  {/if}
+	 </p>
+    </div>
+<ul class="side-tabs">
+    <li><a href="javascript:;" class="icon-process">Personal Information</a></li>
+	<li><a href="javascript:;" class="icon-key">Change Your Password</a></li> 
+    <li><a href="javascript:;" class="icon-update">Avatar &amp; Homepage Image</a></li>
+    <li><a href="javascript:;" class="icon-social">Your Social Networks</a></li>
+    {if $smarty.session.user.quiz == 'true'}
+    <li><a href="javascript:;" class="icon-tick">Exclusivity of Your Items</a></li>
+    <li><a href="javascript:;" class="icon-star">{$lang.featured_items}</a></li>
+    <li><a href="javascript:;" class="icon-licence">Item Licences</a></li>  
+    {/if}	
+</ul>
+</div>
+
+{literal}
+<script type="text/javascript">
+$(document).ready(function(){
+	
+	//default settings
+	
+	$("#taber ul li:eq(0)").siblings().hide();
+	
+	//end default
+	
+	$("#ziper ul li").click(function(){
+		
+		var val = $(this).index();
+	
+		showthis(val+1);
+		
+		});
+
+function showthis(val){
+	
+		var btn_index = val-1;
+		
+		//sidebar buttons
+		$("#ziper ul li:eq("+btn_index+")").siblings().removeClass("active");
+		$("#ziper ul li:eq("+btn_index+")").addClass("active");
+		//end sidebar buttons
+		
+		//tab contents 
+		$("#taber ul li:eq("+btn_index+")").show();
+		$("#taber ul li:eq("+btn_index+")").siblings().hide();
+		//$("#tab"+val).show();
+	
+		}// end if
+	
+	});
+</script>
+{/literal}
+<div id="taber" class="content-s">
+
+            <ul style="list-style-type: none;">
+
+            <li>
+			  <h3 class="underlined">Personal Information</h3>
+  <div id="profile" class="tab-content active">
+    <form class="horizontal-form disable-on-submit" action="" method="post">
+  
+      <fieldset>
+
+        <div class="input-group">
+          <label for="firstname">{$lang.first_name}</label>
+          <div class="inputs">
+            <input id="firstname" name="firstname" required="true" type="text" value="{$smarty.post.firstname|escape}" />
+          </div>
+        </div>
+		
+		
+        <div class="input-group">
+          <label for="surname">{$lang.last_name}</label>
+          <div class="inputs">
+            <input id="surname" name="lastname" required="true" type="text" value="{$smarty.post.lastname|escape}" />
+          </div>
+        </div>
+		
+		
+        <div class="input-group">
+          <label for="invoice_to">{$lang.company_name}</label>
+          <div class="inputs">
+            <input id="invoice_to" name="firmname" type="text" value="{$smarty.post.firmname|escape}" />
+            <small>{$lang.company_name_info}</small>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="lives_in">Lives In</label>
+          <div class="inputs">
+            <input id="lives_in" name="live_city" type="text" value="{$smarty.post.live_city|escape}" />
+            <small>e.g. Sydney</small>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="email">{$lang.email}</label>
+          <div class="inputs">
+            <input id="email" name="email" value="{$smarty.post.email|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="country">{$lang.country}</label>
+          <div class="inputs">
+            <select name="country_id">
+              <option value="">Do not display my country</option>
+              {if $countries}
+              	{foreach from=$countries item=c}
+              		<option value="{$c.id}" {if $smarty.post.country_id == $c.id}selected="selected"{/if}>{$c.name}</option>
+              	{/foreach}
+              {/if}							
+            </select>
+            <small>Your country selection determines what flag appears in your badges</small>
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="available_for_freelance">Freelancer?</label>
+          <div class="inputs">
+           <input id="available_for_freelance" name="freelance" type="checkbox" value="true" {if $smarty.post.freelance == 'true'}checked="checked"{/if} /> 
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="by_line">Profile Heading</label>
+          <div class="inputs">
+            <input id="by_line" name="profile_title" type="text" value="{$smarty.post.profile_title|escape}" />
+            <small>Appears on your profile page</small>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="profile_desc">Profile Text</label>
+          <div class="inputs">
+            <textarea class="tall" id="profile_desc" name="profile_desc">{$smarty.post.profile_desc}</textarea>
+            <small><div class="formatting-help">{$lang.formatting_help}</div></small>
+          </div>
+        </div>
+		
+		<div class="form-submit"><input type="hidden" name="personal_edit" value="yes" />
+          <button id="personal_info_submit_button" class="btn-icon save" type="submit">{$lang.save}</button>
+        </div>
+      </fieldset>
+</form>  
+</div>
+           </li>
+        <li> 
+			  <h3 class="underlined">Change password</h3>
+  <div id="profile" class="tab-content active">
+    <form class="horizontal-form disable-on-submit" action="" method="post">
+      <fieldset>
+	  
+        <div class="input-group">
+          <label for="current_password">{$lang.current_password}</label>
+          <div class="inputs">
+           <input id="current_password" name="password" required="true" type="password" value="" />
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="user_password">{$lang.new_password}</label>
+          <div class="inputs">
+           <input type="password" id="user_password" name="new_password" />
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="user_password_again">{$lang.re_type} password</label>
+          <div class="inputs">
+                 <input type="password" id="user_password_again" name="new_password_confirm" />
+          </div>
+        </div>
+		
+		<div class="form-submit"><input type="hidden" name="change_password" value="yes" />
+          <button id="personal_info_submit_button" class="btn-icon save" type="submit">{$lang.save}</button>
+        </div>
+
+      </fieldset>
+</form>  
+</div>
+        </li>
+         <li> 
+		  <div id="profile" class="tab-content active">
+		   <h3 class="underlined">Avatar &amp; Homepage Image</h3>
+	<form class="horizontal-form disable-on-submit" action="" method="post" enctype="multipart/form-data">
+        <fieldset>
+        <div class="input-group">
+          <label for="profile_image">{$lang.avatar}</label>
+          <div class="inputs">
+		  	{if $smarty.session.user.avatar != ''}
+			  <img alt="{$smarty.session.user.username}" src="{$data_server}/uploads/users/{$smarty.session.user.user_id}/A_{$smarty.session.user.avatar}" width="80" height="80" />
+			{/if}
+           <input id="profile_image" name="profile_image" type="file" />
+            <small>JPEG 80x80px</small>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="profile_image">Homepage Image</label>
+          <div class="inputs">
+         {if $smarty.session.user.homeimage != ''}  
+           <img alt="{$smarty.session.user.username}" src="{$data_server}/uploads/users/{$smarty.session.user.user_id}/A_{$smarty.session.user.homeimage}" width="475" height="242" />	  
+         {/if}
+           <input id="homepage_image" name="homepage_image" type="file" />
+            <small>JPEG 590x242</small>
+          </div>
+        </div>
+
+    <div class="form-submit">
+      <div class="form-submit"><input type="hidden" name="change_avatar_image" value="yes" />
+       <button type="submit" class="btn-icon save">{$lang.save}</button>
+      </div>
+    </div>
+	<fieldset>
+	</form>
+	 </div>
+       	</li> 
+
+<li> 
+<div id="social_networks" class="tab-content active">
+<h2 class="underlined">Your Social Networks</h2>
+<form class="horizontal-form disable-on-submit" action="" method="post">
+
+        <div class="input-group">
+          <label for="behance">
+              <img alt="Behance" src="/static/social/behance.png" title="Behance" height="34" width="34">
+          </label>
+          <div class="inputs">
+            <input id="behance" name="behance" placeholder="Behance Public Profile URL" value="{$smarty.post.behance|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="deviantart">
+                     
+              <img alt="Deviantart" src="/static/social/deviantart.png" title="Deviantart" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="deviantart" name="deviantart" placeholder="Deviantart Public Profile URL" value="{$smarty.post.deviantart|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="digg">
+                     
+              <img alt="Digg" src="/static/social/digg.png" title="Digg" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="digg" name="digg" placeholder="Digg Public Profile URL" value="{$smarty.post.digg|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="dribbble">
+                     
+              <img alt="Dribbble" src="/static/social/dribbble.png" title="Dribbble" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="dribbble" name="dribbble" placeholder="Dribbble Public Profile URL" value="{$smarty.post.dribbble|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="facebook">
+                     
+              <img alt="Facebook" src="/static/social/facebook.png" title="Facebook" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="facebook" name="facebook" placeholder="Facebook Public Profile URL" value="{$smarty.post.facebook|escape}" type="text">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="flickr">
+                     
+              <img alt="Flickr" src="/static/social/flickr.png" title="Flickr" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="flickr" name="flickr" placeholder="Flickr Public Profile URL" value="{$smarty.post.flickr|escape}" type="text">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="forrst">
+                     
+              <img alt="Forrst" src="/static/social/forrst.png" title="Forrst" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="forrst" name="forrst" placeholder="Forrst Public Profile URL" value="{$smarty.post.forrst|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="github">
+                     
+              <img alt="Github" src="/static/social/github.png" title="Github" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="github" name="github" placeholder="Github Public Profile URL" value="{$smarty.post.github|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="googleplus">
+                     
+              <img alt="Google+" src="/static/social/googleplus.png" title="Google+" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="googleplus" name="googleplus" placeholder="Google+ Public Profile URL" value="{$smarty.post.googleplus|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="lastfm">
+                     
+              <img alt="Last.fm" src="/static/social/lastfm.png" title="Last.fm" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="lastfm" name="lastfm" placeholder="Last.fm Public Profile URL" value="{$smarty.post.lastfm|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="linkedin">
+                     
+              <img alt="LinkedIn" src="/static/social/linkedin.png" title="LinkedIn" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="linkedin" name="linkedin" placeholder="LinkedIn Public Profile URL" value="{$smarty.post.linkedin|escape}" type="text">
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="myspace">
+                     
+              <img alt="MySpace" src="/static//social/myspace.png" title="MySpace" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="myspace" name="myspace" placeholder="MySpace Public Profile URL" value="{$smarty.post.myspace|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="reddit">
+                     
+              <img alt="Reddit" src="/static/social/reddit.png" title="Reddit" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="reddit" name="reddit" placeholder="Reddit Public Profile URL" value="{$smarty.post.reddit|escape}" type="text">
+          </div>
+        </div>
+        <div class="input-group">
+          <label for="tumblr">
+                     
+              <img alt="Tumblr" src="/static/social/tumblr.png" title="Tumblr" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="tumblr" name="tumblr" placeholder="Tumblr Public Profile URL" value="{$smarty.post.tumblr|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="twitter">
+                     
+              <img alt="Twitter" src="/static/social/twitter.png" title="Twitter" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="twitter" name="twitter" placeholder="Twitter Public Profile URL" value="{$smarty.post.twitter|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="vimeo">
+                     
+              <img alt="Vimeo" src="/static//social/vimeo.png" title="Vimeo" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="vimeo" name="vimeo" placeholder="Vimeo Public Profile URL" value="{$smarty.post.vimeo|escape}" type="text">
+          </div>
+        </div>
+		
+        <div class="input-group">
+          <label for="youtube">
+                     
+              <img alt="YouTube" src="/static/social/youtube.png" title="YouTube" height="34" width="34">
+            
+          </label>
+          <div class="inputs">
+            <input id="youtube" name="youtube" placeholder="YouTube Public Profile URL" value="{$smarty.post.youtube|escape}" type="text">
+          </div>
+        </div>
+<div class="form-submit">
+<div class="form-submit"><input type="hidden" name="social_edit" value="yes" />
+<button type="submit" class="btn-icon save">Save</button>
+</div>
+    </div>
+</form>	
+</div>	
+</li> 
+		
+    {if $smarty.session.user.quiz == 'true'}
+        <li> 
+<div id="exclusivity" class="tab-content active">
+     <h3 class="underlined">Exclusivity of Your Items</h3>
+	{$lang.exclusive_author_info}
+    <p>
+        {if $smarty.session.user.exclusive_author == 'true'}
+        	{$lang.exclusive_author_true}
+        {else}
+        	{$lang.exclusive_author_false}
+        {/if}
+    </p>
+    <form  action="" class="horizontal-form disable-on-submit" method="post">
+{if $smarty.session.user.exclusive_author == 'true'}
+    <div class="form-submit">
+      <div class="form-submit"><input type="hidden" name="exclusive_false" value="yes" />
+       <button type="submit">{$lang.exclusive_off}</button>
+      </div>
+    </div>
+{else}
+    <div class="form-submit">
+      <div class="form-submit"><input type="hidden" name="exclusive_true" value="yes" />
+       <button type="submit">{$lang.exclusive_on}</button>
+      </div>
+    </div>
+{/if}
+
+</form></div>
+       	</li> 
+
+        <li> 
+			  <h3 class="underlined">{$lang.featured_items}</h3>
+  <div id="profile" class="tab-content active">
+    <form class="horizontal-form disable-on-submit" action="" method="post">
+  
+      <fieldset>
+	  
+        <div class="input-group">
+          <label for="featured_items">Select:</label>
+          <div class="inputs">
+            <select name="featured_item_id">
+              <option value="0">{$lang.none}</option>
+	          {if $items}
+	          	{foreach from=$items item=i}  
+	            	<option value="{$i.id}" {if $i.id == $smarty.session.user.featured_item_id}selected="selected"{/if}>{$i.name}</option>
+	            {/foreach}
+			   {/if}
+            </select> 
+          </div>
+        </div>
+		
+		<div class="form-submit"><input type="hidden" name="feature_save" value="yes" />
+          <button id="personal_info_submit_button" class="btn-icon save" type="submit">{$lang.save}</button>
+        </div>
+
+      </fieldset>
+
+</form>  
+</div>
+       	</li>
+
+		<li>
+  <div id="item_licences" class="tab-content active">
+    <h3 class="underlined">Item Licences</h3>
+    <p>Choose the licences that your items are sold under.  Note that not all licences will be used for all types of items.  The Standard Single-Use Licence is mandatory.</p>
+    <form action="" class="horizontal-form disable-on-submit" method="post">
+    <fieldset>
+      <div class="input-group">
+        <label>Licence Types:</label>
+        <div class="inputs">
+          <ul class="inputs-list">
+              <li>
+                <label for="extended"> 
+                   <input id="extended" name="license[extended]" type="checkbox" value="extended" {if isset($smarty.session.user.license.extended)}checked="checked"{/if} />
+                  Extended License
+                </label>
+				      <label for="personal">
+                <input id="personal" name="license[personal]" type="checkbox" value="personal" {if isset($smarty.session.user.license.personal)}checked="checked"{/if} />
+                  Personal License
+                </label>
+              </li>
+          </ul>
+        </div>
+      </div>
+    </fieldset>
+    <div class="form-submit"><input type="hidden" name="save_license" value="yes" />
+    <button type="submit" class="btn-icon save">{$lang.save}</button>
+    </div>
+	</form>
+   </div>
+       </li> 
+	   {/if}
+        </ul>
+      </div>
+      </div>
+    </div>

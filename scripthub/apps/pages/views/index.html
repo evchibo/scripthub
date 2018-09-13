@@ -1,0 +1,52 @@
+ <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>
+\
+      </div>
+
+<h1 class="page-title">        {$title}
+        
+</h1>
+      
+    </div>
+
+
+  </div>
+
+
+    <div id="content">
+      <div class="container">
+	  		{$errorMessage}
+<div class="sidebar-l">
+
+
+  <ul class="side-tabs">
+   {if $menuPages}
+  {foreach from=$menuPages[0] item=p name=foo}
+    <li><a href="/{$languageURL}pages/{$p.key}.html" class="icon-licence">{$p.name}</a></li>
+{if isset($menuPages[$p.id])}
+{foreach from=$menuPages[$p.id] item=sp name=foo1}
+    <li><a href="/{$languageURL}pages/{$sp.key}.html" class="icon-licence">{$sp.name}</a></li>
+ {/foreach}
+{/if}
+   {/foreach}
+  {/if} 
+  </ul>
+ 
+</div>
+
+
+<div class="content-s">
+{$page.text}
+</div>
+      </div>
+    </div>

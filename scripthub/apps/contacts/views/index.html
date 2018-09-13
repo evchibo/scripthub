@@ -1,0 +1,68 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="content">
+      <div class="container">
+	  	  		{$errorMessage}
+	<div class="content-s">
+	
+		<div class="content-box">
+			
+<h2>Send a Support Ticket</h2>
+<p>{$lang.support_info}</p>
+
+<form class="horizontal-form" method="post" enctype="multipart/form-data" action="">
+      <div class="input-group">
+         <label for="username">Name *</label>
+          <div class="inputs">
+            <input id="username" name="username" required="true" value="{$smarty.session.user.username}" type="text">
+          </div>
+     </div>
+    <div class="input-group">
+     <label for="email">{$lang.email} *</label>
+     <div class="inputs">
+      <input id="email" name="email" required="true" value="{$smarty.session.user.email}" type="text">
+     </div>
+    </div>
+    <div class="input-group">
+     <label for="issue_id">{$lang.your_issue}</label>
+     <div class="inputs">
+      <select name="issue_id" size="1" class="fsField fsRequired" onchange="openBox(this.value);">
+          <option value="0">{$lang.select_issue}</option>
+	          {if $categories}
+	          	{foreach from=$categories item=c}
+	          		<option value="{$c.id}">{$c.name}</option>
+	          	{/foreach}
+	          {/if}  	
+       </select>
+     </div>
+   </div>
+  <div class="input-group">
+    <label for="issue_details">{$lang.how_can_we_help}</label>
+     <div class="inputs">
+       <textarea rows="10" cols="30" id="issue_details" name="issue_details"></textarea>
+	     <small>{$lang.contact_details4}</small>
+     </div>
+    </div>
+  <div class="form-submit"><input name="submit" value="submit" type="hidden">
+<button type="submit" class="btn-icon submit">{$lang.submit}</button>
+</div>
+</form>
+  </div>
+	 </div>
+<div class="sidebar-l sidebar-right">
+    <h2 class="box-heading">{$lang.support_hours}</h2>
+<div class="content-box">
+    <img src="/static/img/clock.png" alt="Operating Hours" class="right" height="94" width="94">
+    <p>{$lang.support_hours_info}</p>
+  </div>
+</div>
+
+      </div>
+
+  </div>

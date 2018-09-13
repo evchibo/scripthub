@@ -1,0 +1,224 @@
+ <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6 oldie no-js"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{if isset($title)}{$title} | {/if}{$domain}</title>
+	
+	<meta name="keywords" content="{if isset($meta_keywords)}{$meta_keywords}{else}{$lang.page_keywords}{/if}" /> 
+	<meta name="description" content="{if isset($meta_description)}{$meta_description}{else}{$lang.page_title}{/if}" /> 
+	<meta name="robots" content="index,follow" />
+	<meta name="author" content="" /> 
+
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+	
+  <!--[if lt IE 9]>
+    <script src="/static/assets/selectivizr.js" type="text/javascript"></script>
+    <script>
+      document.createElement('header');
+      document.createElement('nav');
+    </script>
+  <![endif]-->
+
+  <!--[if IE 9]>
+    <link href="/static/assets/ie9.css" media="screen" rel="stylesheet" type="text/css" />
+  <![endif]-->
+
+  <!--[if IE 8]>
+    <link href="/static/assets/ie8.css" media="screen" rel="stylesheet" type="text/css" />
+  <![endif]-->
+
+  <!--[if IE 7]>
+    <link href="/static/assets/ie7.css" media="screen" rel="stylesheet" type="text/css" />
+  <![endif]-->
+
+  <link href="/{$languageURL}static/css/style.css" media="screen" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+    <header>
+  <div class="container">
+
+  <a href="/" class="marketplace"><img alt="{$domain}" src="/{$languageURL}static/logo/logo-dark.png" title="{$domain}" /></a>
+
+{if check_login_bool()}
+  <div class="account-wrapper">
+    <ul id="user-account-nav">
+	
+        <li>
+          <a><span id="user_username">{$smarty.session.user.username}</span>, <span class="user_balance">{$currency.symbol}{$smarty.session.user.total|string_format:"%.2f"}</span></a>
+          <div>
+  <ul>
+    <li class="profile"><a href="/{$languageURL}user/{$smarty.session.user.username}/">Profile</a></li>
+    <li class="settings"><a href="/{$languageURL}edit/">Settings</a></li>
+    <li class="downloads"><a href="/{$languageURL}download/">Downloads</a></li>
+    <li class="bookmarks"><a href="/{$languageURL}user/bookmarks/">Bookmarks</a></li>
+    <li class="deposit"><a href="/{$languageURL}deposit/">Make a Deposit</a></li>
+    <li class="author_dashboard"><a href="/{$languageURL}author_dashboard/">Author Dashboard</a></li>
+	<li class="upload"><a href="/{$languageURL}upload/index/">Upload</a></li>
+    <li class="earnings"><a href="/{$languageURL}earnings/">Earnings</a></li>
+    <li class="statement"><a href="/{$languageURL}statement/">Statement</a></li>
+    <li class="withdrawal"><a href="/{$languageURL}withdrawal/">Withdrawal</a></li>
+  </ul>
+</div>
+
+        </li>
+        <li>
+            <form action="/{$languageURL}users/logout/" class="sign-out-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="" /><input name="authenticity_token" type="hidden" value="" /></div>
+              <button type="submit" class="auto-width no-margin" id="sign-out-button">Sign Out</button>
+</form>        </li>
+    </ul>
+	</div>
+	{else}
+  <div class="account-wrapper">
+    <ul id="user-account-nav">
+        <li><a href="/{$languageURL}sign_up/"><span>Create Account</span></a></li>
+        <li>
+          <a href="/{$languageURL}sign_in/" rel="nofollow">Sign In</a>
+        </li>
+    </ul>
+	
+  </div>
+{/if}
+  <ul class="info-nav">
+  
+  <li><a href="/make_money/become_an_author">Make Money</a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="/make_money/become_an_author">Become an Author</a></li>
+          <li><a href="/make_money/payment_rates">Payment Rates</a></li>
+        </ul>
+      </div>
+    </li>
+	
+	<li><a href="#">Community</a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="/{$languageURL}collections/">Public Collections</a></li>
+          <li><a href="/{$languageURL}feature/">Featured Files</a></li>
+          <li><a href="/{$languageURL}top_sellers/">Popular Files</a></li>
+          <li><a href="/{$languageURL}top_authors/">Top Authors</a></li>
+        </ul>
+      </div>
+    </li>
+
+<li><a href="/make_money/affiliate_program">Affiliates</a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="/make_money/affiliate_program">Affiliate Program</a></li>
+          <li><a href="/make_money/banners_and_logos">Banners &amp; Logos</a></li>
+        </ul>
+      </div>
+    </li>
+  
+  <li><a href="/support/">Help</a>
+      <div class="dropdown">
+        <ul>
+          <li><a href="/help/getting_started/">Getting Started</a></li>
+          <li><a href="/support/">Support Contact</a></li>
+          <li><a href="/help/licenses">Licenses</a></li>
+          <li><a href="/help/legal/">Legal Agreements</a></li>
+            <li><a href="/categories/">Sitemap</a></li>
+        </ul>
+      </div>
+    </li>
+  </ul>
+
+  </div> <!-- end .container -->
+</header> <!-- end role main header -->
+
+ <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>
+
+          \   <a href='/admin/login/' class="first">Admin</a> \
+      </div>
+
+<h1 class="page-title">        Sign In
+        
+</h1>
+      
+    </div>
+
+
+      <div id="tabsy">
+          <ul>
+            <li class=""><div></div><a href="/{$languageURL}sign_up/">Create Account</a></li>
+			<li class="selected last"><div></div><a href="/{$languageURL}sign_in/">Sign In</a><div class="last"></div></li>
+          </ul>
+      </div>
+  </div>
+
+
+    <div id="content">
+      <div class="container">
+	  	  		{$errorMessage}
+<div class="content-s">
+    <form  class="horizontal-form disable-on-submit" id="signin-form" method="post">
+      <div class="input-group">
+        <label for="username">{$lang.username}</label>
+        <div class="inputs">
+          <input  id="username" name="username" type="text" value="{$smarty.post.username|escape}" required="required" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="password">{$lang.password}</label>
+        <div class="inputs">
+          <input id="password" name="password" type="password" value="" required="required" />
+        </div>
+      </div>
+
+      <div class="form-submit margin-right">
+        <button type="submit" type="submit" name="login" value="yes" class="btn-icon submit no-margin"><input type="hidden" name="login" value="yes" />   {$lang.login}</button>
+        <p>
+          <small><a href="/{$languageURL}reset_password/">{$lang.forgot_password}</a> | <a href="/{$languageURL}lost_username/">{$lang.forgot_username}</a></small>
+        </p>
+      </div>
+</form></div>
+
+<div class="sidebar-l sidebar-right">
+    <h2 class="box-heading">{$lang.why_sign_up}</h2>
+    <div class="content-box">
+        {$lang.why_sign_up_info}
+    <br />
+    <p>
+     {$lang.its_free} 
+      &nbsp;
+      <a href="/{$languageURL}sign_in/" role="button" class="btn-icon update">{$lang.register_now}</a>
+    </p>
+  </div>
+</div>
+</div>
+</div>
+
+        <div id="copyright">
+  <div class="container">
+    <div class="copyright">
+      <p>
+        <span>COPYRIGHT &copy; 2013 <a href="/"> SITENAME</a></span>|
+        <span><a href="/help/legal/" rel="nofollow">TERMS OF USAGE</a></span>|
+        <span><a href="/support/">SUPPORT/HELP</a></span>|
+        <span>ICONS BY <a href="http://tango.freedesktop.org" rel="nofollow">TANGO</a> + <a href="http://wefunction.com" rel="nofollow">WEFUNCTION</a> + <a href="http://famfamfam.com" rel="nofollow">FAMFAMFAM</a></span>
+      </p>
+      <p class="trademarks">Adobe&reg;, Flash&reg;, Flex&reg;, Fireworks&reg;, Photoshop&reg;, Illustrator&reg;, InDesign&reg; and After Effects&reg; are registered trademarks of Adobe Systems Incorporated.</p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

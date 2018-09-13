@@ -1,0 +1,43 @@
+
+	<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<br />
+	<a class="btn" href="?m={$smarty.get.m}&c=list&p={$smarty.get.p}">{$lang.back}</a>	
+	<br /><br />
+	
+	<form id="sampleform" action="" method="post" enctype="multipart/form-data">
+		<fieldset>
+				
+		<p>
+			<label class="required" for="iname">{$lang.name}:</label><br/>
+			<input id="iname" type="text" name="name" value="{$smarty.post.name|escape}" class="half" readonly="readonly" />
+		</p>
+		
+		<p>
+			<label class="required" for="iemail">{$lang.email}:</label><br/>
+			<input id="iemail" type="text" name="email" value="{$smarty.post.email|escape}" class="half" readonly="readonly" />
+		</p>
+		
+		<p>
+			<label class="required" for="itext">{$lang.text}:</label><br/>
+			<textarea name="short_text" readonly="readonly" style="width: 90%; height: 400px;">{$smarty.post.short_text}</textarea>
+		</p>
+		
+		<p>
+			<label class="required" for="ianswer">{$lang.answer}:</label><br/>
+			<textarea id="ianswer" name="answer" style="width: 90%; height: 400px;"></textarea>
+		</p>
+		
+		<p class="box">
+			<input class="btn btn-green big" type="submit" name="send" value="{$lang.send}" />
+		</p>
+		
+		</fieldset>
+		
+	</form>

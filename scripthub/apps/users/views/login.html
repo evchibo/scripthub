@@ -1,0 +1,63 @@
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a> \
+      </div>
+    <h1 class="page-title">Sign In</h1>
+    </div>
+      <div id="tabsy">
+          <ul>
+            <li class=""><div></div><a href="/{$languageURL}sign_up/">Create Account</a></li>
+			<li class="selected last"><div></div><a href="/{$languageURL}sign_in/">Sign In</a><div class="last"></div></li>
+          </ul>
+      </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  	  		{$errorMessage}
+<div class="content-s">
+    <form  class="horizontal-form disable-on-submit" id="signin-form" method="post">
+      <div class="input-group">
+        <label for="username">{$lang.username}</label>
+        <div class="inputs">
+          <input  id="username" name="username" type="text" value="{$smarty.post.username|escape}" required="required" />
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="password">Password</label>
+        <div class="inputs">
+          <input id="password" name="password" type="password" value="" required="required" />
+        </div>
+      </div>
+
+      <div class="form-submit margin-right">
+        <button type="submit" type="submit" name="login" value="yes" class="btn-icon submit no-margin"><input type="hidden" name="login" value="yes" />   {$lang.login}</button>
+        <p>
+          <small><a href="/{$languageURL}reset_password/">{$lang.forgot_password}</a> | <a href="/{$languageURL}lost_username/">{$lang.forgot_username}</a></small>
+        </p>
+      </div>
+</form></div>
+
+<div class="sidebar-l sidebar-right">
+    <h2 class="box-heading">{$lang.why_sign_up}</h2>
+    <div class="content-box">
+        {$lang.why_sign_up_info}
+    <br />
+    <p>
+     {$lang.its_free} 
+      &nbsp;
+      <a href="/{$languageURL}sign_up/" role="button" class="btn-icon update">{$lang.register_now}</a>
+    </p>
+  </div>
+</div>
+</div>
+</div>

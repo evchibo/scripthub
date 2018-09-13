@@ -1,0 +1,185 @@
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a> \
+      </div>
+    <h1 class="page-title">Create an Account</h1>
+    </div>
+      <div id="tabsy">
+          <ul>
+            <li class="selected"><div></div><a href="/{$languageURL}sign_up/">Create Account</a></li>
+			<li class="last"><div></div><a href="/{$languageURL}sign_in/">Sign In</a><div class="last"></div></li>
+          </ul>
+      </div>
+  </div>
+    <div id="content">
+      <div class="container">
+        	  		{$errorMessage}
+
+{if !isset($verify) && !isset($complete)}
+<div class="sidebar-l sidebar-right">
+  <h2 class="box-heading">{$lang.why_sign_up}</h2>
+  <div class="content-box">
+    {$lang.why_sign_up_info}
+  </div>
+</div>
+{/if}
+
+{if isset($verify)}
+  <div class="sidebar-l sidebar-right">
+  <h2 class="box-heading">Become an author</h2>
+  <div class="content-box">
+    <p>
+      You can now start selling your own digital goods on our Marketplace
+    </p>
+    <p><a role="button" class="btn-icon submit" href="/upload/index/">Upload an Item</a></p>
+  </div>
+  </div>
+<div class="content-s">
+  <h2 class="box-heading">Please verify Your Email Address</h2>
+  <div class="content-box">
+    <p>
+     {$lang.verify_registration}
+    </p>
+  </div>
+</div>
+{elseif isset($complete)}
+
+        <div class="notice flash">
+         <p>Welcome  {$smarty.session.user.username}</p>
+        </div>
+
+  <div class="sidebar-l sidebar-right">
+  <h2 class="box-heading">Become an author</h2>
+  <div class="content-box">
+    <p>
+      You can now start selling your own digital goods on our Marketplace
+    </p>
+    <p><a role="button" class="btn-icon submit" href="/upload/index/">Upload an Item</a></p>
+  </div>
+  </div>
+<div class="content-s">
+
+  <div class="content-box">
+
+  <p>
+    <a class="btn-icon purchase massive" role="button" href="/{$languageURL}deposit/">{$lang.deposit_cash}</a> <br><br />
+    to start buying digital products on our <a href="/">Digital Marketplace</a>
+  </p>
+  <p>
+    <a href="/{$languageURL}deposit/"><img alt="Make a deposit" src="/static/img/dsignup.png" /></a>
+  </p>
+  </div>
+</div> 
+{else}
+
+<div class="content-s">
+  <div class="content">
+    <form action="" method="post">
+  
+      <fieldset action="" method="post" class="horizontal-form">
+        <div class="input-group">
+          <label for="user_username">{$lang.username}</label>
+          <div class="inputs">
+            <input type="text" id="user_username" name="username" value="{$smarty.post.username|escape}" required="required" />
+          </div>
+        </div>
+				  <div id="ajax_username_checking" class="clear" style="display: none;">
+		            <img src="{$data_server}/images/common/small_loader.gif"> {$lang.check_availability}
+		          </div>
+				  
+				  <div id="suggestion_result_container" class="clear"></div>
+
+        <div class="input-group">
+          <label for="user_password">Password</label>
+          <div class="inputs">
+            <input type="password" id="user_password" name="password" required="required" />
+            <div class="meter">
+  <div class="tooltip" style="margin-right:130px">
+    <span class="tooltip-icon" tabindex="100">?</span>
+
+    <div class="tooltip-content">
+      <p>Choose a password that is easy to remember but hard for a stranger to guess.</p>
+      <p>
+        You could try a phrase, combine UppERcase &amp; lowercase letters or non-obvious 
+        numbers &amp; symbols — pa$$w0rd is too obvious!
+      </p>
+    </div>
+  </div>
+</div>
+          </div>
+        </div>
+		
+		 <div class="input-group">
+          <label for="password_confirm">{$lang.re_type}</label>
+          <div class="inputs">
+            <input type="password" id="password_confirm" name="password_confirm" required="required" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="user_email">{$lang.email}</label>
+          <div class="inputs">
+            <input type="text" id="user_email" name="email" value="{$smarty.post.email|escape}" required="required" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="user_email_confirmation">{$lang.re_type}</label>
+          <div class="inputs">
+            <input type="text" id="user_email_confirmation" name="email_confirm" value="{$smarty.post.email_confirm|escape}" required="required" />
+          </div>
+        </div>
+
+        <div class="input-group">
+          <label for="user_firstname">{$lang.first_name}</label>
+          <div class="inputs">
+            <input type="text" id="user_firstname" name="firstname" value="{$smarty.post.firstname|escape}" required="required" />
+          </div>
+        </div>
+		
+		 <div class="input-group">
+          <label for="user_surname">{$lang.last_name}</label>
+          <div class="inputs">
+            <input type="text" id="user_surname" name="lastname" value="{$smarty.post.lastname|escape}" required="required" />
+          </div>
+        </div>
+
+        <div class="input-group no-margin">
+          <div class="inputs full-width">
+            <label for="user_agreed_with_terms_and_conditions">
+              <input class="required" id="user_agreed_with_terms_and_conditions" name="terms" type="checkbox" value="1" {if isset($smarty.post.terms)}checked="checked"{/if} />
+             {$lang.agree_with_terms}
+            </label>
+          </div>
+        </div>
+
+        <div class="input-group">
+          <div class="inputs full-width">
+            <label for="user_subscribed_to_foxmail">
+              <input class="checkbox" id="user_subscribed_to_foxmail" name="subscribed" type="checkbox" value="1" {if isset($smarty.post.subscribe)}checked="checked"{/if} />
+              {$lang.sign_me_to_newsletter}
+            </label>
+          </div>
+        </div>
+		{$recaptcha}
+        <div class="form-submit margin-right">
+          <button type="submit" name="add" value="yes" class="btn-icon submit submit-button">{$lang.create_account}</button>
+        </div>
+      </fieldset>
+
+  
+</form>  </div>
+</div>
+{/if}
+
+</div>
+</div>

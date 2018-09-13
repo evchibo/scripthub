@@ -1,0 +1,373 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="sidebar-l sidebar-right">
+{if check_login_bool() && $smarty.session.user.user_id == $item.user_id}
+ <div class="notice" style="margin-top:-0px;">{$lang.this_is_your_file}</div>
+{/if}
+{if isset($item.is_buyed)}
+
+        <div class="notice" style="margin-top:-0px;">
+<p>
+    You have already purchased this file. You can 
+    <a href="/{$languageURL}download/{$item.id}">download it here</a>.
+    If you wish, you can purchase it again.
+  </p>
+</div>
+{/if}
+
+{if $item.free_file == 'true'}
+ <div class="free_item">
+{if check_login_bool()}
+        <h3>
+          <img alt="Free Download!" src="/static/img/gold-star.png" height="30" width="30">
+            <a href="/{$languageURL}download/{$item.id}">Download it for free!</a>
+        </h3>
+
+        <p>
+          This item is {$smarty.now|date_format:"%B"}'s Free File of the Month!<br>
+            Each user is entitled to 
+			<strong><a href="/{$languageURL}download/{$item.id}">one free regular license</a></strong>.
+			
+        </p>
+{else}
+
+        <h3>
+          <img alt="Free Download!" src="/static/img/gold-star.png" height="30" width="30">
+        </h3>
+
+        <p>
+          This item is {$smarty.now|date_format:"%B"}'s Free File of the Month!<br>
+            <strong>You must be signed in to download this file.</strong>
+        </p>
+{/if}
+  </div>
+{/if}
+{if check_login_bool()}{else}
+<form id="licence" action="/{$languageURL}items/{$item.id}/" method="post">
+<p>You must 
+<input type="hidden" name="licence" id="licence" value="regular" />
+<a href="javascript:;" onclick="document.getElementById('licence').submit();">sign in</a>
+ or <a href="/{$languageURL}sign_up/">sign up</a> to purchase this item.
+</p>
+</form>{/if}
+{if $item.free_file !== 'true'}
+{if !check_login_bool() || $smarty.session.user.user_id !== $item.user_id}
+    <div class="pricebox">
+
+    <form action="/{$languageURL}items/{$item.id}" id="purchase-form" method="post" name="purchase-form">
+
+  <div class="licenses">
+    <meta itemprop="price" content="$3">
+{if isset($item.user.license.personal)}
+      <h3 class="js-active"><div class="purchase-container"><span>{$currency.symbol}<span class="price_in_dollars" data-licence="regular">{$item.price|string_format:"%.0f"}</span></span>Regular Licence</div>
+        <div class="clear"><!-- --></div>
+      </h3>
+      <div class="section js-open">
+        <div class="purchase-container">
+          <div class="purchase">
+            <span class="price"><sup>{$currency.symbol}</sup><span class="price_in_dollars" data-licence="regular">{$item.price|string_format:"%.0f"}</span></span>
+			  <input class="licence-type" id="licence" name="licence" type="hidden" value="regular" />
+              <button class="auto-width" id="purchase_button" onclick="chooseLicence('regular', '{$item.price|string_format:"%.0f"}', '{$item.prepaid_price|string_format:"%.0f"}', 'block')" type="submit">Purchase</button>
+          </div>
+          <p>
+            <strong>Regular Licence</strong>
+            Use, by you or one client, in a single end product which end users are not charged for - <a href="/help/licenses/">Details</a>
+          </p>
+          <div class="clear"><!-- --></div>
+
+
+        </div>
+      </div>
+{/if}
+
+{if isset($item.user.license.extended)}
+      <h3 class=""><div class="purchase-container"><span>{$currency.symbol}<span class="price_in_dollars" data-licence="extended">{$item.extended_price|string_format:"%.0f"}</span></span>Extended Licence</div>
+        <div class="clear"><!-- --></div>
+      </h3>
+	  
+      <div class="section js-closed">
+        <div class="purchase-container">
+          <div class="purchase">
+            <span class="price"><sup>{$currency.symbol}</sup><span class="price_in_dollars" data-licence="extended">{$item.extended_price|string_format:"%.0f"}</span></span>
+              <button class="auto-width" id="purchase_button" onclick="chooseLicence('extended', '{$item.extended_price|string_format:"%.0f"}', '{$item.extended_price|string_format:"%.0f"}', 'none')" type="submit">Purchase</button>
+          </div>
+          <p>
+            <strong>Extended Licence</strong>
+            Use, by you or one client, in a single end product which end users can be charged for - <a href="/help/licenses/">Details</a>
+          </p>
+          <div class="clear"><!-- --></div>
+        </div>
+      </div>
+{/if}
+  </div>
+  <div class="clear"><!-- --></div>
+  <small class="surcharge hidden">Add $2 if you are not using prepaid credits</small>
+</form>
+</div>
+{/if}
+{/if}
+
+{if $item.weekly_to}
+<div class="content-box vertical-space item-was-featured">
+  <p>This item was featured on {$domain}</p>
+</div>
+{/if} 
+
+{if $item.user.elite_author  == 'true'}
+<div class="content-box vertical-space author-is-elite">
+  <p>This item is by an Elite Author</p>
+</div>
+{/if}
+
+{if $item.user.power_elite_author  == 'true'}
+<div class="content-box vertical-space author-is-power-elite">
+  <p>This item is by an Power Elite Author</p>
+</div>
+{/if}
+ {literal}      
+<script type="text/javascript">
+function chooseLicence(licence, price, prepaidprice, display) {
+    $("#buynow-form input[name=licence], #prepaid-form input[name=licence]").val(licence);
+    $("strong.buynow-figure").text("{/literal}{literal}" + price);
+    $("strong.prepaid-figure").text("{/literal}{literal}" + prepaidprice);
+
+}
+</script>
+{/literal}   
+  <div class="content-box author-info">
+<div class="avatar-wrapper">
+    <a href="/{$languageURL}user/{$item.user.username}/" class="avatar">
+  			{if $item.user.avatar != ''}  
+			  <img alt="{$item.user.username}"  height="80" src="{$data_server}uploads/users/{$item.user.user_id}/A_{$item.user.avatar}" width="80" />
+			{else}
+				<img alt="{$item.user.username}" height="80" src="{$data_server}img/default-user.jpg" width="80" />
+			{/if}
+    </a>
+</div>
+    <div class="details">
+      <h2 class="decorator"><a href="/{$languageURL}user/{$item.user.username}/" rel="author">{$item.user.username}</a></h2>
+        <ul class="badges">
+            {foreach from=$user_badges item=b name=foo}
+		      	<img src="{$data_server}{$b.photo}" height="20" width="20" alt="{$b.name|escape}" title="{$b.name|escape}" />
+		      	{if $smarty.foreach.foo.last} <br /> {/if}
+	      	{/foreach}
+        </ul>
+     {if $item.user.power_elite_author  == 'true'}
+     <div class="power-elite-author">
+      <a href="/{$languageURL}user/portfolio/{$item.user.username}" role="button" class="btn-icon portfolio">{$lang.view_portfolio}</a>
+    </div>
+  {else}
+  <a href="/{$languageURL}user/portfolio/{$item.user.username}" role="button" class="btn-icon portfolio">View Portfolio</a>
+    {/if}
+    </div>
+  </div>
+ <div class="sidebar-stats">
+    <div class="sidebar-stats__box--sales">
+      <div>
+        <span>{$item.sales}</span>
+        <small>Purchases</small>
+      </div>
+    </div>
+    <div class="sidebar-stats__box--comments">
+      <div>
+        <a href="/{$languageURL}items/comments/{$item.id}/{$item.name|url}">
+          <span>{$item.comments}</span>
+          <small>Comments</small>
+        </a>
+      </div>
+    </div>
+  </div> 
+
+  <div class="content-box vertical-space social-shares">
+  <div class='facebook-like-button'>
+<iframe src="http://www.facebook.com/plugins/like.php?href=http://{$domain}/items/{$item.id}&amp;layout=standard&amp;show_faces=false&amp;width=308&amp;action=like&amp;font=arial&amp;colorscheme=light&amp;height=80&amp;locale=en_US" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:300px; height:35px;" allowTransparency="true"></iframe>
+  </div>
+  
+  <div class='twitter-tweet-button'>
+  <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://{$domain}/items/{$item.id}" data-lang="en">Tweet</a>
+  </div>
+  
+ <div class="google-plus-one-button">
+ <div data-href="http://{$domain}/items/{$item.id}" class="g-plusone" data-size="medium"></div>
+ </div>
+
+ <div class="pinterest-pin-it-button">
+ <a href="//pinterest.com/pin/create/button/" data-pin-do="buttonBookmark" ><img src="//assets.pinterest.com/images/pidgets/pin_it_button.png" /></a>
+ </div>
+
+  </div>
+ <script>
+  {literal}  marketplace.queue(function(){
+      (function(d, s) {
+        var js, fjs = d.getElementsByTagName(s)[0], load = function(url, id) {
+          if (d.getElementById(id)) {return;}
+          js = d.createElement(s); js.src = url; js.id = id;
+          fjs.parentNode.insertBefore(js, fjs);
+        };
+        load('//connect.facebook.net/en_US/all.js#xfbml=1', 'facebook-jssdk');
+        load('//apis.google.com/js/plusone.js', 'gplus1-js');
+        load('//platform.twitter.com/widgets.js', 'tweet-js');
+          load('//assets.pinterest.com/js/pinit.js', 'pinterest-js');
+      }(document, 'script'));
+    });{/literal}
+  </script>
+
+  	{if $item.votes > 2}
+<div class="content-box vertical-space">
+      <div class="rating-detailed">
+    <div class="rating-detailed__header">
+      <strong class="rating-detailed__title">Buyer Rating:</strong>
+      <div class="rating-detailed__stars">
+{section name=foo start=1 loop=6 step=1}{if $item.rating >= $smarty.section.foo.index}<img src="/static/img/large-star-on.png" alt="" />{else}<img src="/static/img/large-star-off.png" alt="" />{/if}{/section}
+      </div>
+      <small class="rating-detailed__average">
+        {$item.rating} average based on {$item.votes} ratings.
+      </small>
+    </div>
+  </div>
+  </div>
+  {else} 
+<div class="content-box vertical-space">
+  <div class="rating-detailed">
+    <strong>Buyer Rating:</strong> &nbsp;&nbsp;<small>Minimum of 3 votes required</small>
+  </div>
+</div>
+{/if} 
+    <div class="content-box vertical-space item-meta-attributes">
+      <table id="item_attributes" border="0" cellpadding="0" cellspacing="0">
+        <tbody>
+		<tr>
+		 <td class="attr-name">Created</td>
+		 <td class="attr-detail">{$item.datetime|date_format:"%e %B %Y"}</td>
+	  	{foreach from=$item.attributes item=a key=c}
+  	    {if $a}
+          <tr>
+            <td class="attr-name">{$attributeCategories[$c].name}</td>
+            <td class="attr-detail">
+						  {if is_array($a)}
+			  	{assign var=foo value=0}
+			  	{foreach from=$a item=ai}
+					{if $attributes[$ai].photo != ''}
+						<img class="tooltip" title="{$attributes[$ai].name|escape}" alt="{$attributes[$ai].name|escape}" src="{$data_server}/uploads/attributes/{$attributes[$ai].photo}" />
+					{else}
+						<a href="#">{$attributes[$ai].name}</a>,
+					{/if}
+				  	{assign var=foo value=$foo+1}
+			  	{/foreach}
+			  {else}			  
+			  	{if $attributes[$a].photo != ''}
+			  		<img class="tooltip" title="{$attributes[$ai].name|escape}" alt="{$attributes[$a].name|escape}" src="{$data_server}/uploads/attributes/{$attributes[$a].photo}" />
+			  	{else}
+			  		{if $attributeCategories[$c].type == 'input'}
+			  		<a href="">{$a}</a>,
+			  		{else}
+			  			<a href="#">{$attributes[$a].name}</a>,
+			  		{/if}
+			  	{/if}
+			  {/if}
+			</td>
+          </tr>
+	 	{/if}
+ 	    {/foreach}
+        </tbody>
+      </table>
+    </div>
+
+	 {if check_login_bool()}
+ <div class="content-box vertical-space bookmarks">
+      <script>
+{literal}marketplace.queue(function(){
+    $('#collection_create_link a').toggle(
+        function() {
+          $('#collection_create_form').show();
+          $(this).parent().find('a').text('Close New Collection');
+
+        },
+        function() {
+          $('#collection_create_form').hide();
+          $(this).parent().find('a').text('Create New Collection');
+        }
+    );
+  });{/literal}
+</script>
+
+<form id="bookmark_form"  method="post" action="" enctype="multipart/form-data">
+
+    <select id="collection_id" name="collection_id" style="width: 100%">
+			{if $bookCollections}
+			{foreach from=$bookCollections item=c}
+        <option value="{$c.id}">{$c.name}</option>
+		   	{/foreach}
+			{/if}
+    </select>
+    <p id="collection_create_link">{$lang.or} <a href="javascript:open_collection();">{$lang.create_bookmark}</a></p>
+    <div style="display:none;" id="collection_create_form" class="vertical-form">
+   <hr>
+
+    <div class="input-group">
+      <label for="name">{$lang.new_collection}:</label>
+      <div class="inputs">
+        <input id="name" name="name" type="text" value="" />
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="description">{$lang.description}:</label>
+      <div class="inputs">
+        <textarea id="description" name="description" rows="6" style="width: 300px"></textarea>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="file_upload">{$lang.photo}:</label>
+      <div class="inputs">
+        <input id="file_upload" name="file_upload" size="12" style="width: 170px;" type="file" />
+        <small>(260 x 140px)</small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <div class="inputs">
+        <label for="publically_visible">
+          <input id="publically_visible" name="publically_visible" style="border:1px" type="checkbox" value="1" /> Publicly viewable? 
+        </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-submit" href="javascript: void(0);" onclick="$(this).parent().submit();" >
+  <input type="hidden" name="add_collection" value="yes" />
+<button type="submit" class="btn-icon bookmark">Bookmark this!</button>
+</div>
+</form>
+
+    </div>
+	{/if}
+
+      <ul class="tag-list" itemprop="keywords">
+	  {foreach from=$item.tags.features item=t}
+        <li><a href="/{$languageURL}items/tag/features/{$t}">{$t}</a></li>
+	  {/foreach}
+	  
+	  {foreach from=$item.tags.usage item=t}
+        <li><a href="/{$languageURL}items/tag/usage/{$t}">{$t}</a></li>
+	  {/foreach}
+	  
+	  {foreach from=$item.tags.style item=t}
+        <li><a href="/{$languageURL}items/tag/style/{$t}">{$t}</a></li>
+	  {/foreach}
+      </ul>
+
+  <div class="item-copyright">
+    <small>
+      &copy; {$lang.all_right_reserved} {$item.user.username} -
+      <a href="/{$languageURL}contacts/"><span>{$lang.report_file}</span></a>
+    </small>
+  </div>
+</div>

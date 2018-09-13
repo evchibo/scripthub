@@ -1,0 +1,53 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list&p={$smarty.get.p}">Support Center</a> \
+      </div>
+      <h1 class="page-title">{$title} Message</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" action="" method="post" enctype="multipart/form-data">
+	 <div class="input-group">
+        <label for="name">{$lang.name}</label>
+        <div class="inputs">
+          <input id="name" type="text" name="name" value="{$smarty.post.name|escape}" readonly="readonly" />
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="email">{$lang.email}</label>
+        <div class="inputs">
+          <input id="email" type="text" name="email" value="{$smarty.post.email|escape}" readonly="readonly" />
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="message">Message</label>
+        <div class="inputs">
+          <textarea name="short_text" id="message" readonly="readonly" style="width: 90%; height: 400px;">{$smarty.post.short_text}</textarea>
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="answer">{$lang.answer}</label>
+        <div class="inputs">
+          <textarea id="answer" name="answer" style="width: 90%; height: 400px;"></textarea>
+        </div>
+    </div>
+    <div class="form-submit">
+     <button type="submit" name="send" class="btn-icon submit auto-width">{$lang.send}</button>
+    </div>
+	</form>
+    </div>
+   </div>
+  </div>
+ </div>

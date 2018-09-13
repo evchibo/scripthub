@@ -1,0 +1,43 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="/admin/?m=users&c=list">Users</a> \
+      </div>
+      <h1 class="page-title">{$title}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  {$errorMessage}
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" method="post">
+	 <div class="input-group">
+        <label for="balance">Amount</label>
+        <div class="inputs">
+         <input id="balance" type="text" name="balance" value="{$smarty.post.balance|escape}" required="true" />
+		{if isset($error.balance)}
+		  <small>{$error.balance}</small>
+		{/if}
+        </div>
+      </div>
+        <div class="form-submit">
+		{if $smarty.get.c=='editBalance'}
+          <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="edit" >{$lang.edit}</button>
+		  {else}
+          <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="add" >{$lang.add}</button>
+		{/if}
+        </div>
+	</form>
+   </div>
+  </div>
+ </div>
+</div>

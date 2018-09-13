@@ -1,0 +1,119 @@
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a> \ <a href='/categories/all/'>Files</a> \ </div>
+       <h1 class="page-title">Featured Files</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+<div class="content-l">
+{if $topItem}
+    <div class="content-box vertical-space featured-item">
+      <h2>{$lang.current_featured_item}</h2>
+      <div class="featured-item-thumbs">
+        
+  <a href="/{$languageURL}items/{$topItem.id}/{$topItem.name|url}"><img alt="{$topItem.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$topItem.user_id].username}" data-item-category="{foreach from=$topItem.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$topItem.price}" data-item-name="{$topItem.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$topItem.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$topItem.id}/{$topItem.thumbnail}" title="{$topItem.name|escape}" width="80" /></a>
+  <a href="/{$languageURL}user/{$users[$topItem.user_id].username}" class="avatar" title="{$users[$topItem.user_id].username}">
+  {if $users[$topItem.user_id].avatar != ''} 
+    <img alt="{$users[$topItem.user_id].username}" src="{$data_server}uploads/users/{$topItem.user_id}/A_{$users[$topItem.user_id].avatar}" height="40" width="40">
+  {else}
+  	<img alt="{$users[$topItem.user_id].username}" src="{$data_server}img/default-user.jpg" height="40" width="40">
+  {/if}
+</a>
+
+      </div>
+
+      <div class="featured-item-info">
+        <h3><a href="/{$languageURL}items/{$topItem.id}/{$topItem.name|url}">{$topItem.name|escape}</a></h3>
+        <small>by <a href="/{$languageURL}user/{$users[$topItem.user_id].username}/">{$users[$topItem.user_id].username}</a></small>
+        <br />
+        <span class="rating">
+          
+{section name=foo1 start=1 loop=6 step=1}{if $topItem.rating >= $smarty.section.foo1.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}{/section}
+							
+							{$topItem.sales} {$lang.sales}
+        </span>
+        <span class="price">{$currency.symbol}{$topItem.price}</span>
+      </div>
+    </div>
+ {/if}
+  <h2 class="underlined">{$lang.featured_last_six_months}</h4>
+ {if $items}
+  <ul class="item-grid">
+ 
+				{foreach from=$items item=i name=foo}
+      <li class="source">
+
+  <div class="thumbnail">
+    
+  <a href="/{$langaugeURL}items/{$i.id}/{$i.name|url}"><img alt="{$i.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" width="80" /></a>  </div>
+
+  <div class="item-info">
+    <h3>
+      <a href="/{$langaugeURL}items/{$i.id}/{$i.name|url}">{$i.name|escape}</a>
+    </h3>
+
+    <a href="/{$languageURL}user/{$users[$i.user_id].username}/" class="author">{$users[$i.user_id].username}</a>
+
+      </div>
+
+  <small class="meta">
+  
+     </small>
+
+  <div class="sale-info">
+    <small class="sale-count">{$i.sales} {$lang.sales}</small>
+    <small class="price">{$currency.symbol}{$i.price}</small>
+    <div class="rating">
+{section name=foo start=1 loop=6 step=1}{if $i.rating > $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}{/section}
+	</div>
+
+      </div>
+</li>
+{/foreach}
+
+  </ul>
+  			{else}
+			<div class="content-box vertical-space">{$lang.no_items}</div>
+			{/if}	
+  
+</div>
+
+  <div class="sidebar-s sidebar-right">
+    <h2 class="box-heading">Recently featured authors</h2>
+				{if $featuredAuthors}
+    		{foreach from=$featuredAuthors item=u name=foo} 
+      <div class="content-box top-author">
+        
+<div class="avatar-wrapper">
+    <a href="/{$languageURL}user/{$u.username}" class="avatar">
+							{if $u.avatar != ''}  
+							  <img alt="{$u.username}" class="" height="80" src="{$data_server}uploads/users/{$u.user_id}/A_{$u.avatar}" width="80" />
+							{else}
+								<img alt="{$u.username}" class="" height="80" src="{$data_server}img/default-user.jpg" width="80" />
+							{/if}
+</a>
+
+
+</div>
+
+        <strong>{$u.username}</strong>
+      </div>
+		    {/foreach}
+		  {/if}	
+
+  </div>
+
+      </div>
+    </div>
+
+    

@@ -1,0 +1,66 @@
+   <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+     <div id="breadcrumbs">
+      <a href="/admin" class="first">Home</a> \ <a href="/admin/?m=users&amp;c=list">Users</a> \ <a href="/admin/?m=users&c=edit&id={$smarty.get.id}">{$users[$smarty.get.id].username}</a> \
+     </div>
+     <h1 class="page-title">Edit Balance</h1>
+	</div>
+     <div id="tabsy">
+      <ul>
+		{if $users[$smarty.get.id].items != '0'}
+		<li><div></div><a href="/admin/?m=users&c=edit&id={$smarty.get.id}">Profile</a></li>
+		<li class="selected"><div></div><a href="/admin/?m=users&c=balance&id={$smarty.get.id}">Edit Balance</a></li>
+		<li class="last"><div></div><a href="/admin/?m=items&c=list&user={$smarty.get.id}">Portfolio</a><div class="last"></div></li>
+		{else}
+		<li><div></div><a href="/admin/?m=users&c=edit&id={$smarty.get.id}">Profile</a></li>
+		 <li class="selected last"><div></div><a href="/admin/?m=users&c=balance&id={$smarty.get.id}">Edit Balance</a><div class="last"></div></li>
+		{/if}
+      </ul>
+	 </div>
+    </div>
+    <div id="content">
+      <div class="container">
+	{if is_array($data)}
+  <div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th>Amount</th>
+				<th>{$lang.date}</th>
+				<th>{$lang.paid}</th>
+				<th>{$lang.from_admin}</th>
+			
+				<th width="150"></th>
+			</tr>
+		</thead>
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td class="ta-right">{$currency.symbol}{$d.deposit|string_format:"%.2f"}</td>
+				<td>{$d.datetime|date_format:"%d %b %Y %H:%M:%S"}</td>
+				<td style="font-weight:bold; color:{if $d.paid == 'true'} #48691d; {else} #c00; {/if}">{if $d.paid == 'true'} {$lang.yes} {else} {$lang.no} {/if}</td>
+				<td style="font-weight:bold; color:{if $d.from_admin} #48691d; {else} #c00; {/if}">{if $d.from_admin} {$lang.yes} {else} {$lang.no} {/if}</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=editBalance&id={$d.id}" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a>
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteBalance':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+				</td>					
+			</tr>
+		{/foreach}
+		</tbody>
+	</table>
+    </div>
+	{/if}
+  <div class="form-submit">
+   <button onclick="window.location='?m={$smarty.get.m}&c=addBalance&user_id={$smarty.get.id}';" type="button" class="btn-icon submit auto-width">{$lang.add_new}</button>
+  </div>
+   </div>
+ </div>

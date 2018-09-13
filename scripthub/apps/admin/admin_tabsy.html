@@ -1,0 +1,23 @@
+	<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="tabsy">
+      <ul>
+        <li {if $smarty.get.m == ''}class="selected"{/if}><div></div><a href="/admin/">Dashboard</a></li>
+		<li {if $smarty.get.m == 'users'}class="selected"{/if}><div></div><a href="/admin/?m=users&c=list">Users</a></li>
+		<li {if $smarty.get.m == 'items'}class="selected"{/if}><div></div><a href="/admin/?m=items&c=list">Items</a></li>
+		<li {if $smarty.get.m == 'system'}class="selected"{/if}><div></div><a href="/admin/?m=system&c=list">Settings</a></li>
+		<li {if $smarty.get.m == 'contacts'}class="selected"{/if}><div></div><a href="/admin/?m=contacts">Support</a></li>
+		<li {if $smarty.get.m == 'categories'}class="selected"{/if}><div></div><a href="/admin/?m=categories">Categories</a></li>
+		<li {if $smarty.get.m == 'quiz'}class="selected"{/if}><div></div><a href="/admin/?m=quiz">Quiz</a></li>
+		<li {if $smarty.get.m == 'pages'}class="selected"{/if}><div></div><a href="/admin/?m=pages">Pages</a></li>
+		<li {if $smarty.get.m == 'qnews'}class="selected"{/if}><div></div><a href="/admin/?m=qnews">News</a></li>
+		<li {if $smarty.get.m == 'collections'}class="selected"{/if}><div></div><a href="/admin/?m=collections">Collections</a></li>
+		<li class="{if $smarty.get.m == 'reports'}selected{/if} last"><div></div><a href="/admin/?m=reports">Reports</a><div class="last"></div></li>
+      </ul>
+    </div>

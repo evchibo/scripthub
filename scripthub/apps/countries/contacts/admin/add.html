@@ -1,0 +1,45 @@
+
+	<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<br />
+	<a class="btn" href="?m={$smarty.get.m}&c=categories&p={$smarty.get.p}">{$lang.back}</a>	
+	<br /><br />
+	
+	<form id="sampleform" action="" method="post" enctype="multipart/form-data">
+		<fieldset>
+				
+		<p>
+			<label class="required" for="iname">{$lang.name}:</label><br/>
+			<input id="iname" type="text" name="name" value="{$smarty.post.name|escape}" class="half" />
+			{if isset($error.name)}
+				<span class="validate_error">{$error.name}</span>
+			{/if}
+		</p>
+			
+		<p>
+			<label for="idesc">{$lang.text}:</label><br/>
+			<textarea name="text">{$smarty.post.text}</textarea>
+		</p>
+		
+		<p>
+			<label for="ivisible">{$lang.visible}:</label><br/>
+			<input type="checkbox" name="visible" value="true" class="checkbox" {if $smarty.post.visible == 'true'}checked="checked"{/if} /> {$lang.yes}
+		</p>
+		
+		<p class="box">
+			{if $smarty.get.c=='edit'}
+				<input class="btn btn-green big" type="submit" name="edit" value="{$lang.edit}" />
+			{else}
+				<input class="btn btn-green big" type="submit" name="add" value="{$lang.add}" />
+			{/if}
+		</p>
+
+		</fieldset>
+	</form>
+	

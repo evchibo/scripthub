@@ -1,0 +1,54 @@
+
+					
+	<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<a href="?m={$smarty.get.m}&c=add" class="btn"><span class="icon icon-add">&nbsp;</span>{$lang.add_new}</a>
+	<br /><br />
+
+	{if is_array($data)}
+	<table class="stylized full" cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+		<thead>
+			<tr>
+				<th>{$lang.name}</th>
+				<th>{$lang.visible}</th>
+				<th>{$lang.sort}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$d.name}</td>
+				<td>
+					{if $d.visible == 'true'}
+						<img src="{$data_server}/admin/images/icons/24x24/accept.png" alt="" class="middle" />
+					{else}
+						<img src="{$data_server}/admin/images/icons/24x24/delete.png" alt="" class="middle" />
+					{/if}
+				</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=categories&down={$d.id}&p={$smarty.get.p}&sub_of={$smarty.get.sub_of}" title="{$lang.up}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/up.png" /></a>
+					<a href="?m={$smarty.get.m}&c=categories&up={$d.id}&p={$smarty.get.p}&sub_of={$smarty.get.sub_of}" title="{$lang.down}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/download1.png" /></a>				
+				</td>								
+				<td>
+					<a href="?m={$smarty.get.m}&c=edit&id={$d.id}&p={$smarty.get.p}" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a>
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteCategory':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table> <!-- END Table -->			
+
+	{else}
+		{$lang.no_records}
+	{/if}
+
+	{$paging}

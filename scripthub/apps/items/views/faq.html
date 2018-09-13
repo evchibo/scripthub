@@ -1,0 +1,107 @@
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a> \  <a href="/categories/all/">Files</a>  \ 	{foreach from=$item.categories item=e}
+								{foreach from=$e item=c name=foo}
+									<a href="/{$languageURL}categories/{$categories[$c].id}/{$categories[$c].name|url}" title="">{$categories[$c].name}</a> {if !$smarty.foreach.foo.last} \ {/if}
+								{/foreach}
+							{/foreach}  \
+     </div>
+   <h1 class="page-title">{$item.name}</h1>
+    </div>
+      <div id="tabsy">
+          <ul>
+            <li class="{if $smarty.get.controller != 'faq' && $smarty.get.controller != 'comments' && $smarty.get.controller != 'edit'} selected {/if} "><div></div><a href="/{$languageURL}items/{$item.id}/{$item.name|url}">Item Details</a></li>
+			{if $faqs>0 || check_login_bool() && $item.user_id == $smarty.session.user.user_id}
+			<li class="{if $smarty.get.controller == 'faq'}selected{/if}"><div></div><a href="/{$languageURL}items/faq/{$item.id}/{$item.name|url}">{$lang.faqs}</a></li>
+			{/if}
+			{if check_login_bool() && $item.user_id == $smarty.session.user.user_id}
+			<li class="last{if $smarty.get.controller == 'edit'}selected{/if}" ><div></div><a href="/{$languageURL}items/edit/{$item.id}/{$item.name|url}">{$lang.edit}</a></li>
+			{/if}
+			<li class="last{if $smarty.get.controller == 'comments'}selected{/if} last"><div></div><a href="/{$languageURL}items/comments/{$item.id}/{$item.name|url}">{$lang.comments1}</a><div class="last"></div></li>
+          </ul>
+      </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  		{$errorMessage}
+{include file="$root_path/zipmarket/apps/items/views/purchase_panel.html"}
+<div class="content-s">
+	{if $faq}  
+  <div id="faq-index">
+  {foreach from=$faq item=f}
+    <div class="content-box">
+  <strong class="question"><p>{$f.question|nl2br}</p></strong>
+  <div class="answer new-typography"><p>{$f.answer|nl2br}</p></div>
+    	{if check_login_bool() && $item.user_id == $smarty.session.user.user_id}
+  <div class="controls" style="float: left; margin-top:5px; margin-bottom: -5px; font-size: 10px; color: silver;">
+	      	<a href="/{$languageURL}items/faq/{$item.id}/?del={$f.id}">{$lang.delete}</a>
+  </div>
+    	{/if}
+</div>
+ {/foreach}
+  </div>
+{else}
+ <div class="content-box vertical-space">{$lang.no_faq}</div>
+{/if}
+{if check_login_bool() && $item.user_id == $smarty.session.user.user_id}
+         <h2 class="box-heading">Create FAQ</h2>
+            <div class="content-box">
+	            <script type="text/javascript" src="{$data_server}nicEditors/nicEdit.js"></script>
+            <script type="text/javascript">
+      {literal}bkLib.onDomLoaded(function() { nicEditors.allTextAreas() });{/literal}
+      </script>	
+           <form action="" method="post">
+            <fieldset class="horizontal-form">
+              <div class="input-group">
+                <label for="item_question">{$lang.question}</label>
+                <div class="inputs">
+				 <textarea id="item_question" name="question" rows="10"></textarea>
+                </div>
+              </div>
+			
+              <div class="input-group">
+                <label for="item_answer">{$lang.answer}</label>
+                <div class="inputs">
+				<textarea id="item_answer" name="answer" rows="10"></textarea>
+                </div>
+              </div>
+
+            </fieldset>
+
+            <div class="form-submit"><input type="hidden" name="add" value="yes" />
+            <button type="submit" name="add" class="btn-icon post-reply">{$lang.create_faq}</button>
+            </div>
+          </form>          
+         </div>
+{/if}
+
+        <div class="more-work">
+        <div>
+       {if $otherItems}
+   		{foreach from=$otherItems item=i}   
+  <a href="/{$languageURL}items/{$i.id}/{$i.name|url}"><img alt="{$i.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="" data-item-category="" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" width="80" /></a>          
+        	{/foreach}
+		{/if}
+		{if $otherItemsCount < 7}
+    	{section name=foo start=$otherItemsCount loop=7 step=1}
+          <div class="thumbnail"></div>
+        {/section}      
+		{/if}
+        </div>
+        <div class="clear"><!-- --></div>
+        <small><a href="/{$languageURL}user/portfolio/{$item.user.username}">{$lang.more_items_by} {$item.user.username}</a></small>
+      </div>
+</div>
+
+{include file="$root_path/zipmarket/apps/items/views/rightside.html"}
+      </div>
+    </div>

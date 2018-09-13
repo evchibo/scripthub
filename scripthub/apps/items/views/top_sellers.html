@@ -1,0 +1,116 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/" class="first">Home</a>\<a href="/categories/all/">Files</a>\</div>
+      <h1 class="page-title">Popular  Files</h1>
+    </div>
+  </div>
+<div id="content">
+  <div class="container">
+  <div class="content-l">
+    <div class="week-switcher">
+  <a href="/{$languageURL}items/top_sellers/{$prevDate}" class="slider-control slider-prev">Previous</a>
+  {$lang.week_ending} {$endDate|date_format:"%d %b"}
+   {if $nextDate}
+     <a href="{$languageURL}items/top_sellers/{$nextDate}" class="slider-control slider-next">Next</a>
+    {else}
+	<span class="slider-control slider-next-disabled">Next</span>
+   {/if}
+</div>
+    <h2>Weekly Top Sellers</h2>
+{if $topSellItems}
+<ul class="item-grid">
+		{assign var='position' value='0'}
+				{foreach from=$topSellItems item=i name=foo}
+			{assign var='position' value=$position+1}
+    <li class="source">
+  <div class="thumbnail">
+  <a href="/{$langaugeURL}items/{$i.item_id}/{$i.name|url}"><img data-tooltip="{$i.name|escape}" alt="{$i.name|escape}" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.item_id}/preview.jpg" data-preview-width="" src="{$data_server}uploads/items/{$i.item_id}/{$i.thumbnail}" title="" border="0" width="80" height="80"></a>  </div>
+
+  <div class="item-info">
+    <h3>
+      <a href="/{$langaugeURL}items/{$i.item_id}/{$i.name|url}">{$i.name}</a>
+    </h3>
+
+	    <a href="/{$languageURL}user/{$users[$i.user_id].username}/" class="author">{$users[$i.user_id].username}</a>
+
+      </div>
+
+  <small class="meta"></small>
+
+  <div class="sale-info">
+    <small class="sale-count">{$i.sales} {$lang.sales}</small>
+    <small class="price">{$currency.symbol}{$i.price}</small>
+    <div class="rating">
+      
+{section name=foo start=1 loop=6 step=1}{if $i.rating >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}{/section}
+  </div>
+      </div>
+</li>
+	{/foreach}
+</ul>
+	{else}
+				<div class="content-box vertical-space">{$lang.no_items}</div>
+	{/if}
+    <br><br>
+      <h2>{$lang.three_monthly} {$endMonthlyDate|date_format:"%d %b %Y"}</h2>
+	{if $topMonthlyItems}
+<ul class="item-grid">
+{foreach from=$topMonthlyItems item=i name=foo}
+  			{assign var='position' value=$position+1}
+    <li class="source">
+  <div class="thumbnail">
+  <a href="/{$langaugeURL}items/{$i.item_id}/{$i.name|url}"><img alt="{$i.name|escape}" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.item_id}/preview.jpg" data-preview-width="" src="{$data_server}uploads/items/{$i.item_id}/{$i.thumbnail}" title="{$i.name|escape}" border="0" width="80" height="80"></a>  </div>
+  <div class="item-info">
+    <h3>
+      <a href="/{$langaugeURL}items/{$i.item_id}/{$i.name|url}">{$i.name}</a>
+    </h3>
+    <a href="/{$languageURL}user/{$users[$i.user_id].username}/" class="author">{$users[$i.user_id].username}</a>
+      </div>
+  <small class="meta"></small>
+  <div class="sale-info">
+    <small class="sale-count">{$i.sales} {$lang.sales}</small>
+    <small class="price">{$currency.symbol}{$i.price}</small>
+    <div class="rating">
+      {section name=foo start=1 loop=6 step=1}{if $i.rating >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}{/section} 
+  </div>
+      </div>
+</li>
+	{/foreach}
+</ul>
+	{else}
+		<div class="content-box vertical-space">{$lang.no_items}</div>
+	{/if}
+  </div>
+<div class="sidebar-s sidebar-right">
+{if $topAuthors}
+    <h2 class="box-heading">{$lang.top_authors_in} {$lang.monthArr[$month]}</h2>
+	{foreach from=$topAuthors item=u name=foo}
+      <div class="content-box top-author">
+<div class="avatar-wrapper">
+    <a href="/{$languageURL}user/{$u.username}" class="avatar" title="{$u.username}">
+{if $u.avatar != ''}  
+  <img alt="{$u.username}" class="m6 left" height="80" src="{$data_server}uploads/users/{$u.user_id}/A_{$u.avatar}" width="80" />
+{else}
+	<img alt="{$u.username}" class="" height="80" src="{$data_server}img/default-user.jpg" width="80" />
+{/if}
+</a>
+</div>
+       <strong><a href="/{$languageURL}user/{$u.username}">{$u.username}</a></strong>
+       <br>
+       <small>{$u.sales} {$lang.sales}</small>
+     </div>
+   {/foreach}
+		
+</div>
+ {/if}	
+      </div>
+    </div> </div>

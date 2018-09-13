@@ -1,0 +1,43 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list">Settings</a> \
+      </div>
+      <h1 class="page-title">{$title} </h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" method="post">
+	 <div class="input-group">
+        <label for="logo">{$lang.site_logo}</label>
+        <div class="inputs">
+			<input id="logo" type="file" name="value" />
+			<small>.PNG 186x45</small>
+			{if $smarty.post.value != ''}
+				<img src="{$data_server}uploads/logo/{$smarty.post.value}" alt="" />
+			{/if}
+			{if isset($error.photo)}
+				<small>{$error.photo}</small>
+			{/if}
+        </div>
+    </div>
+     <div class="form-submit">
+      <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="edit" >{$lang.save}</button>
+     </div>
+    </div>
+	</form>
+   </div>
+  </div>
+ </div>
+</div>

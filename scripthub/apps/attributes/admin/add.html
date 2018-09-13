@@ -1,0 +1,72 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list&p={$smarty.get.p}">Attributes</a> \
+      </div>
+      <h1 class="page-title">{$title}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" action="" method="post" enctype="multipart/form-data">
+	 <div class="input-group">
+        <label for="name">{$lang.name}</label>
+        <div class="inputs">
+			<input type="text" name="name" id="name" required="true" value="{$smarty.post.name|escape}" >
+			{if isset($error.name)}
+				<span class="validate_error">{$error.name}</span>
+			{/if}
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="type">{$lang.type}</label>
+        <div class="inputs">
+			<select id="type" name="type">
+				<option value=""></option>
+				<option value="select" {if $smarty.post.type == 'select'}selected="selected"{/if}>Select box</option>
+				<option value="multiple" {if $smarty.post.type == 'multiple'}selected="selected"{/if}>Multiple</option>
+				<option value="check" {if $smarty.post.type == 'check'}selected="selected"{/if}>Checkbox</option>
+				<option value="radio" {if $smarty.post.type == 'radio'}selected="selected"{/if}>Radio</option>
+				<option value="input" {if $smarty.post.type == 'input'}selected="selected"{/if}>Input</option>
+			</select>
+			{if isset($error.select)}
+				<small>{$error.select}</small>>
+			{/if}
+        </div>
+    </div>
+    {if $categories}
+	 <div class="input-group">
+        <label for="name">{$lang.categories}</label>
+        <div class="inputs">
+			{foreach from=$categories item=c}
+				<input type="checkbox" name="category[{$c.id}]" value="{$c.id}" class="checkbox" {if isset($smarty.post.category[$c.id])}checked="checked"{/if} /> {$c.name}<br />
+			{/foreach}
+        </div>
+    </div>
+    {/if}
+	 <div class="input-group">
+        <label for="visible">{$lang.visible}</label>
+        <div class="inputs">
+			<input type="checkbox" name="visible" id="visible" value="true" class="checkbox" {if $smarty.post.visible == 'true'}checked="checked"{/if} /> {$lang.yes}
+        </div>
+    </div>
+	{if $smarty.get.c=='edit'}
+      <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="edit" >{$lang.edit}</button>
+	  {else}
+      <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="add" >{$lang.add}</button>
+	{/if}
+	</form>
+    </div>
+   </div>
+  </div>
+ </div>

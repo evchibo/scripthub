@@ -1,0 +1,88 @@
+{if $user.power_elite_author  == 'true' || $user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $user.power_elite_author  == 'true'}power-elite-author{/if}{if $user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}user/{$user.username}/">Profile</a>\
+      </div>
+    <h1 class="page-title">{$user.username} </h1>
+    <span class="page-title-tagline">
+      <strong>{if $user.power_elite_author  == 'true'}Power{/if} Elite Author</strong>
+    </span>
+    </div>
+      <div id="tabsy">
+       {if check_login_bool() && $user.user_id == $smarty.session.user.user_id}  
+	       <ul>
+            <li class=""><div></div><a href="/{$languageURL}author_dashboard/">Dashboard</a></li>
+			<li class="selected"><div></div><a href="/{$languageURL}user/{$smarty.session.user.username}/">Profile</a></li>
+			{if $smarty.session.user.items != '0'} 
+			<li class=""><div></div><a href="/{$languageURL}user/portfolio/{$smarty.session.user.username}/">Portfolio</a></li>
+			{/if}
+			<li class=""><div></div><a href="/{$languageURL}edit/">My Settings</a></li>
+			<li class=""><div></div><a href="/{$languageURL}download/">Downloads</a></li>
+			<li class=""><div></div><a href="/{$languageURL}user/bookmarks/">Bookmarks</a></li>
+			<li class=""><div></div><a href="/{$languageURL}deposit/">{$lang.deposit}</a></li>
+			<li class=""><div></div><a href="/{$languageURL}invoices/">{$lang.history}</a></li>
+			<li class=""><div></div><a href="/{$languageURL}withdrawal/">{$lang.withdrawal}</a></li>
+			<li class=""><div></div><a href="/{$languageURL}earnings/">{$lang.earnings}</a></li>
+			<li class="last"><div></div><a href="/{$languageURL}statement/">{$lang.statement}</a><div class="last"></div></li>
+          </ul>
+		  {else}
+		  <ul>
+		  {if $user.items != '0'}
+            <li class="selected"><div></div><a href="/{$languageURL}user/{$user.username}/">Profile</a></li>
+			<li class="last"><div></div><a href="/{$languageURL}user/portfolio/{$user.username}/">Portfolio</a><div class="last"></div></li>
+          {else}
+            <li class="selected last"><div></div><a href="/{$languageURL}user/{$user.username}/">Profile</a><div class="last"></div></li>
+		  {/if}
+          </ul>
+		  {/if}
+      </div>
+  </div>
+</div>
+{else}
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}user/{$user.username}/">Profile</a>\
+      </div>
+    <h1 class="page-title">{$user.username} </h1>
+    </div>
+      <div id="tabsy">
+       {if check_login_bool() && $user.user_id == $smarty.session.user.user_id}  
+	       <ul>
+            <li class=""><div></div><a href="/{$languageURL}author_dashboard/">Dashboard</a></li>
+			<li class="selected"><div></div><a href="/{$languageURL}user/{$smarty.session.user.username}/">Profile</a></li>
+			{if $smarty.session.user.items != '0'} 
+			<li class=""><div></div><a href="/{$languageURL}user/portfolio/{$smarty.session.user.username}/">Portfolio</a></li>
+			{/if}
+			<li class=""><div></div><a href="/{$languageURL}edit/">My Settings</a></li>
+			<li class=""><div></div><a href="/{$languageURL}download/">Downloads</a></li>
+			<li class=""><div></div><a href="/{$languageURL}user/bookmarks/">Bookmarks</a></li>
+			<li class=""><div></div><a href="/{$languageURL}deposit/">{$lang.deposit}</a></li>
+			<li class=""><div></div><a href="/{$languageURL}invoices/">{$lang.history}</a></li>
+			<li class=""><div></div><a href="/{$languageURL}withdrawal/">{$lang.withdrawal}</a></li>
+			<li class=""><div></div><a href="/{$languageURL}earnings/">{$lang.earnings}</a></li>
+			<li class="last"><div></div><a href="/{$languageURL}statement/">{$lang.statement}</a><div class="last"></div></li>
+          </ul>
+		  {else}
+		  <ul>
+		  {if $user.items != '0'}
+            <li class="selected"><div></div><a href="/{$languageURL}user/{$user.username}/">Profile</a></li>
+			<li class="last"><div></div><a href="/{$languageURL}user/portfolio/{$user.username}/">Portfolio</a><div class="last"></div></li>
+          {else}
+            <li class="selected last"><div></div><a href="/{$languageURL}user/{$user.username}/">Profile</a><div class="last"></div></li>
+		  {/if}
+          </ul>
+		  {/if}
+      </div>
+  </div>
+{/if}

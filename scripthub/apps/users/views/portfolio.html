@@ -1,0 +1,130 @@
+ {include file="$root_path/zipmarket/apps/users/views/elite_portfolio.html"}
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="content">
+      <div class="container">
+        <script>{literal}
+  marketplace.queue( function(){
+    marketplace.initializers.itemList({
+      ajaxPagination: true,
+      layoutSwitcher: true
+    });
+  });{/literal}
+</script>
+	  		{$errorMessage}
+<div id="paginated-content-container">
+  <div class="content-l">
+  <div class="page-controls">
+<form action="" class="sort-control" id="sort-by-form" method="get">
+  <label for="sort_by" class="sort-control-label">{$lang.order_by}:</label>
+				<select class="sort_select" id="sort_by" name="sort_by">
+    			<option value="published_at"{if $smarty.get.sort_by == 'published_at'} selected="selected"{/if}>Date Published</option>
+					<option value="name"{if $smarty.get.sort_by == 'name'} selected="selected"{/if}>{$lang.title}</option>
+					<option value="root_category"{if $smarty.get.sort_by == 'root_category'} selected="selected"{/if}>{$lang.category}</option>
+					<option value="average_rating"{if $smarty.get.sort_by == 'average_rating'} selected="selected"{/if}>{$lang.rating}</option>
+					<option value="sales_count"{if $smarty.get.sort_by == 'sales_count'} selected="selected"{/if}>{$lang.sales}</option>
+					<option value="cost"{if $smarty.get.sort_by == 'cost'} selected="selected"{/if}>{$lang.price}</option>
+				</select>
+				<a href="javascript: void(0);" onclick="submitOrder(this);" title="" class="{if $smarty.get.order == 'asc'}asc{else}desc{/if}">
+				<img src="/static/img/{if $smarty.get.order == 'asc'}asc{else}desc{/if}.png"  alt="" /></a>
+	      <input id="order-type" name="order" type="hidden" value="{if $smarty.get.order == 'asc'}asc{else}desc{/if}" />
+</form>
+<div class="layout-switcher sort-control">
+  <a href="#" class="layout-list sort-control-tooltip active" data-tooltip="List View"></a>
+  <a href="#" class="layout-grid sort-control-tooltip" data-tooltip="Grid View"></a>
+</div>
+
+    <div class="pagination">{$paging}</div>   
+  </div>
+    {if $items}
+      <ul class="item-list">
+	 
+				{foreach from=$items item=i name=foo}
+	  
+          <li class="source" >
+
+  <div class="thumbnail">
+    <a href="/{$langaugeURL}items/{$i.id}/{$i.name|url}.html" onclick="">
+
+          <img alt="{$i.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$user.username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}/uploads/items/{$i.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}/uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" width="80" />
+    </a>  
+   </div>
+
+  <div class="item-info">
+    <h3>
+      <a href="/{$languageURL}items/{$i.id}/{$i.name|url}.html">{$i.name}</a>
+    </h3>
+
+ <a href="" class="author"></a>
+
+      </div>
+
+  <small class="meta">
+      <span class="meta-categories">
+	  </span><br />
+    </small>
+
+  <div class="sale-info">
+    <small class="sale-count">{$i.sales} {$lang.sales}</small>
+    <small class="price">{$currency.symbol}{$i.price}</small>
+    <div class="rating">
+{section name=foo start=1 loop=6 step=1}{if $i.rating >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}
+{/section}
+    </div>
+
+   </div>
+</li>
+
+	{/foreach}
+		{else}
+ </ul>
+	  	<div class="content-box vertical-space">
+        <p>
+          <strong>{$lang.no_items}</strong>
+        </p>
+             </div>
+			{/if}
+
+  <div class="pagination">{$paging}</div>
+</div>
+
+</div>
+
+<div class="sidebar-s sidebar-right">
+  <h2 class="box-heading">{$lang.about_the_author}</h2>
+  <div class="content-box about-author">
+    
+<div class="avatar-wrapper">
+    <a href="/{$languageURL}user/{$user.username}/" class="avatar" title="{$user.username}">
+		{if $user.avatar != ''}  
+		<img alt="{$user.username}" class="" width="80" src="{$data_server}/uploads/users/{$user.user_id}/A_{$user.avatar}" width="80" />
+		{else}
+		<img alt="{$user.username}" class="" width="80" src="{$data_server}img/default-user.jpg" width="80" />
+		{/if}	
+    </a>
+
+
+</div>
+
+    <a href="/{$languageURL}user/{$user.username}/" class="author">{$user.username}</a>
+    <br />
+    <div class="badges">
+        <ul class="badges">
+            {foreach from=$user_badges item=b name=foo}
+		      	<img src="{$data_server}{$b.photo}" height="20" width="20" alt="{$b.name|escape}" title="{$b.name|escape}" />
+		      	{if $smarty.foreach.foo.last} <br /> {/if}
+	      	{/foreach}
+        </ul>
+    </div>
+  </div>
+
+</div>
+
+      </div>
+    </div>

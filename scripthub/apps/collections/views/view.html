@@ -1,0 +1,224 @@
+
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/collections">Collections</a>\</div>
+         <h1 class="page-title">{$collection.name}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+        <script>{literal}
+  marketplace.queue( function(){
+    marketplace.initializers.itemList({
+      ajaxPagination: true,
+      layoutSwitcher: true
+    });
+  });{/literal}
+</script>
+        
+<div class="content-l">
+{if $collection.text != ''}
+  <div class="collection-header">
+    <div class="collection-info">
+     {$collection.text|nl2br}
+    </div>
+  </div>
+  <hr />
+{/if}
+  <div class="page-controls">
+<form action="" class="sort-control" id="sort-by-form" method="get">
+  <label for="sort_by" class="sort-control-label">{$lang.order_by}:</label>
+				<select class="sort_select" id="sort_by" name="sort_by">
+    			<option value="published_at"{if $smarty.get.sort_by == 'published_at'} selected="selected"{/if}>{$lang.date}</option>
+					<option value="name"{if $smarty.get.sort_by == 'name'} selected="selected"{/if}>{$lang.title}</option>
+					<option value="root_category"{if $smarty.get.sort_by == 'root_category'} selected="selected"{/if}>{$lang.category}</option>
+					<option value="average_rating"{if $smarty.get.sort_by == 'average_rating'} selected="selected"{/if}>{$lang.rating}</option>
+					<option value="sales_count"{if $smarty.get.sort_by == 'sales_count'} selected="selected"{/if}>{$lang.sales}</option>
+					<option value="cost"{if $smarty.get.sort_by == 'cost'} selected="selected"{/if}>{$lang.price}</option>
+				</select>
+				<a href="javascript: void(0);" onclick="submitOrder(this);" title="" class="{if $smarty.get.order == 'asc'}asc{else}desc{/if}">
+				<img src="/static/img/{if $smarty.get.order == 'asc'}asc{else}desc{/if}.png"  alt="" /></a>
+	      <input id="order-type" name="order" type="hidden" value="{if $smarty.get.order == 'asc'}asc{else}desc{/if}" />
+</form>
+<div class="layout-switcher sort-control">
+  <a href="#" class="layout-list sort-control-tooltip active" data-tooltip="List View"></a>
+  <a href="#" class="layout-grid sort-control-tooltip" data-tooltip="Grid View"></a>
+</div>
+
+    <div class="pagination">{$paging}</div>   
+  </div>
+    {if $items}
+      <ul class="item-list">
+				{foreach from=$items item=i name=foo}
+          <li class="source" >
+  <div class="thumbnail">
+    <a href="/{$langaugeURL}items/{$i.id}/{$i.name|url}" onclick="">
+          <img alt="{$i.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" width="80" />
+    </a>  
+   </div>
+  <div class="item-info">
+    <h3>
+      <a href="/{$languageURL}items/{$i.id}/{$i.name|url}">{$i.name}</a>
+    </h3>
+
+    <span class="author">by</span>  <a href="/{$languageURL}user/{$users[$i.user_id].username}/" class="author">{$users[$i.user_id].username}</a>
+	      {if check_login_bool() && $collection.user_id == $smarty.session.user.user_id}
+ <a href="/{$languageURL}collections/view/{$collection.id}/?delete={$i.id}" title="Remove item from this collection" class="x-button" href="#">Remove</a>
+          {/if}
+      </div>
+
+  <small class="meta">
+      <span class="meta-categories">
+	  
+	  </span><br />
+    </small>
+
+  <div class="sale-info">
+    <small class="sale-count">{$i.sales} {$lang.sales}</small>
+    <small class="price">{$currency.symbol}{$i.price}</small>
+    <div class="rating">
+		{section name=foo start=1 loop=6 step=1}
+{if $i.rating >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />
+{/if}
+		{/section}
+    </div>
+
+   </div>
+</li>
+
+	{/foreach}
+		
+ </ul>
+ {else}
+    <div class="content-box">
+      There are no bookmarks yet in this collection.  You can add them by finding items you like and using the "Bookmark This"
+      tool in the sidebar. A good place to start is the <a href="/top_sellers/">Popular Items</a> page.
+    </div>
+  {/if}
+  <div class="pagination">{$paging}</div>
+</div>
+
+
+<div class="sidebar-s sidebar-right">
+  <div class="img-border img-max">
+   {if $collection.photo != ''} 
+    <img alt="{$collection.name|escape}" src="{$data_server}uploads/collections/{$collection.photo}" />  
+{else}
+    <img alt="{$collection.name|escape}" src="{$data_server}img/default-collection.jpg" />  
+{/if}
+</div>
+{if check_login_bool()}
+<div class="rate_collection">
+        <h4 class="decorator">Rate This Collection</h4>
+      <div id="rate_collection">
+        <div class="rating-container">
+		{if $collection.rate}
+{section name=foo start=1 loop=6 step=1}
+{if $collection.rate.rate >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" class="left" />{else}<img src="/static/img/star-off.png" alt="" class="left" />
+{/if}								  
+{/section}
+<br>
+		{else}
+    <div id="stars_div_{$collection.id}" class="stars" data-star-set-id="{$collection.id}_star" data-rating="0">
+     {section name=foo start=1 loop=6 step=1}
+      <a href="/{$languageURL}collections/rate/{$collection.id}?rating={$smarty.section.foo.index}" data-method="post" data-remote="true" onmouseover="marketplace.rating.toggle_stars('{$collection.id}_star', {$smarty.section.foo.index});" rel="nofollow">
+	  <img alt="{$smarty.section.foo.index}" id="{$collection.id}_star_{$smarty.section.foo.index}" src="/static/img/star-off.png"></a>
+     {/section}
+	</div>
+		{/if}
+      <small>( {$collection.votes} {$lang.votes} )</small>
+	  
+		      	{if $collection.rate}
+		      		<br />
+		      		<small>You rated: {$collection.rate.rate} stars</small>
+		      	{/if}
+</div>
+<script>
+   {literal}marketplace.queue(function(){
+    marketplace.rating.init();
+  }); {/literal}
+</script>
+      </div>
+      <hr>
+    </div>
+{/if}
+  <h2 class="box-heading">Collection Owner</h2>
+  <div class="content-box top-author">
+    
+<div class="avatar-wrapper">
+    <a href="/{$languageURL}user/{$collection.user.username}" class="avatar" title="{$collection.user.username}">
+	{if $collection.user.avatar != ''}  
+  <img alt="{$collection.user.username}" class="" height="80" src="{$data_server}uploads/users/{$collection.user.user_id}/A_{$collection.user.avatar}" width="80" />
+  {else}
+    <img alt="{$collection.user.username}" class="" height="80" src="{$data_server}img/default-user.jpg" width="80" />
+	{/if}
+</a>
+</div>
+    <strong class="author">{$collection.user.username}</strong>
+    <br>
+        <ul class="badges">
+            {foreach from=$user_badges item=b name=foo}
+		      	<img src="{$data_server}{$b.photo}" height="20" width="20" alt="{$b.name|escape}" title="{$b.name|escape}" />
+		      	{if $smarty.foreach.foo.last} <br /> {/if}
+	      	{/foreach}
+        </ul>
+  </div>
+	{if check_login_bool() && $collection.user_id == $smarty.session.user.user_id}
+    <h2 class="box-heading">{$lang.edit_collection}</h2>
+<div class="content-box">
+  <form class="vertical-form" enctype="multipart/form-data" id="edit_collection" method="post">
+    <div class="input-group">
+      <label for="title">Name *</label>
+      <div class="inputs">
+        <input id="collection_name" name="name" size="30" type="text" value="{$collection.name|escape}" />
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="image">Image</label>
+      <div class="inputs">
+        <input id="file_upload" name="file_upload" type="file" />
+        <small>260x140px</small>
+      </div>
+    </div>
+
+    <div class="input-group">
+      <label for="description">Description</label>
+      <div class="inputs">
+        <textarea cols="20" id="collection_description" name="description" rows="10">{$collection.text}</textarea>
+        <label for="collection_publically_visible">
+          <input name="collection[publically_visible]" type="hidden" value="0" />
+		  <input id="collection_publically_visible" name="publically_visible" type="checkbox" value="1" {if $collection.public == 'true'}checked="checked"{/if} />
+          Publicly viewable?
+        </label>
+      </div>
+    </div>
+
+    <div class="form-submit">
+      <div class="form-submit">
+	  	<input type="hidden" name="edit" value="yes" />
+<button type="submit" class="btn-icon submit">Edit Collection</button>
+</div>
+
+    </div>
+</form></div>
+
+      <h2 class="box-heading">Delete Collection?</h2>
+      <div class="content-box">
+      <form action="" method="post">
+	  <input type="hidden" name="delete" value="yes" />
+          <button type="submit" onclick="return confirm('Are you sure you want to delete this collection?');" class="no-margin">Yes! Delete PERMANENTLY</button>
+</form>      </div>  {/if}
+</div>
+
+      </div>
+    </div>

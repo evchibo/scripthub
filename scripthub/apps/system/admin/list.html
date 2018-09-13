@@ -1,0 +1,187 @@
+   <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \
+      </div>
+      <h1 class="page-title">Settings</h1>
+	  </div>
+	 {include file="$root_path/zipmarket/apps/admin/admin_tabsy.html"}
+    </div>
+    <div id="content">
+      <div class="container">
+	{if is_array($data)}
+   <div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>
+					{if $d.help}
+						{$d.help|escape:'htmlall':'utf-8'}
+					{else}
+						{$d.key}
+					{/if}
+				</td>
+				<td>{$d.value}</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=edit&id={$d.id}" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a>
+					{if !$d.system}
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteKey':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+					{/if}
+				</td>					
+			</tr>
+			{/foreach}
+			
+			<tr>
+			<td>Attributes</td>
+			<td></td>
+			<td><a href="/admin/?m=attributes&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			<tr>
+			<td>Community Badges</td>
+			<td></td>
+			<td><a href="/admin/?m=system&c=badges" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			<tr>
+			<td>Contacts categories</td>
+			<td></td>
+			<td><a href="/admin/?m=contacts&c=categories" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+			
+
+
+			<tr>
+			<td>Countries</td>
+			<td></td>
+			<td><a href="/admin/?m=countries&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+
+			
+			<tr>
+			<td>Collections</td>
+			<td></td>
+			<td><a href="/admin/?m=collections&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+			<tr>
+			<td>Items Categories</td>
+			<td></td>
+			<td><a href="/admin/?m=categories&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+			
+			
+			
+			<tr>
+			<td>Newsletter</td>
+			<td></td>
+			<td><a href="/admin/?m=bulletin&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+	        <tr>
+			<td>Newsletter Subscribers</td>
+			<td></td>
+			<td><a href="/admin/?m=bulletin&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+
+
+			
+
+			
+
+
+			<tr>
+			<td>Payment Rates</td>
+			<td></td>
+			<td><a href="/admin/?m=percents&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+			<tr>
+			<td>Payment method</td>
+			<td></td>
+			<td><a href="/admin/?m=payments&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+
+			<tr>
+			<td>Quick News</td>
+			<td></td>
+			<td><a href="/admin/?m=qnews&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+			<tr>
+			<td>Reports</td>
+			<td></td>
+			<td><a href="/admin/?m=reports&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+			
+			
+			
+			<tr>
+			<td>Reported Comments</td>
+			<td></td>
+			<td><a href="/admin/?m=users&c=comments" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+
+			
+			
+
+			
+			
+			<tr>
+			<td>Site Logo</td>
+			<td></td>
+			<td><a href="/admin/?m=system&c=logo" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			
+			
+			<tr>
+			<td>System Currency</td>
+			<td></td>
+			<td><a href="/admin/?m=system&c=currency" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			<tr>
+			<td>Tags</td>
+			<td></td>
+			<td><a href="/admin/?m=tags&c=list" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+			
+			<tr>
+			<td>Withdraws</td>
+			<td></td>
+			<td><a href="/admin/?m=users&c=withdraws" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a></td>
+			</tr>
+
+		</tbody>
+	</table>
+   </div>	
+	{/if}
+  </div>
+ </div>

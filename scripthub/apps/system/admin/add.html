@@ -1,0 +1,48 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list">Settings</a> \
+      </div>
+      <h1 class="page-title">{$title} </h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" method="post">
+	 <div class="input-group">
+        <label for="edit">{$smarty.post.help_text}</label>
+        <div class="inputs">
+		<input id="edit" type="text" name="value" value="{$smarty.post.value|escape}" required="true"/>
+		<input id="edit" type="{if !isset($smarty.post.system) || !$smarty.post.system }text{else}hidden{/if}" name="key" value="{$smarty.post.key|escape}" required="true" />
+		{if isset($error.value)}
+		<small>{$error.value}<small>
+		{/if}
+		
+		{if isset($error.key)}
+		<small>{$error.key}</small>
+		{/if}
+        </div>
+    </div>
+      <div class="form-submit">
+	{if $smarty.get.c=='edit'}
+      <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="edit" >{$lang.edit}</button>
+	  {else}
+      <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="add" >{$lang.add}</button>
+	{/if}
+     </div>
+    </div>
+	</form>
+   </div>
+  </div>
+ </div>
+</div>

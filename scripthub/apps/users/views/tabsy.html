@@ -1,0 +1,27 @@
+  {if check_login_bool()}
+      <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="tabsy">
+          <ul>
+            <li {if $smarty.get.controller == 'dashboard'}class="selected"{/if}><div></div><a href="/{$languageURL}author_dashboard/">Dashboard</a></li>
+			<li {if $smarty.get.controller == 'profile'}class="selected"{/if}><div></div><a href="/{$languageURL}user/{$smarty.session.user.username}/">Profile</a></li>
+			{if $smarty.session.user.items != '0'} 
+			<li {if $smarty.get.controller == 'portfolio'}class="selected"{/if}><div></div><a href="/{$languageURL}user/portfolio/{$smarty.session.user.username}/">Portfolio</a></li>
+			{/if}
+			<li {if $smarty.get.controller == 'edit'}class="selected"{/if}><div></div><a href="/{$languageURL}edit/">My Settings</a></li>
+			<li {if $smarty.get.controller == 'downloads'}class="selected"{/if}><div></div><a href="/{$languageURL}download/">Downloads</a></li>
+			<li {if $smarty.get.controller == 'bookmarks'}class="selected"{/if}><div></div><a href="/{$languageURL}user/bookmarks/">Bookmarks</a></li>
+			<li {if $smarty.get.controller == 'deposit' || $smarty.get.controller == 'payment'}class="selected"{/if}><div></div><a href="/{$languageURL}deposit/">{$lang.deposit}</a></li>
+			<li {if $smarty.get.controller == 'history'}class="selected"{/if}><div></div><a href="/{$languageURL}invoices/">{$lang.history}</a></li>
+			<li {if $smarty.get.controller == 'withdrawal'}class="selected"{/if}><div></div><a href="/{$languageURL}withdrawal/">{$lang.withdrawal}</a></li>
+			<li {if $smarty.get.controller == 'earnings'}class="selected"{/if}><div></div><a href="/{$languageURL}earnings/">{$lang.earnings}</a></li>
+			<li class="{if $smarty.get.controller == 'statement'}selected{/if} last"><div></div><a href="/{$languageURL}statement/">{$lang.statement}</a><div class="last"></div></li>
+          </ul>
+      </div>
+  {/if}

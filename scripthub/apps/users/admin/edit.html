@@ -1,0 +1,320 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="/admin/?m=users&c=list">Users</a> \
+      </div>
+      <h1 class="page-title">{$user.username}</h1>
+    </div>
+     <div id="tabsy">
+      <ul>
+		{if $user.items != '0'}
+		<li class="selected"><div></div><a href="/admin/?m=users&c=edit&id={$user.user_id}">Profile</a></li>
+		<li><div></div><a href="/admin/?m=users&c=balance&id={$user.user_id}">Edit Balance</a></li>
+		<li class="last"><div></div><a href="/admin/?m=items&c=list&user={$user.user_id}">Portfolio</a><div class="last"></div></li>
+		{else}
+		<li class="selected"><div></div><a href="/admin/?m=users&c=edit&id={$user.user_id}">Profile</a></li>
+		 <li class="last"><div></div><a href="/admin/?m=users&c=balance&id={$user.user_id}">Edit Balance</a><div class="last"></div></li>
+		{/if}
+      </ul>
+	</div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  		{$errorMessage}
+<div class="sidebar-l" id="ziper">
+     <div class="basic-user-info">
+	 
+	 {if $user.avatar != ''}
+	 <img class="img-border" src="{$data_server}/uploads/users/{$user.user_id}/A_{$user.avatar}" style="margin-top:15px" height="80" width="80">
+	 {else}
+	 <img class="img-border" src="/static/img/default-user.jpg" style="margin-top:15px" height="80" width="80">
+	 {/if}
+
+     <h2>{$user.username}</h2>
+	 Current Balance: {$currency.symbol}{$user.total|string_format:"%.2f"}<br>	
+	{if $user.ip_address != ''}
+	 IP Address {$user.ip_address}<br>
+	{/if}
+     Member Since {$user.register_datetime|date_format:"%B %Y"}<br>
+    {if $user.last_login_datetime != ''}
+     Last sign in: {$user.last_login_datetime|date_format:"%H:%M %e %B %Y"}<br>
+    {/if}
+
+    </div>
+<ul class="side-tabs">
+    <li><a href="javascript:;" class="icon-process">Personal Information</a></li>
+	<li><a href="javascript:;" class="icon-key">Change Password</a></li> 
+    <li><a href="javascript:;" class="icon-badge">Badges</a></li>
+	
+</ul>
+</div>
+<script type="text/javascript">
+{literal}
+$(document).ready(function(){
+	
+	//default settings
+	
+	$("#taber ul li:eq(0)").siblings().hide();
+	
+	//end default
+	
+	$("#ziper ul li").click(function(){
+		
+		var val = $(this).index();
+	
+		showthis(val+1);
+		
+		});
+
+function showthis(val){
+	
+		var btn_index = val-1;
+		
+		//sidebar buttons
+		$("#ziper ul li:eq("+btn_index+")").siblings().removeClass("active");
+		$("#ziper ul li:eq("+btn_index+")").addClass("active");
+		//end sidebar buttons
+		
+		//tab contents 
+		$("#taber ul li:eq("+btn_index+")").show();
+		$("#taber ul li:eq("+btn_index+")").siblings().hide();
+		//$("#tab"+val).show();
+	
+		}// end if
+	
+	});{/literal}
+</script>
+<div id="taber" class="content-s">
+<form id="sampleform" action="" method="post" enctype="multipart/form-data">
+{if !isset($personalEdit)}
+ <ul style="list-style-type: none;">
+  <li>
+   <div class="horizontal-form">
+
+	{foreach from=$groups item=g}
+    <div class="input-group">
+      <label for="group_{$g.ug_id}">{$g.name}</label>
+      <div class="inputs">
+		<input id="group_{$g.ug_id}" type="checkbox" name="groups[{$g.ug_id}]" values="yes" {if isset($smarty.post.groups[$g.ug_id])}checked="checked"{/if}>
+      </div>
+    </div>
+	{/foreach}
+   
+    <div class="input-group">
+      <label>Status:</label>
+      <div class="inputs">
+        <select id="istatus" name="status">
+		 <option value="activate" {if $smarty.post.status == 'activate'}selected="selected"{/if}>{$lang.activate}</option>
+		  <option value="waiting" {if $smarty.post.status == 'waiting'}selected="selected"{/if}>{$lang.waiting}</option>
+		 <option value="banned" {if $smarty.post.status == 'banned'}selected="selected"{/if}>Banned</option>
+        </select>
+      </div>
+    </div>
+	
+	{if $user.quiz == 'true'}
+    <div class="input-group">
+     <label for="commission_percent">Commission %</label>
+      <div class="inputs">
+       <input type="text" id="commission_percent" name="commission_percent" value="{$user.commission_percent}">
+	   <small>Set single commission percent</small>
+      </div>
+    </div>
+	{/if}
+    <div class="input-group">
+      <label for="firstname">{$lang.first_name}:</label>
+      <div class="right">
+       <strong>{$user.firstname}</strong>
+      </div>
+    </div>
+    <div class="input-group">
+     <label for="surname">{$lang.last_name}:</label>
+      <div class="right">
+       <strong>{$user.lastname}</strong>
+      </div>
+    </div>
+    <div class="input-group">
+     <label for="email">{$lang.email}:</label>
+      <div class="right">
+       <strong>{$user.email}</strong>
+      </div>
+    </div>
+	{if $user.firmname != ''}
+    <div class="input-group">
+     <label for="invoice_to">{$lang.company_name}:</label>
+      <div class="right">
+        <strong>{$user.firmname}</strong>
+      </div>
+    </div>
+    {/if}
+
+	{if $user.live_city != ''}
+    <div class="input-group">
+     <label for="lives_in">Lives In:</label>
+      <div class="right">
+        <strong>{$user.live_city}</strong>
+      </div>
+    </div>
+    {/if}
+	
+    {if $user.country.name != ''}
+    <div class="input-group">
+      <label for="country">{$lang.country}:</label>
+       <div class="right">
+         <strong>{$user.country.name}</strong>
+       </div>
+     </div>
+    {/if}
+		
+    <div class="input-group">
+     <label>Deposit Money:</label>
+      <div class="right">
+        <strong>{$currency.symbol} {$user.stats.deposit|string_format:"%.2f"}</strong>
+      </div>
+    </div>
+	
+    {if !isset($user.stats.items)}{else}
+    <div class="input-group">
+     <label>{$lang.buy_items}:</label>
+      <div class="right">
+        <strong>{$user.buy} for {$currency.symbol} {$user.stats.total|string_format:"%.2f"}</strong>
+      </div>
+    </div>
+	{/if}
+	
+    <div class="input-group">
+     <label>Can sell items?</label>
+      <div class="right">
+	{if $user.quiz == 'true'}
+        <strong>Yes</strong>
+	{else}
+        <strong>No</strong>
+	{/if}
+      </div>
+    </div>
+		
+    <div class="input-group">
+     <label>{$lang.sign_up}:</label>
+      <div class="right">
+        <strong>{$user.register_datetime|date_format:"%H:%M, %e %B %Y"}</strong>
+      </div>
+    </div>
+		
+    {if $user.last_login_datetime != ''}
+    <div class="input-group">
+      <label>Last sign in:</label>
+       <div class="right">
+         <strong>{$user.last_login_datetime|date_format:"%H:%M, %e %B %Y"}</strong>
+       </div>
+    </div>
+	{/if}
+		
+	{if $user.ip_address != ''}
+    <div class="input-group">
+     <label>IP address:</label>
+      <div class="right">
+        <strong>{$user.ip_address}</strong>
+      </div>
+    </div>
+	{/if}
+		
+	{if $user.profile_title != ''}
+    <div class="input-group">
+      <label>Profile Heading:</label>
+      <div class="right">
+        <strong>{$user.profile_title}</strong>
+      </div>
+    </div>
+    {/if}
+		
+	{if $user.profile_desc != ''}
+    <div class="input-group">
+      <label>Profile Text:</label>
+       <div class="right">
+         <strong>{$user.profile_desc}</strong>
+       </div>
+    </div>
+	{/if}
+   </div>
+  </li>
+ 
+ 
+ 
+ 
+  <li>
+    <div id="password" class="horizontal-form">
+     <div class="input-group">
+      <label for="change_password">Change password:</label>
+        <div class="inputs">
+         <input id="change_password" name="password" type="text" value="">
+        </div>
+      </div>
+    </div>
+  </li>
+ 
+ 
+ 
+   <li>
+    <h3 class="underlined">Badges</h3>
+      <div id="profile" class="horizontal-form">
+	  
+       <div class="input-group" style="margin-bottom:0px;">
+          <div class="inputs">
+           <input id="power_elite_author" name="power_elite_author" value="true" type="checkbox" class="checkbox" {if $smarty.post.power_elite_author == 'true'}checked="checked"{/if}>
+		   &nbsp;  <img src="{$data_server}uploads/badges/power_elite_author.png" alt="" /> &nbsp; Power Elite Author
+          </div>
+        </div>
+       <div class="input-group" style="margin-bottom:0px;">
+          <div class="inputs">
+           <input id="elite_author" name="elite_author" value="true" type="checkbox" class="checkbox" {if $smarty.post.elite_author == 'true'}checked="checked"{/if}> 
+		   &nbsp; <img src="{$data_server}uploads/badges/elite_author.png" alt="" /> &nbsp;  Elite Author
+          </div>
+        </div>
+	  {if $badges}
+       {foreach from=$badges item=b}
+       <div class="input-group" style="margin-bottom:0px;">
+          <div class="inputs">
+           <input id="badge_{$b.id}" name="badges[]" value="{$b.id}" type="checkbox" {if is_array($smarty.post.badges) && in_array($b.id, $smarty.post.badges)}checked="checked"{/if}> 		 
+		 {if $b.photo != ''} &nbsp; 
+		 <img src="{$data_server}uploads/badges/{$b.photo}" alt="" />
+		 {/if} &nbsp; {$b.name}
+          </div>
+        </div>
+		{/foreach}
+	   {/if}
+	   
+       <div class="input-group" style="margin-bottom:0px;">
+          <div class="inputs">
+           <input id="featured_author" name="featured_author" value="true" type="checkbox" class="checkbox" {if $smarty.post.featured_author == 'true'}checked="checked"{/if}>
+		   &nbsp; <img src="{$data_server}uploads/badges/author_was_featured.png" alt="" /> &nbsp; {$lang.featured_author}
+          </div>
+        </div>
+	   </div>
+    </li>
+ 
+ </ul>
+	{$lang.edit_from_site}
+	{/if}
+    <div class="form-submit">
+	  {if $smarty.get.c=='edit'}	
+        <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="edit">{$lang.edit}</button>
+      {else}
+		<button id="personal_info_submit_button" class="btn-icon save" type="submit" name="add">{$lang.edit}</button>
+	  {/if}
+    </div>
+ 
+ 
+ </form>
+</div>
+
+
+
+    </div>
+  </div>

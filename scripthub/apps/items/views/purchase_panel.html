@@ -1,0 +1,63 @@
+{if check_login_bool()}
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="fancy-purchase-panel shadowed" style="display: none">
+    <div class="inner-boundary">
+      <div class="inner-border">
+        <div class="buynow">
+            <h2 class="underlined"><a href="#" class="buynow-submit">{$lang.buy_now_paypal} <span>(via PayPal)</span></a></h2>
+           <p>You will be redirected to pay {$currency.symbol}<strong class="buynow-figure">{$item.price|string_format:"%.0f"}</strong> of credit via PayPal.<br>
+                <small class="surcharge">( INCLUDES $2 SURCHARGE )</small>
+                <a href="#" class="buynow-submit"><img alt="PayPal Options" height="27" src="/static/img/paypal_options.jpg" width="202" /></a>
+            </p>
+
+      <form id="buynow-form" action="/{$languageURL}items/{$item.id}/" method="post">
+      <input type="hidden" name="licence" id="licence" value="regular" />
+      <input type="hidden" name="pay_method" value="paypal" />
+       <input type="submit" name="buy" value="{$lang.purchase}"/>
+      </form>      
+        </div>
+
+        <span class="or">or</span>
+
+        <div class="prepaid">
+          <h2 class="underlined"><a href="#" class="prepaid-submit">{assign var=foo value=$item.your_profit|string_format:"%.0f"}
+Buy with Prepaid Credit</a></h2>
+          <p>{$lang.pay} {$currency.symbol}<strong class="prepaid-figure">{$item.prepaid_price|string_format:"%.0f"}</strong> from your prepaid credit balance: <strong>{$currency.symbol}{$smarty.session.user.total|string_format:"%.2f"}</strong><br/>
+<small>( <a href="/{$languageURL}deposit/">MAKE A DEPOSIT </a>)</small>
+          </p>
+      <form id="prepaid-form" action="/{$languageURL}items/{$item.id}/" method="post">
+        <input id="stored-item-name" type="hidden" value="{$item.name|escape}">
+        <input type="hidden" name="licence" id="licence" value="regular" />
+      <input type="hidden" name="pay_method" value="deposit" />
+        <input type="submit" name="buy" value="{$lang.purchase}"/>
+      </form>      
+		</div>
+        <a class="close-panel" href="#">Close</a>
+      </div>
+    </div>
+  </div>
+  {else}
+<div class="account-required panel shadowed" style="display: none">
+  <div class="inner-boundary">
+    <h2>You must be signed in to make a purchase</h2>
+    <div class="choices">
+      <a href="/{$languageURL}sign_up/" role="button" class="choices__signup btn-icon update auto-width">Create Account</a>
+      <span>or</span>
+	  <form id="licence" action="/{$languageURL}items/{$item.id}/" method="post">
+
+        <input type="hidden" name="licence" id="licence" value="regular" />
+
+      <a href="javascript:;" role="button" onclick="document.getElementById('licence').submit();" class="choices__signin btn-icon submit auto-width">Sign In</a>
+	  </form>
+    </div>
+    <a class="close-panel" href="#">Close</a>
+  </div>
+</div>
+{/if} 

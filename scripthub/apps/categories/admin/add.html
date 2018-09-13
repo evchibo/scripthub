@@ -1,0 +1,81 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ {if isset($pdata)}<a href="?m={$smarty.get.m}&c=list">Categories</a> \ <a href="?m={$smarty.get.m}&c=list&sub_of={$smarty.get.sub_of}&p={$smarty.get.p}">{$pdata.name}</a> \ <a href="#">{$smarty.post.name|escape}</a>{else}<a href="?m={$smarty.get.m}&c=list">Categories</a> \{/if} 
+      </div>
+      <h1 class="page-title">{$title}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" action="" method="post" enctype="multipart/form-data">
+	{if $smarty.get.c == 'edit'}
+	 <div class="input-group">
+        <label for="name">{$lang.subcategory_of}</label>
+        <div class="inputs">
+			<select name="sub_of">
+				<option value="0">{$lang.none}</option>
+				{$select}
+			</select>
+			<input type="hidden" name="sub_of_old" value="{if isset($smarty.post.sub_of_old)}{$smarty.post.sub_of_old}{else}{$smarty.post.sub_of}{/if}" />
+			{if isset($error.sub)}
+				<small>{$error.sub}</small>
+			{/if}
+        </div>
+    </div>
+	{/if}
+	 <div class="input-group">
+        <label for="name">{$lang.name}</label>
+        <div class="inputs">
+          <input id="name" type="text" name="name" value="{$smarty.post.name|escape}" />
+			{if isset($error.name)}
+				<small>{$error.name}</small>
+			{/if}
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="meta_title">{$lang.meta_title}</label>
+        <div class="inputs">
+         <input id="meta_title" type="text" name="meta_title" value="{$smarty.post.meta_title|escape}" />
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="meta_keywords">{$lang.meta_keywords}</label>
+        <div class="inputs">
+         <input type="text" id="meta_keywords" name="meta_keywords" value="{$smarty.post.meta_keywords|escape}" />
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="meta_description">{$lang.meta_description}</label>
+        <div class="inputs">
+         <input type="text" id="meta_description" name="meta_description" value="{$smarty.post.meta_description|escape}" />
+        </div>
+    </div>
+	 <div class="input-group">
+        <label for="visible">{$lang.visible}</label>
+        <div class="inputs">
+         	<input type="checkbox" name="visible" value="true" id="visible" class="checkbox" {if $smarty.post.visible == 'true'}checked="checked"{/if} /> {$lang.yes}
+        </div>
+    </div>
+    <div class="form-submit">
+	{if $smarty.get.c=='edit'}
+     <button type="submit" name="edit" class="btn-icon submit auto-width">{$lang.edit}</button>
+	 {else}
+     <button type="submit" name="add" class="btn-icon submit auto-width">{$lang.add}</button>
+	{/if}
+    </div>
+	</form>
+    </div>
+   </div>
+  </div>
+ </div>

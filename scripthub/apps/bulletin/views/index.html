@@ -1,0 +1,18 @@
+
+	{if $bulletins}
+		<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<ul>
+		{foreach from=$bulletins item=b}
+			<li><a href="/{$languageURL}bulletin/view/{$b.id}" title="" target="_blank">{$b.name}</a></li>
+		{/foreach}
+		</ul>
+	{else}
+		{$lang.no_bulletin}
+	{/if}

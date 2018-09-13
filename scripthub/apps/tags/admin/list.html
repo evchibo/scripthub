@@ -1,0 +1,47 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \
+      </div>
+      <h1 class="page-title">Tags</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	{if is_array($data)}
+  <div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th>{$lang.name}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$d.name}</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=edit&id={$d.id}" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a>
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteKey':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table> 		
+</div>
+	{else}
+		{$lang.no_records}
+	{/if}
+  </div>
+</div>

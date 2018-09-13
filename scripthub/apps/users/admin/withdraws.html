@@ -1,0 +1,85 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="/admin/?m=users&c=list">Users</a> \
+      </div>
+      <h1 class="page-title">Withdraws</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  {$errorMessage}
+	  
+	{if $paging !=""}
+       <div class="page-controls">
+        {$paging}
+       </div>
+      <br /><br />
+	{/if}
+	
+	{if is_array($data)}
+   <div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th>{$lang.user}</th>
+				<th>Current Earnings</th>
+				<th>{$lang.amount}</th>
+				<th>{$lang.payment_method}</th>
+				<th>Email</th>
+				<th>{$lang.request_date}</th>
+				<th>{$lang.paid}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$users[$d.user_id].username}</td>
+				<td>{$currency.symbol} {$users[$d.user_id].earning|string_format:"%.2f"}</td>
+				<td>
+					{if !is_numeric($d.amount)}
+						{$d.amount}
+					{else}
+						{$currency.symbol} {$d.amount|string_format:"%.2f"}
+					{/if}
+				</td>
+				<td>{$d.method}</td>
+				<td>{$d.text|nl2br}</td>
+				<td>{$d.datetime|date_format:"%d %b %Y"}</td>
+				<td>
+					{if $d.paid == 'true'}
+						<img src="{$data_server}admin/images/icons/24x24/accept.png" alt="" class="middle" />
+
+						{$d.paid_datetime|date_format:"%d %b %Y"}
+					{else}
+						<img src="{$data_server}admin/images/icons/24x24/delete.png" alt="" class="middle" />
+					{/if}
+				</td>
+				<td>
+					{if $d.paid == 'false'}
+						<a href="?m={$smarty.get.m}&c=pay&id={$d.id}" title="{$lang.payout}"><img class="middle" src="{$data_server}admin/images/icons/16x16/edit.png" /> {$lang.payout}</a>
+
+						<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteWithdraw':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+					{/if}
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table> 
+   </div>	
+	{else}
+		{$lang.no_records}
+	{/if}
+  </div>
+ </div>
+</div>

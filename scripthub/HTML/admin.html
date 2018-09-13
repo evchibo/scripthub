@@ -1,0 +1,200 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Admin CP</title>
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+
+
+<link href="{$data_server}admin/css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+<link href="{$data_server}css/style.css" media="screen" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="{$data_server}admin/js/swfobject.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script type="text/javascript" src="{$data_server}admin/js/jquery.tipTip.min.js"></script>
+<script type="text/javascript" src="{$data_server}admin/js/jquery.validate_pack.js"></script>
+<script type="text/javascript" src="{$data_server}admin/js/jquery.superfish.min.js"></script>
+<script type="text/javascript" src="{$data_server}admin/js/admin.js"></script>
+<script type="text/javascript" src="{$data_server}admin/js/jquery.nyroModal.pack.js"></script>
+<script type="text/javascript" src="{$data_server}admin/js/flot/jquery.flot.min.js"></script>
+<script type="text/javascript" src="{$data_server}admin/js/jquery.supersubs.min.js"></script>
+{literal}
+<script type="text/javascript">
+	$(document).ready(function(){
+	
+		/* setup navigation, content boxes, etc... */
+		Administry.setup();
+	});	
+</script>
+<script type="text/javascript" src="{/literal}{$data_server}{literal}/j_s/highcharts/highcharts.js"></script>
+{/literal}
+</head>
+<body>
+	<!-- Header -->
+    <header>
+  <div class="container">
+
+  <a href="/" class="marketplace"><img alt="{$domain}" src="/{$languageURL}static/logo/logo-dark.png" title="{$domain}" /></a>
+
+{if check_login_bool()}
+  <div class="account-wrapper">
+    <ul id="user-account-nav">
+    <li>
+    <a><span id="user_username">{$smarty.session.user.username}</span>, <span class="user_balance">{$currency.symbol}{$smarty.session.user.total|string_format:"%.2f"}</span></a>
+    <div>
+      <ul>
+        <li class="profile"><a href="/{$languageURL}user/{$smarty.session.user.username}/">Profile</a></li>
+        <li class="settings"><a href="/{$languageURL}edit/">Settings</a></li>
+        <li class="downloads"><a href="/{$languageURL}download/">Downloads</a></li>
+        <li class="bookmarks"><a href="/{$languageURL}user/bookmarks/">Bookmarks</a></li>
+        <li class="deposit"><a href="/{$languageURL}deposit/">Make a Deposit</a></li>
+        {if $smarty.session.user.quiz == 'true'}
+        <li class="author_dashboard"><a href="/{$languageURL}author_dashboard/">Author Dashboard</a></li>
+    	{if $smarty.session.user.items != '0'} 
+    	<li class="portfolio"><a href="/{$languageURL}user/portfolio/{$smarty.session.user.username}/">Portfolio</a></li>
+    	{/if}
+    	<li class="upload"><a href="/{$languageURL}upload/index/">Upload</a></li>
+        <li class="earnings"><a href="/{$languageURL}earnings/">Earnings</a></li>
+        <li class="statement"><a href="/{$languageURL}statement/">Statement</a></li>
+        <li class="withdrawal"><a href="/{$languageURL}withdrawal/">Withdrawal</a></li>
+    	{else}
+    	 <li class="become_author"><a href="/make_money/become_an_author/">Become an Author</a></li>
+    	{/if}
+    	{if $smarty.session.user.access}
+    	<li class="admin_dashboard"><a href="/{$languageURL}admin/">Admin Dashboard</a></li>
+    	{/if}
+      </ul>
+    </div>
+   </li>
+     <li>
+      <form action="/{$languageURL}users/logout/" class="sign-out-form" method="post"><div style="margin:0;padding:0;display:inline"><input name="utf8" type="hidden" value="" /><input name="authenticity_token" type="hidden" value="" /></div>
+       <button type="submit" class="auto-width no-margin" id="sign-out-button">Sign Out</button>
+      </form>       
+     </li>
+    </ul>
+	</div>
+	{else}
+  <div class="account-wrapper">
+    <ul id="user-account-nav">
+        <li><a href="/{$languageURL}users/registration/"><span>Create Account</span></a></li>
+        <li>
+          <a href="/{$languageURL}users/login/" rel="nofollow">Sign In</a>
+        </li>
+    </ul>
+	
+  </div>
+{/if}
+  	<ul class="info-nav">
+			<li><a href="/{$languageURL}{$smarty.get.module}/" title="Admin Dashboard">{$lang.dashboard}</a></li>
+			<li>
+			  <a href="/{$languageURL}{$smarty.get.module}/?m=items&c=list">{$lang.items}</a>
+				<div class="dropdown">
+				<ul>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=tags&c=list">Items {$lang.tags}</a></li>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=items&c=queue">Items Queue</a></li>							
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=items&c=queue_update">Items Queue Updated</a></li>	
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=users&c=comments">{$lang.report_comments}</a></li>	
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=collections&c=list">Item Collections</a></li>	
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=items&c=list&p=&q=&order=freefile&dir=desc">Free Items</a></li>							
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=items&c=list&p=&q=&order=weekly&dir=desc">Feature Items</a></li>							
+				</ul>
+				</div>
+			</li>
+			<li>
+			  <a href="/{$languageURL}{$smarty.get.module}/?m=users&c=list">{$lang.users}</a>
+				<div class="dropdown">
+				<ul>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=users&c=list&p=&q=&order=sales&dir=desc">User Sales</a></li>							
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=users&c=withdraws">Users Payout Request</a></li>							
+					
+				
+				</ul>
+				</div>
+			</li>
+			<li>
+			 <a href="/{$languageURL}{$smarty.get.module}/?m=bulletin&c=list">Newsletter</a>
+				<div class="dropdown">
+				<ul>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=bulletin&c=emails">Subscribers</a></li>							
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=bulletin&c=add">Send Newsletter</a></li>							
+				</ul>
+				</div>
+			</li>
+		   <li>
+		     <a href="/{$languageURL}{$smarty.get.module}/?m=qnews&c=list">News</a>
+		      <div class="dropdown">
+		      <ul>
+		         <li><a href="/{$languageURL}{$smarty.get.module}/?m=qnews&c=add">Add</a></li>	
+		      </ul>
+		   </li>
+			<li>
+			  <a href="/{$languageURL}{$smarty.get.module}/?m=contacts&c=list">Support</a>
+				<div class="dropdown">
+				<ul>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=contacts&c=categories">{$lang.issue_categories}</a></li>
+				</ul>	
+                </div>						
+			</li>
+			<li>
+			  <a href="/{$languageURL}{$smarty.get.module}/?m=system&c=list">{$lang.system}</a>
+				<div class="dropdown">
+				<ul>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=quiz&c=list">{$lang.quiz}</a></li>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=system&c=badges">{$lang.badges}</a></li>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=countries&c=list">{$lang.countries}</a></li>	
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=system&c=currency">{$lang.currency}</a></li>
+				    <li><a href="/{$languageURL}{$smarty.get.module}/?m=pages&c=list">{$lang.pages}</a></li>
+			        <li><a href="/{$languageURL}{$smarty.get.module}/?m=reports&c=list">{$lang.reports}</a></li>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=system&c=logo">{$lang.site_logo}</a></li>
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=categories&c=list">{$lang.categories}</a></li>	
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=attributes&c=list">{$lang.attributes}</a></li>							
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=percents&c=list">Payment Rates</a></li>							
+					<li><a href="/{$languageURL}{$smarty.get.module}/?m=system&c=language">{$lang.language}</a></li>							
+				</ul>
+				</div>
+			</li>
+	</ul>
+  </div>
+</header> 
+
+		{include file=$content_template}
+
+ <div id="copyright">
+  <div class="container">
+    <div class="copyright">
+      <p>
+        <span>COPYRIGHT &copy; 2013 <a href="/" style="text-transform: uppercase;">{$domain}</a></span>|
+        <span><a href="/help/legal/" rel="nofollow">TERMS OF USAGE</a></span>|
+        <span><a href="/support/">SUPPORT/HELP</a></span>|
+        <span>ICONS BY <a href="http://tango.freedesktop.org" rel="nofollow">TANGO</a> + <a href="http://wefunction.com" rel="nofollow">WEFUNCTION</a> + <a href="http://famfamfam.com" rel="nofollow">FAMFAMFAM</a></span>
+      </p>
+      <p class="trademarks">Adobe&reg;, Flash&reg;, Flex&reg;, Fireworks&reg;, Photoshop&reg;, Illustrator&reg;, InDesign&reg; and After Effects&reg; are registered trademarks of Adobe Systems Incorporated.</p>
+    </div>
+  </div>
+</div>
+<script type="text/javascript" src="{$data_server}/admin/js/administry.js"></script>
+</body>
+{literal}
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36912868-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+{/literal}
+</html>

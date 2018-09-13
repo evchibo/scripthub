@@ -1,0 +1,182 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/" class="first">Home</a> \ </div>
+       <h2 class="page-title">Admin Dashboard </h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/admin/admin_tabsy.html"}
+</div>
+<div id="content">
+      <div class="container">
+	  		
+<div class="content-s">
+<div id="finance_chart"></div>
+<br />
+{if $updated_items}
+<div id="sales_chart"></div>
+{/if}
+</div>
+
+<div class="sidebar-l sidebar-right">
+
+
+{if $lastContact}
+<h2 class="box-heading">Support Center</h2>
+<table class="general_table">
+<tbody>
+{foreach from=$lastContact item=i}
+<tr><td><a href="?m=contacts&c=view&id={$i.id}">Message</a> from {$i.name}</td></tr>
+{/foreach}
+</tbody>
+</table>
+{/if}
+
+{if $items}
+<h2 class="box-heading">{$lang.items_for_approve}</h2>
+<table class="general_table">
+<tbody>
+{foreach from=$items item=i}
+<tr><td><a href="?m=items&c=queue_view&id={$i.id}" title="">{$i.name}</td></tr>
+{/foreach}
+</tbody>
+</table>
+{/if}
+
+{if $updated_items}
+<h2 class="box-heading">{$lang.queue_update}</h2>
+<table class="general_table">
+<tbody>
+{foreach from=$updated_items item=i}
+<tr><td><a href="?m=items&c=queue_view_update&id={$i.id}" title="">{$i.name}</td></tr>
+{/foreach}
+</tbody>
+</table>
+{/if}
+
+<h2 class="box-heading">Stats</h2>
+<table class="general_table">	
+<tbody>
+		<tr>
+			<td>Monthly income</td>
+			<td class="ta-right"></td>
+			<td class="ta-right">{$currency.symbol} {$sales.total|string_format:"%.2f"}</td>
+		</tr>
+		<tr>
+			<td>{$lang.users_earnings}</td>
+			<td class="ta-right"></td>
+			<td class="ta-right">{$currency.symbol} {$sales.receive|string_format:"%.2f"}</td>
+		</tr>
+		<tr>
+			<td><strong>{$lang.clear_win_this_month}</strong></td>
+			<td class="ta-right"></td>
+			<td class="ta-right"><strong style="color: {if $sales.win > 0}green{else}red{/if};">{$currency.symbol} {$sales.win|string_format:"%.2f"}</strong></td>
+		</tr>
+	</tbody>
+</table>
+</div>
+      </div>
+    </div>
+<script type="text/javascript" src="{$data_server}j_s/highcharts/themes/gray.js"></script>
+
+{literal}
+<script type="text/javascript">
+
+	var finance_chart, sales_chart;
+	$(document).ready(function() {
+		finance_chart = new Highcharts.Chart({
+			credits: {
+				enabled: false
+			},
+			chart: {
+				renderTo: 'finance_chart', 
+				defaultSeriesType: 'area'
+			},	
+            legend: {
+                align: 'center',
+                verticalAlign: 'top',
+                y: 0,
+                floating: false,
+                borderWidth: 0
+            },			
+			title: {
+				text: ""
+			},
+			xAxis: {
+				categories: {/literal}{$days}{literal}
+			},
+			yAxis: {
+				title: {
+					text: ''
+				},
+				min: 0
+			},
+			plotOptions: {
+				area: {
+					marker: {
+						enabled: false,
+						symbol: 'circle',
+						radius: 2,
+						states: {
+							hover: {
+								enabled: true
+							}
+						}
+					}
+				}
+			},
+			tooltip: {
+			    shared: true,
+                crosshairs: true,
+                valueSuffix: ' {/literal}{$valuta}{literal}',
+                headerFormat: '{point.key} {/literal}{$smarty.now|date_format:"%b %Y"}{literal}<br />'
+			},
+			series: {/literal}{$finance_array}{literal}
+		});
+
+		sales_chart = new Highcharts.Chart({
+			credits: {
+				enabled: false
+			},
+            legend: { 
+                align: 'center',
+                verticalAlign: 'top',
+                y: 0,
+                floating: false,
+                borderWidth: 0
+            },		
+			chart: {
+				renderTo: 'sales_chart', 
+				defaultSeriesType: 'area'
+			},				
+			title: {
+				text: ""
+			},
+			xAxis: {
+				categories: {/literal}{$days}{literal}
+			},
+			yAxis: {
+				title: {
+					text: ''
+				},
+				min: 0
+			},
+			tooltip: {
+			    shared: true,
+                crosshairs: true,
+                headerFormat: '{point.key} {/literal}{$smarty.now|date_format:"%b %Y"}{literal}<br />'
+	
+			},
+			series: {/literal}{$sales_array}{literal}
+		});
+	});
+		
+</script>
+{/literal}

@@ -1,0 +1,85 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list">Settings</a> \ 
+      </div>
+      <h1 class="page-title">{$title} </h1>
+    </div>
+    <div id="tabsy">
+      <ul>
+          <li {if $smarty.get.type == 'system'}class="selected"{/if}><div></div><a href="/admin/?m=system&c=badges&type=system">System</a></li>
+		 <li {if $smarty.get.type == 'authors'}class="selected"{/if}><div></div><a href="/admin/?m=system&c=badges&type=authors">Authors</a></li>
+		 <li {if $smarty.get.type == 'buyers'}class="selected"{/if}><div></div><a href="/admin/?m=system&c=badges&type=buyers">Buyers</a></li>
+		 <li {if $smarty.get.type == 'referrals'}class="selected"{/if}><div></div><a href="/admin/?m=system&c=badges&type=referrals">Referrals</a></li>
+		<li class="{if $smarty.get.type == 'other'}selected{/if} last"><div></div><a href="/admin/?m=system&c=badges&type=other">Others</a><div class="last"></div></li>
+      </ul>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  
+  	{if $paging !=""}
+       <div class="page-controls">
+        {$paging}
+       </div></div>
+	{/if}
+	
+	{if is_array($data)}
+<div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th>{$lang.name}</th>
+				<th>{$lang.photo}</th>
+				<th>{$lang.visible}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$d.name}</td>
+				<td>
+					{if $d.photo != ''}
+						<img src="{$data_server}/uploads/badges/{$d.photo}" alt="" />
+					{/if}
+				</td>
+				<td>
+					{if $d.visible == 'true'}
+						<img src="{$data_server}/admin/images/icons/24x24/accept.png" alt="" class="middle" />
+					{else}
+						<img src="{$data_server}/admin/images/icons/24x24/delete.png" alt="" class="middle" />
+					{/if}
+				</td>							
+				<td>
+					<a href="?m={$smarty.get.m}&c=editBadge&type={$d.type}&fid={$d.id}" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit}</a>
+					{if $smarty.get.type != 'system'}
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteRow':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+					{/if}
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+   </div>	
+	{else}
+		{$lang.no_records}	
+	{/if}
+	
+    {if $smarty.get.type != 'system'}
+    <div class="form-submit">
+     <button onclick="window.location='?m={$smarty.get.m}&c=addBadge&type={$smarty.get.type}';" type="button" class="btn-icon submit auto-width">{$lang.add_new}</button>
+    </div>
+    {/if}
+  </div>
+</div>

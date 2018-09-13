@@ -1,0 +1,86 @@
+{if $smarty.session.user.power_elite_author  == 'true' || $smarty.session.user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $smarty.session.user.power_elite_author  == 'true'}power-elite-author{/if}{if $smarty.session.user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h2 class="page-title">Deposit Cash </h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+</div>
+{else}
+  <div class="page-info">  
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h1 class="page-title">Deposit Cash </h1>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+{/if}
+<div id="content">
+      <div class="container">
+  	  		{$errorMessage}
+		<div id="process">
+  <div class="inner-boundary">
+    <div class="inner-border">
+        <ul>
+	       <li class="{if !isset($depositID) && !isset($complete)}current{/if}">Choose Prepaid Credit Amount<img src="/static/img/arrow.gif" /></li>
+	       <li class="{if isset($depositID)}current {/if}">{$lang.make_payment}<img src="/static/img/arrow.gif" /></li>
+	       <li class="{$lang.return_to_site}"><img src="/static/img/arrow.gif" />{$lang.return_to_site}</li>	
+        </ul>
+      <div class="single">DEPOSIT CASH</div>
+      <img class="context" src="/static/img/cash.png" alt="Deposit" height="44" width="52"/>
+    </div>
+  </div>
+</div>
+<div class="content-l">
+  	<form id="add-deposit" method="post" action="">
+    <div class="content-box vertical-space">
+      <div class="deposit-aside content-box callout">
+        <img alt="Deposit Money!" height="95" src="/static/img/moneystack.png" width="130" />
+        <p>For larger amounts <a href="/support/">Contact Us</a>
+      </div>
+
+      <h2>{$lang.how_much_deposit}</h2>
+      <p>Deposits are non-refundable and will expire one year from your last deposit</p>
+
+      <ul class="deposit-amounts">
+	  {section name=foo start=20 loop=101 step=10}
+             <li>
+						     <label><input{if $smarty.section.foo.first} checked="checked"{/if} class="checkbox" id="amount_{$smarty.section.foo.index}" name="amount" style="border: none" type="radio" value="{$smarty.section.foo.index}" />
+						     <span>{$currency.symbol}</span>{$smarty.section.foo.index}</label>
+			 </li>
+	  {/section}
+      </ul><br /><br /><br /><br /><br /><br /><br /><br />
+<div class="form-submit next-to-feature"><button type="submit" href="javascript: void(0);" id="paypal-purchase-button" name="paypal" onclick="$('#add-deposit').submit();" class="btn-icon purchase">Purchase</button></div>
+    </div>
+</form></div>
+
+<div class="sidebar-s sidebar-right">
+  <h2 class="box-heading">Current Credit Balance</h2>
+  <div class="content-box">
+    <span class="current-balance">{$currency.symbol}{$smarty.session.user.total|string_format:"%.2f"}</span>
+
+    <p><a href="/{$languageURL}invoices/">{$lang.view_account_history}</a></p>
+
+    <p>
+      <strong>{$lang.need_invoice}</strong><br />
+      <a href="/{$languageURL}edit/">{$lang.settings}</a>
+    </p>
+  </div>
+</div>
+
+    </div>
+
+
+  </div>

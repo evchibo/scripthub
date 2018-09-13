@@ -1,0 +1,146 @@
+	  {if isset($categoriesList)}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/" class="first">Home</a>\<a href="/categories/all/">Files</a>\
+      </div>
+    <h1 class="page-title">Categories List</h1>
+    </div>
+      <div id="tabsy">
+          <ul>
+            <li class=""><div></div><a href="/categories/browse/">Browse</a></li><li class="selected last"><div></div><a href="/categories/" rel="nofollow">List</a><div class="last"></div></li>
+          </ul>
+      </div>
+  </div>
+ <div id="content">
+     <div class="container">
+	 <div class="clear">
+      <!-- -->
+    </div>
+	  {$categoriesList}  
+{else}
+ <div id="content">
+     <div class="container">
+	 <div class="clear">
+      <!-- -->
+    </div>
+        <script>{literal}
+  marketplace.queue( function(){
+    marketplace.initializers.itemList({
+      ajaxPagination: true,
+      layoutSwitcher: true
+    });
+  });{/literal}
+</script>
+
+<div id="paginated-content-container">
+  <div class="content-l">
+  <div class="page-controls">
+<form action="" class="sort-control" id="sort-by-form" method="get">
+  <label for="sort_by" class="sort-control-label">{$lang.order_by}:</label>
+				<select class="sort_select" id="sort_by" name="sort_by">
+    			<option value="published_at"{if $smarty.get.sort_by == 'published_at'} selected="selected"{/if}>{$lang.date}</option>
+					<option value="name"{if $smarty.get.sort_by == 'name'} selected="selected"{/if}>{$lang.title}</option>
+					<option value="root_category"{if $smarty.get.sort_by == 'root_category'} selected="selected"{/if}>{$lang.category}</option>
+					<option value="average_rating"{if $smarty.get.sort_by == 'average_rating'} selected="selected"{/if}>{$lang.rating}</option>
+					<option value="sales_count"{if $smarty.get.sort_by == 'sales_count'} selected="selected"{/if}>{$lang.sales}</option>
+					<option value="cost"{if $smarty.get.sort_by == 'cost'} selected="selected"{/if}>{$lang.price}</option>
+				</select>   
+				<a href="javascript: void(0);" onclick="submitOrder(this);" title="" class="{if $smarty.get.order == 'asc'}asc{else}desc{/if}">
+				<img src="/static/img/{if $smarty.get.order == 'asc'}asc{else}desc{/if}.png"  alt="" /></a>
+	      <input id="order-type" name="order" type="hidden" value="{if $smarty.get.order == 'asc'}asc{else}desc{/if}" />
+</form>
+    <div class="layout-switcher sort-control">
+  <a href="#" class="layout-list sort-control-tooltip active" data-tooltip="List View"></a>
+  <a href="#" class="layout-grid sort-control-tooltip" data-tooltip="Grid View"></a>
+</div>
+
+    <div class="pagination">{$paging}</div>   
+  </div>
+    {if $items}
+      <ul class="item-list">
+	  
+				{foreach from=$items item=i name=foo}
+	  
+          <li class="source" >
+
+  <div class="thumbnail">
+    <a href="/{$langaugeURL}items/{$i.id}/{$i.name|url}.html" onclick="">
+            <img data-tooltip="{$i.name|escape}" alt="{$i.name|escape}" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="" border="0" height="80" width="80">
+    </a> 
+   </div>
+
+  <div class="item-info">
+    <h3>
+      <a href="/{$languageURL}items/{$i.id}/{$i.name|url}">{$i.name}</a>
+    </h3>
+
+    <span class="author">by</span> <a href="/{$languageURL}user/{$users[$i.user_id].username}/" class="author">{$users[$i.user_id].username}</a>
+
+      </div>
+
+  <small class="meta">
+      <span class="meta-categories">
+	  </span><br />
+    </small>
+
+  <div class="sale-info">
+    <small class="sale-count">{$i.sales} {$lang.sales}</small>
+    <small class="price">{$currency.symbol}{$i.price}</small>
+    <div class="rating">
+{section name=foo start=1 loop=6 step=1}
+{if $i.rating >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}
+{/section}
+    </div>
+
+   </div>
+   
+</li>
+
+	{/foreach}
+		
+ </ul>   <div class="pagination">{$paging}</div>
+ {else}
+	  	<div class="content-box">{$lang.no_items}</div>
+{/if}
+
+     
+    
+
+</div>
+
+</div>
+
+<div class="sidebar-s sidebar-right">
+  <h2 class="box-heading">Search Category</h2>
+  <div class="content-box">
+    <form class="sidebar-search" method="get" action="/{$languageURL}search/">
+     <input type="text" name="term" value="{$lang.search}" onfocus="this.value='';" />
+     <input type="hidden" name="categories[{$category.id}]" value="1" checked="checked" />
+  <button type="submit" class="image-button search no-margin">Search</button>
+</form>
+
+  </div>
+
+  <div class="content-box">
+    <ul class="category-tree">
+	          <li><a href="/{$languageURL}categories/all">All Files</a></li>
+	          {$categoriesList2}
+    </ul>
+  </div>
+
+</div>
+{/if} 
+
+      </div>
+    </div>
+
+   

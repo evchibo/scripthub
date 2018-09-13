@@ -1,0 +1,113 @@
+  <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a> \  <a href="/categories/all/">Files</a>  \ 	{foreach from=$item.categories item=e}
+								{foreach from=$e item=c name=foo}
+									<a href="/{$languageURL}categories/{$categories[$c].id}/{$categories[$c].name|url}" title="">{$categories[$c].name}</a> {if !$smarty.foreach.foo.last} \ {/if}
+								{/foreach}
+							{/foreach}  \
+     </div>
+   <h1 class="page-title">{$item.name}</h1>
+    </div>
+      <div id="tabsy">
+          <ul>
+            <li class="selected"><div></div><a href="/{$languageURL}items/{$item.id}/{$item.name|url}">Item Details</a></li>
+			{if $faqs>0 || check_login_bool() && $item.user_id == $smarty.session.user.user_id}
+			<li class="{if $smarty.get.controller == 'faq'}selected{/if}" id="faq-tab"><div></div><a href="/{$languageURL}items/faq/{$item.id}/{$item.name|url}">{$lang.faqs}</a></li>
+			{/if}
+			{if check_login_bool() && $item.user_id == $smarty.session.user.user_id}
+			<li class="last{if $smarty.get.controller == 'edit'}selected{/if}" ><div></div><a href="/{$languageURL}items/edit/{$item.id}/{$item.name|url}">{$lang.edit}</a></li>
+			{/if}
+			<li class="last{if $smarty.get.controller == 'comments'}selected last{/if}  {if check_login_bool() && $item.user_id == $smarty.session.user.user_id}last{/if}"><div></div><a href="/{$languageURL}items/comments/{$item.id}/{$item.name|url}">{$lang.comments1}</a><div class="last"></div></li>
+          </ul>
+      </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  		{$errorMessage}
+			
+{if isset($paypal_show)}
+	<div class="box-warning">{$lang.paypal_proceed}</div>
+	<form id="form" action="{$paypal.url}" method="post">
+		<input type="hidden" name="cmd" value="_ext-enter">
+		<input type="hidden" name="redirect_cmd" value="_xclick">
+		<input type="hidden" name="business" value="{$paypal.business}">
+		<input type="hidden" name="item_name" value="Buy {$item.name|escape}">
+		<input type="hidden" name="currency_code" value="{$currency.code}">
+		<input type="hidden" name="no_shipping" value="1">
+		<input type="hidden" name="no_note" value="1">
+		<input type="hidden" name="notify_url" value="http://{$domain}/{$languageURL}items/paypal/notify/">
+		<input type="hidden" name="return" value="http://{$domain}/{$languageURL}items/paypal/success/">
+		<input type="hidden" name="cancel_return" value="http://{$domain}/{$languageURL}items/paypal/cancel/">
+		<input type="hidden" name="image_url" value="">
+		<input type="hidden" name="email" value="{$smarty.session.user.email}">
+		<input type="hidden" name="first_name" value="{$smarty.session.user.firstname}">
+		<input type="hidden" name="last_name" value="{$smarty.session.user.lastname}">
+		<input type="hidden" name="custom" value="{$orderID}">
+		<input type="hidden" name="custom2" value="{$smarty.post.licence}">
+		<input type="hidden" name="amount" value="{$price}">
+		<input type="hidden" name="cs" value="0">
+		<input type="hidden" name="page_style" value="PayPal">
+		<noscript>
+			<button type="submit">Click here to pay</button>
+		</noscript>
+	</form>
+	
+	{literal}
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$("#form").submit();
+	});
+	</script>
+	{/literal}
+{/if}      
+
+{include file="$root_path/zipmarket/apps/items/views/purchase_panel.html"}
+<div class="content-s">
+  <div class="item-preview content-box">
+        <a href="/{$languageURL}items/screenshots/{$item.id}/{$item.name|url}" class="details-image" target="_blank"><img alt="{$item.name|escape}" src="{$data_server}/uploads/items/{$item.id}/preview.jpg" /></a>    
+        <div id="fullscreen">
+		{if $item.demo_url}
+            <a href="/{$languageURL}items/preview/{$item.id}/{$item.name|url}" role="button" class='btn btn-icon live-preview' target='_blank'>Live Preview</a>
+	    {/if}
+			<a href="/{$languageURL}items/screenshots/{$item.id}/{$item.name|url}" role="button" class='btn btn-icon screenshots' target='_blank'>{$lang.screenshots}</a>
+        </div>
+  </div>
+    <div class="item-description">
+	 <div class="user-html">
+        {$item.description}
+	 </div>
+    </div>
+
+        <div class="more-work">
+        <div>
+       {if $otherItems}
+   		{foreach from=$otherItems item=i}   
+  <a href="/{$languageURL}items/{$i.id}/{$i.name|url}"><img alt="{$i.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$item.user.username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" width="80" /></a>          
+        	{/foreach}
+		{/if}
+		{if $otherItemsCount < 7}
+    	{section name=foo start=$otherItemsCount loop=7 step=1}
+          <div class="thumbnail"></div>
+        {/section}      
+		{/if}
+        </div>
+        <div class="clear"><!-- --></div>
+        <small><a href="/{$languageURL}user/portfolio/{$item.user.username}">{$lang.more_items_by} {$item.user.username}</a></small>
+      </div>
+</div>
+{include file="$root_path/zipmarket/apps/items/views/rightside.html"}
+<div class="clear"><!-- --></div>
+      </div>
+    </div>
+
+        <div class="clear"><!-- --></div>
+

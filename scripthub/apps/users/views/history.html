@@ -1,0 +1,79 @@
+{if $smarty.session.user.power_elite_author  == 'true' || $smarty.session.user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $smarty.session.user.power_elite_author  == 'true'}power-elite-author{/if}{if $smarty.session.user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h2 class="page-title">{$lang.deposit_history1} </h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+</div>
+{else}
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h2 class="page-title">{$lang.deposit_history1} </h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+{/if}	
+<div id="content">
+      <div class="container">
+	  		{$errorMessage}
+<div class="content-l">
+
+  <div class="general_table_border">
+  
+    <table class="general_table" border="0" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <td>{$lang.action}</td>
+          <td>{$lang.when}</td>
+          <td>{$lang.transaction_id1}</td>
+		   <td>Invoice</td>
+        </tr>
+      </thead>
+      <tbody>
+	  {foreach from=$history item=h}
+    {if $history} 
+	<tr>
+        <td>{$h.action}</td>
+        <td>{$h.datetime|date_format:"%d.%m.%Y"}</td>
+        <td><small>{$h.transaction_id}</small><!-- include item number here --></td>
+		<td><a href="#" popup="true">-</a></td>
+      </tr>
+{else}
+	<tr>
+        <td></td>
+        <td></td>
+        <td>nothing here</td>
+		<td></td>
+    </tr>
+	{/if}
+	  {/foreach}
+      </tbody>
+    </table>
+	
+  </div>
+
+</div>
+
+<div class="sidebar-s sidebar-right">
+  <h2 class="box-heading">Current Balance</h2>
+  <div class="content-box current-balance">
+   {$currency.symbol}{$smarty.session.user.total|string_format:"%.2f"}
+  </div>
+</div>
+
+      </div>
+    </div>

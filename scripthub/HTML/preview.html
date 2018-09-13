@@ -1,0 +1,75 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<!doctype html>
+<!--[if lt IE 7 ]> <html lang="en" class="ie6 oldie no-js"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie7 oldie no-js"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie8 oldie no-js"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie9 no-js"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--> <html lang="en" class="no-js"> <!--<![endif]-->
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>{$item.name|escape} Preview - {$domain}</title>
+    <meta name="Description" content="{$item.name|escape}">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link rel="stylesheet" type="text/css" href="/static/css/fullscreen_preview.css"/>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.0/jquery.min.js"></script>
+
+    {literal}
+    <script type="text/javascript">
+      //function to fix height of iframe!
+      var calcHeight = function() {
+        var headerDimensions = $('#header-bar').height();
+        $('#preview-frame').height($(window).height() - headerDimensions);
+      }
+      
+      $(document).ready(function() {
+        calcHeight();
+        $('#header-bar a.close').mouseover(function() {
+          $('#header-bar a.close').addClass('activated');
+        }).mouseout(function() {
+          $('#header-bar a.close').removeClass('activated');
+        });
+      });
+      
+      $(window).resize(function() {
+        calcHeight();
+      }).load(function() {
+        calcHeight();
+      });
+    </script>
+    <!--[if IE 6]>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#close-button').remove();
+      });
+    </script>
+    <![endif]-->
+    {/literal}
+
+</head>
+  <body>
+   <div id="header-bar">
+
+     <div class="close-header">
+       <a id="close-button" title="Close {$domain} Bar" class="close" href="{$item.demo_url}">X</a>
+     </div>
+
+     <p class="meta-data">
+       <a class="close" href="{$item.demo_url}">Remove Frame</a> <a class="purchase" href="/{$languageURL}items/{$item.id}/" >Purchase this Item!</a>
+     </p>
+
+     <a class="zipmarket-preview-logo site-loopback" href="/{$languageURL}items/{$item.id}/">{$domain}</a><span class="preview">item preview</span>
+
+   </div>
+   <iframe id="preview-frame" src="{$item.demo_url}" name="preview-frame" frameborder="0" noresize="noresize">
+   </iframe>
+
+</body>
+</html>

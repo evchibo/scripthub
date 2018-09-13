@@ -1,0 +1,156 @@
+{if $smarty.session.user.power_elite_author  == 'true' || $smarty.session.user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $smarty.session.user.power_elite_author  == 'true'}power-elite-author{/if}{if $smarty.session.user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+	  <h2 class="page-title">Bookmarks</h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+</div>
+{else}
+  <div class="page-info">  
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\<a href='/collections/'>Collections</a>\</div>
+	  <h1 class="page-title">Bookmarks</h1>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+{/if}
+    <div id="content">
+      <div class="container">
+	  		{$errorMessage}
+<div class="content-l">
+  <h2>{$lang.your_public_collections}</h2>
+    <ul>
+	{if $collections.true}
+				{foreach from=$collections.true item=c name=foo}
+      <li class="content-box">
+    <a href="/{$languageURL}collections/view/{$c.id}/{$c.name|url}.html" class="collection-image">
+						  {if $c.photo != ''}
+						  	<img alt="{$c.name|escape}" height="140" src="{$data_server}/uploads/collections/{$c.photo}" width="260" class="m6 left" />
+						  {else}
+						  	<img alt="{$c.name|escape}" height="140" src="/static/img/default-collection.jpg" width="260" class="m6 left" />
+						  {/if}
+    </a>
+   <div class="collection-info">
+    <h3><a href="/{$languageURL}collections/view/{$c.id}/{$c.name|url}.html">{$c.name}</a></h3>
+    <span>{$lang.by} <a href="/{$languageURL}users/{$users[$c.user_id].username}">{$users[$c.user_id].username}</a></span>
+    <p>{$c.text|nl2br}</p>  
+  </div>
+
+  <div class="collection-meta">
+    <strong>{$c.items} {$lang.items}</strong>
+    <br />
+    
+  </div>
+</li>
+{/foreach}
+
+	{else}
+<div class="content-box vertical-space">
+        <p>
+          <strong>You don't have any public collections yet.</strong>
+        </p>
+
+        <p>
+          <a href="/collections/">Public Collections</a> allow you to group items together and make the link publicly available. They can be
+          used to group items to show a client, to showcase work, to create links to use with your referral code or
+          to create collections of related items to appear on item pages.
+        </p>
+    </div>
+    {/if}
+    </ul>
+
+    <h2>Your private collections</h2>
+      <ul>
+	  {if $collections.false}
+				{foreach from=$collections.false item=c name=foo}
+        <li class="content-box">
+      <a href="/{$languageURL}collections/view/{$c.id}/{$c.name|url}.html" class="collection-image">
+						  {if $c.photo != ''}
+						  	<img alt="{$c.name|escape}" height="140" src="{$data_server}/uploads/collections/{$c.photo}" width="260" class="m6 left" />
+						  {else}
+						  	<img alt="{$c.name|escape}" height="140" src="/static/img/default-collection.jpg" width="260" class="m6 left" />
+						  {/if}
+      </a>
+
+  <div class="collection-info">
+    <h3><a href="/{$languageURL}collections/view/{$c.id}/{$c.name|url}.html">{$c.name}</a></h3>
+    <span>{$lang.by} <a href="/{$languageURL}users/{$users[$c.user_id].username}">{$users[$c.user_id].username}</a></span>
+    <p>{$c.text|nl2br}</p> 
+  </div>
+
+  <div class="collection-meta">
+    <strong>{$c.items} {$lang.items}</strong>
+    <br />
+  </div>
+</li>
+{/foreach}
+
+      	{else}
+	<div class="content-box vertical-space">
+        <p>
+          <strong>You don't have any private collections yet.</strong>
+        </p>
+    </div>
+    {/if}
+    </ul> 
+</div>
+
+  <div class="sidebar-s sidebar-right">
+    <h2 class="box-heading">Create a Collection</h2>
+<div class="content-box">
+
+  <form action="" class="vertical-form" enctype="multipart/form-data" id="new_collection" method="post">
+    <fieldset>
+      <div class="input-group">
+        <label for="collection_name">{$lang.name}:</label>
+        <div class="inputs">
+          <input id="collection_name" name="name" size="25" type="text" />        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="file_upload">{$lang.photo}: <small>(260x140px)</small></label>
+        <div class="inputs">
+          <input id="file_upload" name="file_upload" size="9" type="file" />        </div>
+      </div>
+
+      <div class="input-group">
+        <label for="collection_description">{$lang.description}:</label>
+        <div class="inputs">
+          <textarea cols="40" id="collection_description" name="description" rows="20"></textarea>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <div class="inputs">
+          <label for="collection_publically_visible">
+            <input id="collection_publically_visible" name="publically_visible" type="checkbox" value="1" />
+            {$lang.public_visible}
+          </label>
+        </div>
+      </div>
+    </fieldset>
+
+    <div class="form-submit" href="javascript: void(0);" onclick="$(this).parent().parent().submit();">
+	<input type="hidden" name="add" value="yes" />
+<button type="submit" class="btn-icon submit">{$lang.create}</button>
+</div>
+
+</form></div>
+
+  </div>
+
+      </div>
+    </div>

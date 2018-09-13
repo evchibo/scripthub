@@ -1,0 +1,58 @@
+/*
+ * Copyright (c) 2018.
+ * KarmaTechs
+ * Evan Karma Alias MADSkill
+ * madskill.madskill@gmail.com
+ * https://sociamater.com
+ */
+
+body {
+  background-color:#000000;
+  color:#454545;
+  font-size:13px;
+  line-height:17px;
+  font-family:Tahoma, Arial, sans-serif;
+  padding: 20px 20px 25px 20px;
+}
+.thumbnails {
+  padding-right: 250px;
+}
+.fullsize {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+img.purchase { 
+  border: 0px; 
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin-right: 0px;
+}
+img { 
+  border: 1px solid #353535;
+}
+a img {
+  margin-right: 10px;
+}
+a:hover img {
+  border: 1px solid #666666;
+}
+a:hover img.purchase {
+  border: 0px;
+}
+a { color:#586d56;}
+
+/* MgOpen Moderna - http://www.zvr.gr/typo/mgopen/index */
+@font-face { font-family: MgOpen Modata; src: url(../fonts/MGOPENM1.eot); }
+@font-face { font-family: MgOpen Modata; src: url(../fonts/MgOpenModataRegular.ttf); }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: MgOpen Modata, Helvetica, Geneva; 
+  margin:0px;
+  padding: 10px 0px 10px 0px; 
+  color: #ffffff; 
+  font-weight: normal; 
+}
+p {
+ padding: 10px 0px 10px 0px;
+}

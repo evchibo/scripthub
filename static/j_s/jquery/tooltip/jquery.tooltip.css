@@ -1,0 +1,24 @@
+/*
+ * Copyright (c) 2018.
+ * KarmaTechs
+ * Evan Karma Alias MADSkill
+ * madskill.madskill@gmail.com
+ * https://sociamater.com
+ */
+
+#tooltip {
+	position: absolute;
+	z-index: 3000;
+	border: 1px solid #a14664;
+	background-color: #eacad4;
+	padding: 5px;
+	opacity: 0.85;
+	color: #a14664;
+	-moz-border-radius: 6px;
+}
+#tooltip h3, #tooltip div { 
+	color: #a14664;
+	font-size: 12px;
+	font-weight: normal;
+	margin: 0;
+}

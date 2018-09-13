@@ -1,0 +1,215 @@
+    <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="content">
+      <div class="container">
+	  	  		{$errorMessage}
+		{if check_login_bool()}
+<div id="home-panel" class="loggedin shadowed">
+  <div class="inner-boundary">
+    <div class="inner-border">
+    <div class="featured-collection">
+   {if $qnews_data} {foreach from=$qnews_data item=i} {if $i.url}<a href="{$i.url}" title="{$i.name}">{/if}<img src="{$i.thumb}" alt="{$i.name}" title="{$i.name}" />{if $i.url}</a>{/if}
+    {if $i.url}<a href="{$i.url}" title="{$i.name}">{$i.name}</a><br>{/if}
+    <p>{$i.description}</p>{/foreach} {/if} 
+    </div>
+      <h3 class="decorator">Hello!</h3>
+        <p>
+		Welcome to {$domain}! Read our <a href="/help/getting_started">Getting Started Guide</a>.
+		Browse recent <a href="/categories/all">Files</a>, community <a href="/top_authors/">Authors</a>.
+		Check your <a href="/{$languageURL}user/{$smarty.session.user.username}/">Profile</a> page and current <a href="/statement/">Statements</a>!
+		Want to earn some extra cash? Join our <a href="/make_money/affiliate_program/">Referral Program</a>!
+       </p>
+      <div class="balance-signin-container">
+        <div class="balance">
+          <small>Credit balance</small>
+          <strong>{$currency.symbol}{$smarty.session.user.total|string_format:"%.2f"}</strong>
+          <a role="button" href="/{$languageURL}deposit/" class="auto-width">Deposit</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="home-following" class="shadowed">
+    <div class="following-slider">
+<div class="inner-boundary">
+  <div class="inner-border">
+	{if $followingItemsCount > 9}			    	
+		{literal}<a href="javascript: void(0);" onclick="$.ajax({complete: function(request) { hideLoading(); }, beforeSend: function() { showLoading(); }, dataType: 'script', type: 'post', url: '/{/literal}{$languageURL}{literal}users/following/?p=2'}); return false;" class="slider-control slider-next">Next</a>{/literal}	        
+	{else}
+     <span class="slider-control slider-next-disabled"></span>
+	{/if}
+    <div>
+     <ul id="recently-followed-items">
+	{if $followingItems}
+	 {foreach from=$followingItems item=f}
+	   <li class="thumbnail">
+	    <a href="/{$languageURL}items/{$f.id}/{$f.name|url}" onclick="">
+         <img data-tooltip="{$f.name|escape}" alt="{$f.name|escape}" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$f.user_id].username}" data-item-category="{foreach from=$f.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$f.price|escape}" data-item-name="{$f.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$f.id}/preview.jpg" data-preview-width="" src="{$data_server}uploads/items/{$f.id}/{$f.thumbnail}" title="" border="0" height="80" width="80">
+        </a>
+	   </li>
+	 {/foreach}{else}
+    <div style="position: absolute; margin-top: 89px; padding: 20px;">
+      <p>
+        <strong>Recent Items from Authors You Follow</strong> <br>
+        Click "Follow" on authors you like and their recent items will appear here in future!
+      </p>
+    </div>
+	{/if}	
+     </ul>			
+    </div>
+  </div>
+</div>
+</div>
+ </div>
+{else}
+  <div id="home-panel" class="guest shadowed">
+  <div class="inner-boundary">
+       <div class="inner-border">
+        <h1>
+          <span>{$itemsCount}</span>
+          Scripts and Snippets from {$currency.symbol}{$lowPrice}
+        </h1>
+        <h2><a href="/categories/all">{if $randCategories}{foreach from=$randCategories item=c name=foo}{$mainCategories[$c].name}{if !$smarty.foreach.foo.last}, {/if}{/foreach}{$lang.home_info2}{/if}</a></h2>
+      <div class="btns">
+        <div class="relative-wrapper">
+          <div class="center">
+            <a href="/{$languageURL}categories/all" role="button">{$lang.start_browsing}</a>
+            <a href="/{$languageURL}top_sellers" role="button">{$lang.popular_files}</a>
+            <a href="/help/getting_started" role="button">Learn More</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{/if}  
+ <div id="weekly-features" class="shadowed">
+<div class="inner-boundary">
+  <div class="inner-border">
+    <h3 class="decorator">Weekly Features</h3>
+     <div class="slider">
+                    <span class="slider-control slider-prev-disabled"></span>
+					{if isset($haveWeekly)}
+					{literal}
+		          <a href="/{/literal}{$languageURL}{literal}feature/" onclick="$.ajax({complete: function(request) { screenshotPreview(); hideLoading(); }, beforeSend: function() { showLoading(); }, dataType: 'script', type: 'post', url: '/{/literal}{$languageURL}{literal}items/weekly/?p=2'}); return false;" class="slider-control slider-next"></a> 
+				   {/literal}
+					{/if}
+					
+	{if $weeklyItems}
+					
+      	 <ul id="weekly-featured-items">
+            
+		      	{foreach from=$weeklyItems item=i}
+            <li class="thumbnail">
+  <a href="/{$languageURL}items/{$i.id}/{$i.name|url}"><img data-tooltip="{$i.name|escape}" alt="{$i.name|escape}" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="" border="0" width="80" height="80"></a>
+  </li>
+				{/foreach}
+
+                 </ul>				{/if}
+    </div>
+  </div>
+</div>
+</div>
+
+  <div id="free-file" class="shadowed">
+    <div class="inner-boundary">
+      <div class="inner-border">
+        <div class="thumbnail itemcontainer">
+         <a href="/{$languageURL}items/{$freeItem.id}/{$freeItem.name|url}" onclick="">
+          <img alt="{$freeItem.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$freeItem.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$freeItem.price}" data-item-name="{$freeItem.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$freeItem.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$freeItem.id}/{$freeItem.thumbnail}" title="{$freeItem.name|escape}" width="80" />
+         </a>            
+		</div>
+            <a href="/{$languageURL}items/{$freeItem.id}/{$freeItem.name|url}"><h3 class="decorator">{$lang.free_file}!</h3></a>
+            <p>
+                Grab this month's <a href="/{$languageURL}items/{$freeItem.id}/{$freeItem.name|url}">free file</a>!
+            </p>
+      </div>
+    </div>
+  </div>
+<div class="clear"><!--  --></div>
+{if $recentItems}
+    <div id="recent-files-wrapper">
+  <div id="recent-files" class="shadowed">
+    <div class="inner-boundary">
+      <div class="inner-border">
+        <h3 class="decorator">Radom Items</h3>
+	   <ul class="nav">
+	    <li><a href="/{$languageURL}categories/all/">All</a></li>
+        {if $mainCategories}
+	    	{foreach from=$mainCategories item=c}
+          <li><a href="/{$languageURL}categories/{$c.id}/{$c.name|url}">{$c.name}</a></li>
+            {/foreach}
+       	{/if}
+        </ul>
+        <div class="clear"><!-- --></div>
+          <ul class="recent-items">
+	     {foreach from=$recentItems item=i}
+        <li class="thumbnail">
+	     <a href="/{$languageURL}items/{$i.id}/{$i.name|url}">
+          <img alt="{$i.name|escape}" border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price|string_format:"%.0f"}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" width="80" />
+         </a>
+	    </li>
+	   	{/foreach}
+          </ul>
+        <div class="category-links"><span class="prefix">View: </span><a class="all" href="/{$languageURL}categories/all/" >All Items</a> <span>|</span> <a class="popular" href="/{$languageURL}categories/all?sort_by=sales_count&order=desc">Popular Items</a></div>
+      </div>
+    </div>
+  </div>
+</div>
+{/if}
+
+{if $featuredAuthor}
+<div id="featured-author" class="shadowed">
+        <div class="inner-boundary">
+        <div class="inner-border">
+          <div class="avatar-wrapper">
+            <a href="/{$languageURL}user/{$featuredAuthor.username}" class="avatar" title="{$featuredAuthor.username}">
+			{if $featuredAuthor.avatar != ''} 
+  <img alt="{$featuredAuthor.username}" class="" height="80" src="{$data_server}uploads/users/{$featuredAuthor.user_id}/A_{$featuredAuthor.avatar}" width="80" />
+            {else}
+  <img alt="{$featuredAuthor.username}" class="" height="80" src="{$data_server}img/default-user.jpg" width="80" />
+			{/if}
+			</a>
+
+          </div>
+          <div class="info">
+            <h3 class="decorator">{$lang.featured_author}: <a href="/{$languageURL}user/{$featuredAuthor.username}">{$featuredAuthor.username}</a></h3>
+            <p>
+              {$featuredAuthorInfo}<br />
+              <a href="/{$languageURL}user/portfolio/{$featuredAuthor.username}">{$lang.view_portfolio_of} {$featuredAuthor.username}</a>
+            </p>
+          </div>
+          <div class="other-work">
+		  {if $featuredItems}
+						{foreach from=$featuredItems item=i}
+		  
+                <a href="/{$languageURL}items/{$i.id}/{$i.name|url}" >
+
+          <img border="0" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-cost="{$currency.symbol}{$i.price|escape}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" height="80" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" width="80" />
+         </a>     
+	                     {/foreach}
+		  {/if}
+		 
+		 <small>Some of {$featuredAuthor.username}'s work</small>
+          </div>
+        </div>
+      </div>
+
+</div>
+{/if}
+<div class="clear"><!--  --></div>
+
+<script>{literal}
+  marketplace.queue(function() {
+    marketplace.ajaxify_weekly_features();
+  });{/literal}
+</script>
+
+      </div>
+    </div>

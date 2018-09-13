@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list&p={$smarty.get.p}">Newsletter</a> \  <a href="?m={$smarty.get.m}&c=list&p={$smarty.get.p}">{$title}</a> \
+      </div>
+      <h1 class="page-title">{$data.name}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" action="" method="post" enctype="multipart/form-data">
+	 <div class="input-group">
+        <label>Title</label>
+        <div class="right">
+         {$data.name}
+        </div>
+    </div>
+	 <div class="input-group">
+        <label>Posted</label>
+        <div class="right">
+         {$data.datetime|date_format:"%H:%M %d %B %Y"}
+        </div>
+    </div>
+	 <div class="input-group">
+        <label>{$lang.readed}</label>
+        <div class="right">
+         {$data.readed}
+        </div>
+    </div>	
+	 <div class="input-group">
+        <label>Description</label>
+        <div class="right">
+        {$data.text}
+        </div>
+    </div>	
+	</form>
+    </div>
+   </div>
+  </div>
+ </div>

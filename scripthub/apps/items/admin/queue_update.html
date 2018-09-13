@@ -1,0 +1,52 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list">Items</a> \  
+      </div>
+      <h1 class="page-title">Items Queue Update</h1>
+	  </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    {$errorMessage}
+  <div class="page-controls">{$paging}</div>
+  
+	{if is_array($data)}
+<div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th>{$lang.name}</th>
+				<th>{$lang.date}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$d.name}</td>
+				<td>{$d.datetime|date_format:"%H:%M %d %b %Y"}</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=queue_view_update&id={$d.id}&p={$smarty.get.p}" title="{$lang.preview}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.preview}</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table> <!-- END Table -->			
+
+	{else}
+		{$lang.no_records}
+	{/if}
+
+	  </div>
+  </div>
+</div>

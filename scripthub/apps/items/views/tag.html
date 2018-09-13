@@ -1,0 +1,88 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="content">
+      <div class="container">
+          
+        
+        
+<div class="content-l">
+
+  <div class="page-controls">
+      
+
+<form class="sort-control" method="get" action="">
+  <label for="sort_by" class="sort-control-label">{$lang.order_by}:</label>
+  <select class="sort_select" name="sort_by">
+ <option value="published_at"{if $smarty.get.sort_by == 'published_at'} selected="selected"{/if}>{$lang.date}</option>
+					<option value="name"{if $smarty.get.sort_by == 'name'} selected="selected"{/if}>{$lang.title}</option>
+					<option value="root_category"{if $smarty.get.sort_by == 'root_category'} selected="selected"{/if}>{$lang.category}</option>
+					<option value="average_rating"{if $smarty.get.sort_by == 'average_rating'} selected="selected"{/if}>{$lang.rating}</option>
+					<option value="sales_count"{if $smarty.get.sort_by == 'sales_count'} selected="selected"{/if}>{$lang.sales}</option>
+					<option value="cost"{if $smarty.get.sort_by == 'cost'} selected="selected"{/if}>{$lang.price}</option>
+
+</select>
+  
+<a href="javascript: void(0);" onclick="submitOrder(this);" title="" class="{if $smarty.get.order == 'asc'}asc{else}desc{/if}">
+				<img src="/static/img/{if $smarty.get.order == 'asc'}asc{else}desc{/if}.png"  alt="" /></a>
+	      		<input id="order-type" name="order" type="hidden" value="{if $smarty.get.order == 'asc'}asc{else}desc{/if}" />
+</form>
+
+
+    <div class="pagination">{$paging}</div>
+
+    <script>
+    {literal}  marketplace.queue(function(){
+        marketplace.listControls.init();
+      });  {/literal}  
+    </script>
+  </div>
+{if $items}
+      <ul class="item-list" style="width:984px;">
+	  {foreach from=$items item=i name=foo}
+          <li>
+  <div class="thumbnail">
+    
+  <a href="/{$langaugeURL}items/{$i.id}/{$i.name|url}"><img alt="{$i.name|escape}" class="landscape-image-magnifier preload no_preview" data-item-author="by {$users[$i.user_id].username}" data-item-category="{foreach from=$i.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$i.price}" data-item-name="{$i.name|escape}" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$i.id}/preview.jpg" data-preview-width="" src="{$data_server}uploads/items/{$i.id}/{$i.thumbnail}" title="{$i.name|escape}" border="0" width="80" height="80"></a>  </div>
+
+  <div class="item-info">
+    <h3>
+      <a href="/{$langaugeURL}items/{$i.id}/{$i.name|url}">{$i.name}</a>
+    </h3>
+
+   <span class="author">by</span> <a href="/{$languageURL}user/{$users[$i.user_id].username}/" class="author">{$users[$i.user_id].username}</a>
+
+      </div>
+
+  <small class="meta">
+      <span class="meta-categories"></span><br></small>
+
+  <div class="sale-info">
+    <small class="sale-count">{$i.sales} {$lang.sales}</small>
+    <small class="price">{$currency.symbol}{$i.price}</small>
+    <div class="rating">
+{section name=foo start=1 loop=6 step=1}{if $i.rating >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}{/section}				
+	</div>
+      </div>
+</li>
+{/foreach}
+
+      </ul>
+{else}
+<div class="content-box vertical-space" style="width:984px;">{$lang.no_items}</div>
+{/if}
+  <div class="pagination">{$paging}</div>
+</div>
+
+<div class="sidebar-s sidebar-right">
+
+</div>
+
+
+      </div>
+    </div>

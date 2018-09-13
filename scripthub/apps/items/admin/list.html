@@ -1,0 +1,106 @@
+   <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    {if $smarty.get.user == $user_id}
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \
+      </div>
+      <h1 class="page-title">Items</h1>
+	  </div>
+	 {include file="$root_path/zipmarket/apps/admin/admin_tabsy.html"}
+	  
+    {else}
+    <div class="container">
+     <div id="breadcrumbs">
+      <a href="/admin" class="first">Home</a> \ <a href="/admin/?m=users&amp;c=list">Users</a> \ <a href="/admin/?m=users&c=edit&id={$smarty.get.user}">{foreach from=$data item=d name=foo}{if $smarty.foreach.foo.index < 1}{$users[$d.user_id].username}{/if}{/foreach}</a> \
+     </div>
+     <h1 class="page-title">Portfolio</h1>
+	</div>
+     <div id="tabsy">
+      <ul>
+		<li><div></div><a href="/admin/?m=users&c=edit&id={$smarty.get.user}">Profile</a></li>
+		<li><div></div><a href="/admin/?m=users&c=balance&id={$smarty.get.user}">Edit Balance</a></li>
+		<li class="selected last"><div></div><a href="/admin/?m=items&c=list&user={$smarty.get.user}">Portfolio</a><div class="last"></div></li>
+      </ul>
+	 </div>
+	{/if}
+    </div>
+    <div id="content">
+      <div class="container">
+    {$errorMessage}
+	
+  	{if $paging !=""}
+       <div class="page-controls"> 
+<form class="sort-control" method="post" style="width: 350px;" action="?m={$smarty.get.m}&c={$smarty.get.c}">
+ <input type="text" id="q" name="q" value="{$lang.start_searching}..." onfocus="this.value=='{$lang.start_searching}...'?this.value='':false;" onblur="this.value==''?this.value='{$lang.start_searching}...':false;">
+  <button type="submit" class="image-button search no-margin">Search</button>
+</form>
+  {$paging}
+   </div></div>
+{/if}
+  
+	{if is_array($data)}
+<div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th><a href="?m={$smarty.get.m}&c={$smarty.get.c}&p={$smarty.get.p}&q={$smarty.get.q}&order=name&dir={$orderDir}&user={$smarty.get.user}" title="">Item {$lang.name}</a></th>
+				<th>Seller</th>
+				<th><a href="?m={$smarty.get.m}&c={$smarty.get.c}&p={$smarty.get.p}&q={$smarty.get.q}&order=price&dir={$orderDir}&user={$smarty.get.user}" title="">{$lang.price}</a></th>
+				<th><a href="?m={$smarty.get.m}&c={$smarty.get.c}&p={$smarty.get.p}&q={$smarty.get.q}&order=sales&dir={$orderDir}&user={$smarty.get.user}" title="">{$lang.sales}</a></th>
+				<th><a href="?m={$smarty.get.m}&c={$smarty.get.c}&p={$smarty.get.p}&q={$smarty.get.q}&order=earning&dir={$orderDir}&user={$smarty.get.user}" title="">{$lang.win}</a></th>		
+				<th><a href="?m={$smarty.get.m}&c={$smarty.get.c}&p={$smarty.get.p}&q={$smarty.get.q}&order=freefile&dir={$orderDir}&user={$smarty.get.user}" title="">{$lang.free_file}</a></th>
+				<th><a href="?m={$smarty.get.m}&c={$smarty.get.c}&p={$smarty.get.p}&q={$smarty.get.q}&order=weekly&dir={$orderDir}&user={$smarty.get.user}" title="">Featured</a></th>				
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$d.name}</td>
+				<td>{$users[$d.user_id].username}</td>
+				<td>{$currency.symbol}{$d.price|string_format:"%.0f"}</td>
+				<td>{$d.sales}</td>
+				<td>{$currency.symbol}{$d.earning|string_format:"%.0f"}</td>
+				<td>
+					{if $d.free_file == 'true'}
+						<img src="{$data_server}/admin/images/icons/24x24/accept.png">
+					{else}
+						<img src="{$data_server}/admin/images/icons/24x24/delete.png">
+					{/if}
+				</td>
+				<td>
+					{if $d.weekly_to == ''}
+						<img src="{$data_server}/admin/images/icons/24x24/delete.png">
+					{else}
+						<img src="{$data_server}/admin/images/icons/24x24/accept.png">
+					{/if}
+				</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=comments&id={$d.id}" title="{$lang.comments}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/icon-comments.png" /> {$d.comments} {$lang.comments} </a>
+					<br/>
+					<a href="?m={$smarty.get.m}&c=edit&id={$d.id}&p={$smarty.get.p}" title="{$lang.edit}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.edit} Item</a>
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'delete':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete} Item</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table> <!-- END Table -->			
+</div>
+	{else}
+		{$lang.no_records}
+	{/if}
+
+
+  </div>
+</div>
+</div>

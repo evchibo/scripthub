@@ -1,0 +1,43 @@
+
+	{if is_array($data)}
+	<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<table class="stylized full" cellspacing="0" cellpadding="0" border="0"><!-- Table -->
+		<thead>
+			<tr>
+				<th>{$lang.name}</th>
+				<th>{$lang.email}</th>
+				<th>{$lang.issue}</th>				
+				<th>{$lang.date}</th>				
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$d.name}</td>
+				<td>{$d.email}</td>
+				<td>{$d.issue}</td>
+				<td>{$d.datetime|date_format:"%d %b %Y"}</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=view&id={$d.id}&p={$smarty.get.p}" title="{$lang.view}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/view.png" /> {$lang.view}</a>
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteMail':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow','{$lang.are_you_sure_to_delete} {$d.name|replace:"'":" "|replace:'"':' '} ?');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table> <!-- END Table -->			
+
+	{else}
+		{$lang.no_records}
+	{/if}
+
+	{$paging}

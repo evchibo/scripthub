@@ -1,0 +1,77 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/" class="first">Home</a>
+       \  <a href="/categories/all/">Files</a> \
+      </div>
+     <h1 class="page-title">{$domain} Top Authors</h1>
+    </div>
+  </div>
+<div id="content">
+      <div class="container">
+          
+
+<div style="width:984px;" class="content-l">
+    <div class="page-controls">  <div class="pagination">{$paging}</div></div>
+
+{if $users}
+  <ul class="item-grid">
+    {foreach from=$users item=u name=foo}  <li>
+  <div class="thumbnail">
+    <a href="/{$languageURL}user/{$u.username}" class="avatar" title="{$u.username}">
+							{if $u.avatar != ''}  
+							  <img alt="{$u.username}" class="" height="80" src="{$data_server}uploads/users/{$u.user_id}/A_{$u.avatar}" width="80" />
+							{else}
+								<img alt="{$u.username}" class="" height="80" src="{$data_server}img/default-user.jpg" width="80" />
+							{/if}
+</a>
+  </div>
+
+  <div class="user-info">
+    <h3><a href="/{$languageURL}user/{$u.username}">{$smarty.foreach.foo.index+$number}. {$u.username}</a></h3>
+        <ul class="badges"> </ul>
+  </div>
+
+  <small class="meta">
+    <strong>{$u.items}</strong> Items<br>
+    <strong>{$u.followers}</strong> Followers<br>
+    Member Since: {$u.register_datetime|date_format:"%b %Y"}<br>
+  {if $u.freelance == 'true'}  Available for freelance work<br>{/if}
+  </small>
+
+  <div class="sale-info">
+      <em class="sale-count">{$u.sales}</em>
+      <small>Sales</small>
+    <div class="rating">
+      
+{section name=foo1 start=1 loop=6 step=1}
+{if $u.rating >= $smarty.section.foo1.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}
+{/section}
+   </div>
+  </div>
+</li>
+	{/foreach}
+  </ul>
+			{else}
+				<div class="content-box vertical-space">{$lang.no_users}</div>
+			{/if}
+
+  <div class="pagination">{$paging}</div>
+</div>
+<script>
+ {literal} marketplace.queue(function(){
+    marketplace.initializers.topAuthors();
+      new marketplace.PjaxPagination( '#paginated-content-container' ).setup();
+  }); {/literal}
+</script>
+
+      </div>
+    </div>

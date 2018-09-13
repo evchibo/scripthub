@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list">Newsletter </a> \
+      </div>
+      <h1 class="page-title">E-mail's</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+  	{if $paging !=""}
+       <div class="page-controls">
+        {$paging}
+       </div></div>
+	{/if}
+	
+	{if is_array($data)}
+<div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th>{$lang.name}</th>
+				<th>{$lang.email}</th>
+				<th>{$lang.unsubscribe}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>{$d.firstname} {$d.lastname}</td>
+				<td>{$d.email}</td>
+				<td>
+					{if $d.bulletin_subscribe == 'false'}
+						<img src="{$data_server}admin/images/icons/24x24/accept.png" alt="" class="middle" />
+					{else}
+						<img src="{$data_server}admin/images/icons/24x24/delete.png" alt="" class="middle" />
+					{/if}
+				</td>
+				<td>
+					{if $d.bulletin_subscribe == 'false'}
+					<a href="?m={$smarty.get.m}&c=emails&subscribe={$d.id}" title="{$lang.subscribe}"><img class="middle" src="{$data_server}admin/images/icons/16x16/edit.png" /> {$lang.subscribe}</a>
+					{else}
+					<a href="?m={$smarty.get.m}&c=emails&unsubscribe={$d.id}" title="{$lang.unsubscribe2}"><img class="middle" src="{$data_server}admin/images/icons/16x16/edit.png" /> {$lang.unsubscribe2}</a>
+					{/if}
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('{$root_server}/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteSEmail':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow','{$lang.are_you_sure_to_delete} {$d.email|replace:"'":" "|replace:'"':' '} ?');"><img class="middle" src="{$data_server}admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table> <!-- END Table -->			
+</div>
+	{else}
+		{$lang.no_records}
+	{/if}
+  </div>
+</div>

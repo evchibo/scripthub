@@ -1,0 +1,271 @@
+	{include file="$root_path/zipmarket/apps/users/views/elite_profile.html"}
+     <!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="content">
+      <div class="container">
+        <div class="content">
+	  		{$errorMessage}
+<div class="content-s">
+  <div class="item-preview content-box arrow-to-sidebar">
+  {if $user.homeimage != ''}
+    <img alt="{$user.username}" height="242" src="{$data_server}uploads/users/{$user.user_id}/A_{$user.homeimage}" width="590" />
+    {else}
+	<img alt="{$user.username}" height="242" src="{$data_server}img/default-Home2.jpg" width="590" />
+  {/if}
+  </div>
+
+   {if $user.profile_title != ''}<h2 class="underlined">{$user.profile_title}</h2>{/if}
+   {if $user.profile_desc != ''}<div class="user-bio">{$user.profile_desc|nl2br}</div>{/if}
+  
+{if $collections}
+ <h2 class="underlined">{$lang.public_collections}</h2>
+  <div class="profile_collections">
+   {foreach from=$collections item=c} 
+    <div class="collection_box">
+  <a href="/{$languageURL}collections/view/{$c.id}">
+  	  		{if $c.photo != ''}
+	  			<img alt="{$c.name|escape}" class="img" height="140" src="{$data_server}/uploads/collections/{$c.photo}" width="260" />
+            {else}
+  	  			<img alt="{$c.name|escape}" class="img" height="140" src="{$data_server}img/default-collection.jpg" width="260" />
+	  		{/if}
+            <p>
+          <a href="/{$languageURL}collections/view/{$c.id}">{$c.name}</a><br>
+        <span>
+       {section name=foo start=1 loop=6 step=1}{if $c.rating >= $smarty.section.foo.index}<img src="/static/img/star-on.png" alt="" />{else}<img src="/static/img/star-off.png" alt="" />{/if}{/section}
+     </span>
+    </p>
+   </div>
+    {/foreach}
+  </div>
+  
+{else}
+        {if check_login_bool() && $user.user_id == $smarty.session.user.user_id}  
+    <br><div class="tip">
+      Would you like to display collections on your profile page? To get started, create a public 
+	  <a href="/user/bookmarks/" class="">bookmarks collection</a> with a preview image. Your three most recent collections will appear here.
+    </div>
+	    {/if}
+	
+{/if}
+  <br style="clear: both;">
+</div>
+
+<div class="sidebar-l sidebar-right">
+  <div class="author-info">
+    
+<div class="avatar-wrapper">
+    <a href="/{$languageURL}user/{$user.username}/" class="avatar" >
+	{if $user.avatar != ''} 
+    <img alt="{$user.username}"  height="80" src="{$data_server}uploads/users/{$user.user_id}/A_{$user.avatar}" width="80" />
+	{else}
+	<img alt="{$user.username}" height="80" src="{$data_server}img/default-user.jpg" width="80" />
+	{/if}
+</a>
+</div>
+    <div class="details">
+      <h2>{$user.username}</h2>
+        <ul class="badges">
+            {foreach from=$user_badges item=b name=foo}
+		      	<img src="{$data_server}{$b.photo}" height="20" width="20" alt="{$b.name|escape}" title="{$b.name|escape}" />
+		      	{if $smarty.foreach.foo.last} <br /> {/if}
+	      	{/foreach}
+        </ul>
+{if $user.power_elite_author  == 'true'}
+      <div class="power-elite-author">
+	{if $user.items != '0'} 
+  <a href="/{$languageURL}user/portfolio/{$user.username}/" role="button" class="btn-icon portfolio">{$lang.view_portfolio}</a>{else}
+    {/if}
+	{if check_login_bool() && $smarty.session.user.user_id != $user.user_id}
+        {literal}<a href="/{/literal}{$languageURL}users/{$user.username}/?follow{literal}" id="follow-user" onclick="$.ajax({complete:function(request){jQuery(&quot;#ajax-feedback&quot;).animate({&quot;height&quot;: &quot;toggle&quot;, &quot;opacity&quot;: &quot;toggle&quot;}, &quot;slow&quot;); }, dataType:'script', type:'post', url:'/{/literal}{$langaugeURL}users/{$user.username}/?follow{literal}'}); jQuery(&quot;#ajax-feedback&quot;).hide(); jQuery(&quot;#ajax-feedback&quot;).animate({&quot;height&quot;: &quot;toggle&quot;, &quot;opacity&quot;: &quot;toggle&quot;}, &quot;slow&quot;);; return false;">{/literal}
+          <button id="follow" class="auto-width no-margin" type="submit">{if $user.is_follow}{$lang.unfollow}{else}{$lang.follow}{/if}</button>
+        </a>   
+	{/if}
+      </div>
+{else}
+	{if $user.items != '0'} 
+  <a href="/{$languageURL}user/portfolio/{$user.username}/" role="button" class="btn-icon portfolio">View Portfolio</a>{else}
+    {/if}
+	{if check_login_bool() && $smarty.session.user.user_id != $user.user_id}
+        {literal}<a href="/{/literal}{$languageURL}users/{$user.username}/?follow{literal}" id="follow-user" onclick="$.ajax({complete:function(request){jQuery(&quot;#ajax-feedback&quot;).animate({&quot;height&quot;: &quot;toggle&quot;, &quot;opacity&quot;: &quot;toggle&quot;}, &quot;slow&quot;); }, dataType:'script', type:'post', url:'/{/literal}{$langaugeURL}users/{$user.username}/?follow{literal}'}); jQuery(&quot;#ajax-feedback&quot;).hide(); jQuery(&quot;#ajax-feedback&quot;).animate({&quot;height&quot;: &quot;toggle&quot;, &quot;opacity&quot;: &quot;toggle&quot;}, &quot;slow&quot;);; return false;">{/literal}
+          <button id="follow" class="auto-width no-margin" type="submit">{if $user.is_follow}Unfollow{else}Follow{/if}</button>
+        </a>   
+	{/if}
+{/if}
+    </div>
+  </div>
+<div class="sidebar-stats--vertical-space">
+      <div class="sidebar-stats__box--sales">
+        <div>
+          <span>{$user.sales}</span>
+          <small>{$lang.sales}</small>
+        </div>
+      </div>
+      <div class="sidebar-stats__box--followers">
+        <div>
+          <span class="js-follower-count">{if $follow.to < '1'}0{else}{$follow.toto_count}{/if}</span>
+          <small class="js-follower-wording">{$lang.followers}</small>
+        </div>
+      </div>
+    </div>
+  <div class="clear"></div><br />
+{if $user.votes > 2}
+<div class="content-box vertical-space">
+        <div class="rating-detailed">
+    <div class="rating-detailed__header">
+      <strong class="rating-detailed__title">Author Rating:</strong>
+      <div class="rating-detailed__stars">
+{section name=foo start=1 loop=6 step=1}{if $user.rating >= $smarty.section.foo.index}<img src="/static/img/large-star-on.png" alt="" />{else}<img src="/static/img/large-star-off.png" alt="" />{/if}
+{/section}
+      </div>
+      <small class="rating-detailed__average">
+        {$user.rating} average based on {$user.votes} ratings.
+      </small>
+    </div>
+  </div>
+</div>
+{else} 
+<div class="content-box vertical-space">
+  <div class="rating-detailed">
+    <strong>Buyer Rating:</strong> &nbsp;&nbsp;<small>Minimum of 3 votes required</small>
+  </div>
+</div>
+{/if} 
+
+    {if $user.items != '0'} 
+      <div class="content-box vertical-space">
+      <a href="/{$languageURL}rss/?user={$user.user_id}" class="rss-feed-link">{$user.username}'s {$lang.user_rss}</a>
+      </div>
+	{/if}
+	{if $featureItem}  
+	   <div class="content-box vertical-space featured-file">
+        <a href="/{$languageURL}items/{$featureItem.id}" onclick="">
+          <img data-tooltip="{$featureItem.name|escape}" alt="{$featureItem.name|escape}" class="landscape-image-magnifier preload no_preview" data-item-author="by {$user.username}" data-item-category="{foreach from=$featureItem.categories item=e}{foreach from=$e item=c name=foo}{$categories[$c].name} {if !$smarty.foreach.foo.last} \ {/if}{/foreach}{/foreach}" data-item-cost="{$currency.symbol}{$featureItem.price}" data-item-name="{$featureItem.name|escape}" data-item-cost="" data-preview-height="" data-preview-url="{$data_server}uploads/items/{$featureItem.id}/preview.jpg" data-preview-width="" src="{$data_server}uploads/items/{$featureItem.id}/{$featureItem.thumbnail}" title="" border="0" height="80" width="80">
+         </a>        <p>
+          <small>{$lang.feature_file}</small>
+          <br>
+          <a href="/{$languageURL}items/{$featureItem.id}">{$featureItem.name}</a>
+          <br>
+          {$featureItem.sales} {$lang.sales}
+        </p>
+      </div>
+	{/if}
+ <dl class="content-box country-info">
+ {if $user.live_city != ''}
+      <dt><small>{$lang.lives_in}:</small></dt>
+      <dd>{$user.live_city}</dd>
+ {/if}
+ {if $user.country_id != '0'}
+      <dt><small>{$lang.country}:</small></dt>
+      <dd>{$user.country.name}</dd>
+ {/if}
+
+    <dt><small>{$lang.member_since}:</small></dt>
+    <dd>{$user.register_datetime|date_format:"%B %Y"}</dd>
+
+ {if $user.freelance == 'true'}
+      <dt><small>Freelance:</small></dt>
+	  <dd>{$lang.i_am_available}</dd>
+ {/if}
+	
+  {if $user.last_login_datetime != ''}
+    <dt><small>Last sign in:</small></dt>
+    <dd>{$user.last_login_datetime|date_format:"%H:%M %A %e %B %Y"}</dd>
+  {/if}
+  </dl>
+ 
+  {include file="$root_path/zipmarket/apps/users/views/social_profile.html"}
+
+ {if check_login_bool() && $user.user_id == $smarty.session.user.user_id}{else}
+{if check_login_bool()}
+    <h2 class="box-heading">{$lang.email} {$user.username}</h2>
+    <div class="content-box">
+        <p>
+         {$lang.profile_email_info}
+        </p>
+        <form action="" class="contact_form" method="post">
+          <fieldset class="horizontal-form">
+            <div class="input-group">
+              <label for="from">{$lang.from}</label>
+              <div class="inputs">
+                <input type="email" value="{$smarty.session.user.email}" name="from" id="from" disabled />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="message">{$lang.message}</label>
+              <div class="inputs">
+                <textarea name="message" id="message"></textarea>
+              </div>
+            </div>
+          </fieldset>
+          <div class="form-submit"><input type="hidden" name="send_email" value="yes" />
+           <button type="submit"  name="send_email" value="yes" class="btn-icon subscribe-mail no-margin">{$lang.send}</button>
+          </div>   
+		</form>
+	</div>
+{else}
+<h2 class="box-heading">Email {$user.username}</h2>
+<div class="content-box">
+        <p>
+          Please <a href="/sign_in/">sign in</a> to contact this author.
+        </p>
+</div>
+{/if}
+{/if}
+ </div>
+   </div>
+  </div>
+    </div>
+
+{if $follow.to < 1 && $follow.from < 1}{else}
+      <div class="followings">
+    <div class="inner-container">
+      <div class="container">
+          <div class="followed" id="bottom_follower_info">
+            <h2 class="decorator follower-count">{if $follow.toto < '1'}0{else}{$follow.toto_count}{/if} {$lang.followers}</h2>
+        <div class="center-image-container">
+			{if $follow.to}
+				{foreach from=$follow.to item=f}
+			<a class="avatar" title="{$f.username}" href="/{$languageURL}user/{$f.username}">
+			{if $f.avatar != ''}  
+			<img class="" height="80" width="80" src="{$data_server}uploads/users/{$f.user_id}/A_{$f.avatar}" alt="{$f.username}"></img>
+			{else}
+			<img class="" height="80" width="80" src="{$data_server}img/default-user.jpg" alt="{$f.username}"></img>
+			{/if}
+			</a>
+				{/foreach}
+			{/if}
+			{if $follow.to_count > 8}
+			  <strong> . . . </strong>
+		  {/if}
+        </div>
+          </div>
+          <div class="following">
+            <h2 class="decorator">{$lang.authors_i_follow}: {if $follow.fromfrom < '1'}0{else}{$follow.fromfrom_count}{/if} </h2>
+            <div class="center-image-container">
+		{if $follow.from}
+			{foreach from=$follow.from item=f}
+			<a class="avatar" title="{$f.username}" href="/{$languageURL}user/{$f.username}">
+			{if $f.avatar != ''}  
+			<img class="" height="80" width="80" src="{$data_server}uploads/users/{$f.user_id}/A_{$f.avatar}" alt="{$f.username}"></img>
+			{else}
+			<img class="" height="80" width="80" src="{$data_server}img/default-user.jpg" alt="{$f.username}"></img>
+			{/if}
+			</a>
+			{/foreach}
+		{/if}
+		{if $follow.from_count > 8}
+			<strong> . . . </strong>
+		{/if}
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+ {/if}

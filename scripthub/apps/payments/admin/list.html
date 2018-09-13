@@ -1,0 +1,49 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+       <a href="/admin" class="first">Home</a> \ <a href="?m=system&c=list">Settings</a> \
+      </div>
+      <h1 class="page-title">{$title}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	{if is_array($data)}
+   <div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th>{$lang.col_name}</th>
+				<th>{$lang.col_status}</th>
+				<th>{$lang.sort_order}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.id}" class="{cycle values="no,alt"}">
+				<td>
+					{$d.title}
+				</td>
+				<td>{$d.status}</td>
+				<td>{$d.sort_order}</td>
+				<td>
+					<a href="?m=payments&c={$d.key}" title="{$lang.edit}"><img class="middle" src="{$data_server}admin/images/icons/16x16/edit.png" /> {$lang.edit}</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+   </div>
+ </div>
+</div> 
+	{/if}

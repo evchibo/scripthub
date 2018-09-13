@@ -1,0 +1,54 @@
+{if $smarty.session.user.power_elite_author  == 'true' || $smarty.session.user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $smarty.session.user.power_elite_author  == 'true'}power-elite-author{/if}{if $smarty.session.user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}author_dashboard/">My Account</a>\</div>
+       <h2 class="page-title">Upload to {$domain}</h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+</div>
+{else}
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a> \ <a href="/{$languageURL}author_dashboard/">My Account</a> \</div>
+       <h1 class="page-title">Upload to {$domain}</h1>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+
+{/if}
+    <div id="content">
+      <div class="container">
+	  		{$errorMessage}
+<div class="content-l">
+  <h2 class="underlined">Select a category for your upload:</h2>
+  <form id="begin-upload" action="/" method="get">
+    <p>
+          <select class="inline" id="category" name="category">
+          	{if $mainCategories}
+          		{foreach from=$mainCategories item=c}
+		          	<option value="{$c.id}">{$c.name}</option>
+          		{/foreach}
+          	{/if}
+          </select>
+       <button onclick="window.location='/upload/form/?category=' + document.getElementById('category').options[document.getElementById('category').selectedIndex].value;" type=button class="btn-icon submit auto-width">Next &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</button>
+    </p>
+</form>
+  <div class="notice">
+    <p><strong>Need help selecting a category?</strong></p>
+    <p>A great way to start is by browsing through <a href="/categories/">our categories</a> to see what other authors are selling.</p>
+  </div>
+</div>
+      </div>
+    </div>

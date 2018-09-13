@@ -1,0 +1,65 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div style="width:984px;margin: 0 auto;">{$errorMessage}</div>
+ {if $payments_data} 
+<div id="content">
+      <div class="container">
+	  		
+		<div id="process">
+  <div class="inner-boundary">
+    <div class="inner-border">
+        <ul>
+	       <li class="">Choose Item<img src="/static/img/arrow.gif"></li> 
+	       <li class="current">Make payment<img src="/static/img/arrow.gif"></li>
+	       <li class=""><img src="/static/img/arrow.gif">Back to site</li>	
+        </ul>
+      <div class="single"> </div>
+      <img class="context" src="/static/img/cash.png" alt="Deposit" width="52" height="44">
+    </div>
+  </div>
+</div>
+<div class="content-l">
+{foreach from=$payments_data item=pm}
+<div class="content-box vertical-space">
+      <div class="deposit-aside content-box callout">
+        <img alt="" src="/static/img/moneystack.png" width="130" height="95">
+      </p></div>
+
+      
+        							<p>You will be transferred to a secure Skrill or PayPal page.<br>After payment your cash will display in the top panel.</p>
+<br />
+									<img class="option" src="/static/img/paypal.png" alt="Pay with PayPal"></img>
+
+						<div style="margin-left:300px;">{$pm.form}</div>
+
+    </div>
+{/foreach}
+
+</div>
+
+<div class="sidebar-s sidebar-right">
+  <h2 class="box-heading">Current Credit Balance</h2>
+  <div class="content-box">
+    <span class="current-balance">{$currency.symbol} {$smarty.session.user.total|string_format:"%.2f"}</span>
+
+    <p><a href="/{$languageURL}invoices/">View Account History</a></p>
+
+    <p>
+      <strong><strong>Need a tax invoice?</strong><br>Make sure you've added your company name to the</strong><br>
+      <a href="/{$languageURL}edit/">Settings</a>
+    </p>
+  </div>
+</div>
+
+
+    </div>
+
+
+  </div>
+  {/if}  

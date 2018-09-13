@@ -1,0 +1,46 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/" class="first">Home</a>\
+      </div>
+     <h1 class="page-title">Browse Categories</h1>
+    </div>
+      <div id="tabsy">
+          <ul>
+            <li class="selected"><div></div><a href="/categories/browse/">Browse</a></li><li class="last"><div></div><a href="/categories/" rel="nofollow">List</a><div class="last"></div></li>
+          </ul>
+      </div>
+  </div>
+<div id="content">
+      <div class="container">
+<div id="first" class="category-section">
+<ul class="first">
+ {$categoriesbrowseList} 
+</ul>
+</div>
+<div id="second" class="category-section empty">
+  <p class="helper-text">Click on a row to show sub-categories</p>
+  <p class="helper-text">Click on the category text to browse that category!</p>
+</div>
+<div id="third" class="category-section empty">
+  <!-- -->
+</div>
+<div id="fourth" class="category-section empty">
+  <!-- -->
+</div>
+<div class="clear"><!-- --></div>
+<script>{literal}
+  marketplace.queue(function(){
+    marketplace.initializers.categoryTree();
+  });{/literal}
+</script>
+      </div>
+    </div>

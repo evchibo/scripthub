@@ -1,0 +1,100 @@
+
+	<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div id="item-left">
+	
+		<div class="box">
+			<div class="box_inner  fancy-form">
+			
+				<h2 class="title">{$lang.send_support_ticket}</h2>
+				<div class="clr"></div>
+    
+				<form id="as" method="post" enctype="multipart/form-data" action="">
+				
+					<p>{$lang.support_info}</p>
+					
+					<dl class="form-list">
+						<dt class="large">{$lang.username} *</dt>
+						<dd class="small">
+	            <input type="text" name="username" size="50" value="" class="fsField fsRequired input big" />
+	            <small>{$lang.contact_username}</small>
+						</dd>
+						<dt class="large">{$lang.email} *</dt>
+						<dd class="small">
+							<input type="text" name="email" size="50" value="" class="fsField fsFormatEmail fsRequired input big" />
+							<small>{$lang.contact_email}</small>
+						</dd>
+						<dt class="large">{$lang.your_issue}</dt>
+           	<dd class="small">
+	            <select name="issue_id" size="1" class="fsField fsRequired" onchange="openBox(this.value);">
+	              <option value="0">{$lang.select_issue}</option>
+	              {if $categories}
+	              	{foreach from=$categories item=c}
+	              		<option value="{$c.id}">{$c.name}</option>
+	              	{/foreach}
+	              {/if}
+	            </select>
+	            <small>{$lang.contact_issue}</small>
+{literal}		                    
+<script type="text/javascript">
+function openBox(id) {
+	$("dt[class*='issue_'], dd[class*='issue_']").hide();
+	$(".issue_"+id).show();
+}
+</script>
+{/literal}		                    
+						</dd>
+   		      {if $categories}
+   		      	{foreach from=$categories item=c}
+	             	<dt class="large issue_{$c.id}" style="display: none;"><!-- --></dt>
+	             	<dd class="small issue_{$c.id}" style="display: none;"><h3 id="financial-heading">{$c.name}</h3></dd>
+	             	<dt class="large issue_{$c.id}" style="display: none;"><!-- --></dt>
+	             	<dd class="small issue_{$c.id}" style="display: none;">
+	             		{$c.text}	     
+	             		<div class="clr"></div>               		
+	             	</dd>
+         			{/foreach}
+         		{/if}
+         		<dt class="large"><!-- --></dt>
+            <dd class="small"><h3>{$lang.description_of_issue}</h3></dd>
+            <dt class="large">{$lang.how_can_we_help}</dt>
+            <dd class="small">
+              <textarea name="issue_details" rows="10" cols="50" class="big fsField fsRequired "></textarea>
+              <small>{$lang.contact_details4}</small>
+            </dd>
+					</dl>
+					<div class="clr"></div>
+				
+	        <div class="tright">
+	        	<br />
+	        	<button id="submit_btn" type="submit" name="submit" style="display: none;"></button>
+		        <a href="javascript: void(0);" onclick="$('#submit_btn').click();" class="btn-middle sprite"><ins class="sprite">{$lang.submit}</ins></a>
+	        </div>
+	        
+				</form>
+
+			</div>
+		</div>
+	            	
+	</div> <!-- end of item-left -->
+
+	<div id="item-right">
+
+		<div class="box">
+			<div class="box_inner2">
+	      <img src="{$data_server}/images/common/clock.png" height="94" width="94" alt="" class="right" />
+	      <h3 class="decorator">{$lang.support_hours}</h3>
+	      <p>{$lang.support_hours_info}</p>
+	      <div class="clr"></div>
+      </div>
+    </div> <!-- end of box -->
+
+	</div> <!-- end of item-right -->
+	
+	<div class="clr"></div>

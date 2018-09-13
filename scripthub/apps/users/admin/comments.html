@@ -1,0 +1,58 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="/admin/?m=users&c=list">Users</a> \
+      </div>
+      <h1 class="page-title">{$title}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+	  {$errorMessage}
+	  
+	{if $paging !=""}
+       <div class="page-controls">
+        {$paging}
+       </div>
+      <br /><br />
+	{/if}
+	{if is_array($data)}
+   <div class="general_table_border">
+	<table class="general_table" cellspacing="0" cellpadding="0" border="0">
+		<thead>
+			<tr>
+				<th width="400">{$lang.comment}</th>
+				<th>{$lang.item}</th>
+				<th>{$lang.reported_by}</th>
+				<th width="150"></th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		{foreach from=$data item=d}
+			<tr id="row{$d.user_id}" class="{cycle values="no,alt"}">
+				<td>{$d.comment|nl2br}</td>				
+				<td><a href="/{$languageURL}items/{$d.item_id}/" title="" target="_blank">{$d.item_name}</a></td>
+				<td>{$users[$d.report_by].username}</td>
+				<td>
+					<a href="?m={$smarty.get.m}&c=comments&check={$d.id}" title="{$lang.report_check}"><img class="middle" src="{$data_server}/admin/images/icons/16x16/edit.png" /> {$lang.report_check}</a>
+					<br/>
+					<a href="javascript:void(0);" title="{$lang.delete}" onclick="eAjax('/zipmarket/apps/{$smarty.get.m}/ajax/delete.php',{literal}{'deleteComment':true,'id':'{/literal}{$d.id}{literal}'}{/literal},'deleteRow');"><img class="middle" src="{$data_server}/admin/images/icons/16x16/delete.png" /> {$lang.delete}</a>
+				</td>					
+			</tr>
+			{/foreach}
+		</tbody>
+	</table>
+   </div>	
+	{/if}
+  </div>
+ </div>
+</div>

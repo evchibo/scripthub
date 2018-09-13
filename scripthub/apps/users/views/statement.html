@@ -1,0 +1,139 @@
+{if $smarty.session.user.power_elite_author  == 'true' || $smarty.session.user.elite_author  == 'true'}
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="{if $smarty.session.user.power_elite_author  == 'true'}power-elite-author{/if}{if $smarty.session.user.elite_author  == 'true'}elite-author{/if}">
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h2 class="page-title">{$lang.statement} </h2>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+</div>
+{else}
+  <div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href='/' class="first">Home</a>\<a href="/{$languageURL}users/{$smarty.session.user.username}/">My Account</a>\</div>
+       <h1 class="page-title">{$lang.statement} </h1>
+    </div>
+	{include file="$root_path/zipmarket/apps/users/views/tabsy.html"}
+  </div>
+{/if}
+    <div id="content">
+      <div class="container">
+   {$errorMessage} 
+<div class="content-s">
+<h2 class="statement-heading">
+{if $nav.prev.show == 'true'}
+<a href="/{$languageURL}statement/?month={$nav.prev.month}&amp;year={$nav.prev.year}" class="slider-control slider-prev">Previous</a> 
+{else}
+<span class="slider-control slider-prev-disabled">Previous</span>
+{/if} 
+
+{$lang.statement_for} {$lang.monthArr[$smarty.get.month]} {$smarty.get.year}
+
+{if $nav.next.show == 'true'} 
+<a href="/{$languageURL}statement/?month={$nav.next.month}&amp;year={$nav.next.year}" class="slider-control slider-next">Next</a>
+{else}
+<span class="slider-control slider-next-disabled">Next</span>
+{/if}
+</h2>
+  <div class="general_table_border">
+   	  <table class="general_table" cellpadding="0" cellspacing="0">
+      <thead>
+        <tr>
+          <th width="80">{$lang.date}</th>
+          <th width="40">{$lang.type}</th>
+          <th width="60">{$lang.amount}</th>
+          <th width="370">{$lang.details}</th>
+        </tr>
+      </thead>
+      <tbody>
+	    {if $statement}
+	    	{foreach from=$statement item=s}  
+	      <tr style="text-transform:capitalize">
+	        <td>{$s.datetime|date_format:"%d %b %Y"}</td>
+	        <td><strong>
+	        	{if $s.type == 'deposit'}
+	        		{$lang.deposit}
+	        	{elseif $s.type == 'withdraw'}
+	        		{$lang.withdraw_money}
+	        	{elseif $s.type == 'order' && $s.owner_id == $smarty.session.user.user_id}
+	        		{$lang.receive_money}
+	        	{else}
+	        		{$lang.purchase_money}
+	        	{/if}
+	        </strong></td>
+	        <td>
+	        	{if $s.type == 'deposit'}
+	        		{$currency.symbol} {$s.price|string_format:"%.2f"}
+	        	{elseif $s.type == 'withdraw'}
+	        		{$currency.symbol} -{$s.price|string_format:"%.2f"}
+	        	{elseif $s.type == 'order' && $s.owner_id == $smarty.session.user.user_id}
+	        		{$currency.symbol} {$s.receive|string_format:"%.2f"}
+	        	{else}
+	        		{$currency.symbol} -{$s.price|string_format:"%.2f"}
+	        	{/if}
+	        </td>
+	        <td>
+	        	{if $s.type == 'deposit'}
+	        		{$lang.deposit_money}
+	        	{elseif $s.type == 'withdraw'}
+	        		{$lang.earning_money}
+	        	{elseif $s.type == 'order' && $s.owner_id == $smarty.session.user.user_id}
+	        		{if $s.referal == 'buy'}
+	        			{$lang.sold_item} {$s.item_name}
+	        		{else}
+	        			{$lang.referal_money}
+	        		{/if}
+	        	{else}
+	        		{$lang.buy_item} {$s.item_name}
+	        	{/if}
+	        </td>
+	      </tr>
+	      {/foreach}
+		  
+		{else}
+		<tr>
+		<td></td>
+		<td></td>
+		<td></td>
+		<td>nothing here</td>
+		</tr>
+	    {/if}
+      </tbody>
+    </table>
+  </div>
+</div>
+	<div class="sidebar-l sidebar-right">
+  <h2 class="box-heading">{$lang.download_csv}</h2>
+  <div class="content-box">
+    {$download_csv_info}
+  </div>
+    <h2 class="box-heading">{$lang.past_statements}</h2>
+    <div class="content-box">
+      <ul class="feature-list">
+				{section name=year start=$registrationDate[0] loop=$today.year step=1}
+				  {section name=month start=1 loop=12 step=1}
+				  	{if $smarty.section.year.index == $registrationDate[0] && $smarty.section.month.index >= $registrationDate[1]}
+					  	{if $smarty.section.month.index < $today.month}
+					  		<li><a href="/{$languageURL}statement/?month={$smarty.section.month.index}&amp;year={$smarty.section.year.index}">{$lang.statement_for} {$lang.monthArr[$smarty.section.month.index]} {$smarty.section.year.index}</a></li>
+					  	{elseif $smarty.section.month.index == $today.month}
+					  		<li><a href="/{$languageURL}statement/?month={$smarty.section.month.index}&amp;year={$smarty.section.year.index}">{$lang.current_month}</a></li>
+					  	{/if}
+					  {/if}
+				  {/section}
+				{/section}
+      </ul>
+    </div>
+</div>
+    </div>
+	   </div>

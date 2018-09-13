@@ -1,0 +1,42 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list">Settings</a> \
+      </div>
+      <h1 class="page-title">{$title} </h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" method="post">
+	 <div class="input-group">
+        <label for="currency">{$lang.currency}</label>
+        <div class="inputs">
+		<select id="currency" name="code">
+			{if $data}
+				{foreach from=$data item=c}
+				<option value="{$c.code}" {if $c.active == 'yes'}selected="selected"{/if}>{$c.name}</option>
+				{/foreach}
+			{/if}
+		</select>
+        </div>
+    </div>
+     <div class="form-submit">
+      <button id="personal_info_submit_button" class="btn-icon save" type="submit" name="save" >{$lang.save}</button>
+     </div>
+    </div>
+	</form>
+   </div>
+  </div>
+ </div>
+</div>

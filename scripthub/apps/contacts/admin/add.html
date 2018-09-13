@@ -1,0 +1,55 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/admin" class="first">Home</a> \ <a href="?m={$smarty.get.m}&c=list&p={$smarty.get.p}">Support Center</a> \
+		<a href="?m={$smarty.get.m}&c=categories&p={$smarty.get.p}">Issue categories</a> \
+      </div>
+      <h1 class="page-title">{$title} {if $smarty.get.c=='edit'}{$smarty.post.name|escape} Issue{else} New Issue{/if}</h1>
+    </div>
+  </div>
+    <div id="content">
+      <div class="container">
+    <div class="content" style="width:984px;">
+   <div class="content-box">
+	<form action="" class="horizontal-form item-form disable-on-submit" action="" method="post" enctype="multipart/form-data">
+	<div class="input-group">
+        <label for="name">{$lang.name}</label>
+        <div class="inputs">
+          <input id="name" type="text" name="name" value="{$smarty.post.name|escape}" required="true" />
+			{if isset($error.name)}
+				<small>{$error.name}</small>
+			{/if}
+        </div>
+    </div>
+	<div class="input-group">
+        <label for="desc">{$lang.text}</label>
+        <div class="inputs">
+         <textarea name="text" id="desc">{$smarty.post.text}</textarea>
+        </div>
+    </div>
+	<div class="input-group">
+        <label for="visible">{$lang.visible}</label>
+        <div class="inputs">
+         <input type="checkbox" name="visible" id="visible" value="true" class="checkbox" {if $smarty.post.visible == 'true'}checked="checked"{/if} /> {$lang.yes}
+        </div>
+    </div>
+    <div class="form-submit">
+	{if $smarty.get.c=='edit'}
+     <button type="submit" name="edit" class="btn-icon submit auto-width">{$lang.edit}</button>
+	 {else}
+     <button type="submit" name="add" class="btn-icon submit auto-width">{$lang.add}</button>
+	{/if}
+    </div>
+	</form>
+    </div>
+   </div>
+  </div>
+ </div>

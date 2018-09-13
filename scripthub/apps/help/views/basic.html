@@ -1,0 +1,409 @@
+<!--
+  ~ Copyright (c) 2018.
+  ~ KarmaTechs
+  ~ Evan Karma Alias MADSkill
+  ~ madskill.madskill@gmail.com
+  ~ https://sociamater.com
+  -->
+
+<div class="page-info">
+    <div class="container">
+      <div id="breadcrumbs">
+        <a href="/" class="first">Home</a>
+
+           \ <a href="/help/basic">Help</a>
+\
+      </div>
+
+<h1 class="page-title">       basic HTML
+        
+</h1>
+      
+    </div>
+
+
+  </div>
+  
+  
+<div id="content">
+      <div class="container">
+          
+        
+        
+<div class="sidebar-l">
+  <ul class="side-tabs">
+    <li>
+      <a href="#formatpost" class="icon-licence">
+        How do I format a post?
+      </a>
+    </li>
+    <li>
+      <a href="#emoticons" class="icon-licence">
+       Emoticons and their Codes
+      </a>
+    </li>
+  </ul>
+</div>
+
+<div class="content-s">
+ 
+ 
+ 
+<div colspan="2" id="formatpost">
+
+   <h1>How do I format a post?</h1>
+
+      <p>You can format comments and posts on the {$domain} Marketplace using some simple HTML tags.  Basic HTML is very easy to learn even if you don't know the first thing about programming or code. We only support a limited set of HTML tags, but they should be sufficient for most usage.  You can see the full set, including examples below. You'll be a proficient HTML'er in no time at all!</p>
+<h2>Emphasize Text</h2>
+<p>Wrap your text in either &lt;strong&gt; and &lt;/strong&gt; or &lt;em&gt; and &lt;/em&gt; to place emphasis. For example:</p>
+<p><strong>Bold Text</strong> &lt;strong&gt;Bold Text&lt;/strong&gt;</p>
+<p><em>Italicized Text</em> &lt;em&gt;Italicized Text&lt;/em&gt;</p>
+<h2>Links</h2>
+<p>Linking is one of the most essential things you'll want to do. It's easy too! Just wrap up the text you want to link with &lt;a href="URL"&gt; and &lt;/a&gt;. So for example if you want to link to the {$domain} Marketplace, you would write:</p>
+<p>&lt;a href="http://{$domain}/"&gt;Check out {$domain}&lt;/a&gt;</p>
+<p><a href="http://{$domain}/" target="_blank">Check out {$domain}</a></p>
+<h2>Images</h2>
+If you want to show an image you first need to have somewhere to store it. Happily there are a lot of places you can place images for free. Try these places:                                      
+<ul>
+<li><a href="http://www.flickr.com/" target="_blank">Flickr</a> - Free Image Hosting from Yahoo!</li>
+<li><a href="http://www.mediafire.com/" target="_blank">MediaFire</a> - Free File Hosting</li>
+<li><a href="http://photobucket.com/" target="_blank">PhotoBucket</a> - Free Image and Video Hosting</li>
+<li><a href="https://rapidshare.com/" target="_blank">RapidShare</a> - Free File Hosting for Pretty Much Anything</li>
+</ul>
+<p>Once you have a URL for the image then you write &lt;img src="URL"&gt;. For example there is an image of the Marketplace logos up at <a href="http://{$domain}/static/logo/logo-dark.png" target="_blank">http://{$domain}/static/logo/logo-dark.png</a>, so to show them just write:</p>
+<p>&lt;img src="http://{$domain}/static/logo/logo-dark.png"&gt;</p>
+<p><img src="http://{$domain}/static/logo/logo-dark.png" alt="Marketplace"></p>
+<h2>Quoting Someone</h2>
+<p>If you want to quote someone simply wrap the code in &lt;blockquote&gt; and &lt;/blockquote&gt;. This is especially useful on the forums. If you click "Reply" it will automatically put these in for you.</p>
+<h2>Making Lists</h2>
+<p>You can make two types of lists, either an unordered one (points) or an ordered one (numbered). Both types of lists begin and end with a list tag, either &lt;ul&gt; ... &lt;/ul&gt; or &lt;ol&gt; ... &lt;/ol&gt;. In between you wrap each item in the list with list item tags, like this &lt;li&gt; ...&lt;/li&gt;. For example:</p>
+<p><strong>Unordered List</strong> &lt;ul&gt; &lt;li&gt;List Item&lt;/li&gt; &lt;li&gt;List Item&lt;/li&gt; &lt;/ul&gt;</p>
+<ul>
+<li>List Item</li>
+<li>List Item</li>
+</ul>
+<strong>Ordered List</strong> &lt;ol&gt; &lt;li&gt;List Item&lt;/li&gt; &lt;li&gt;List Item&lt;/li&gt; &lt;/ol&gt; <ol>
+<li>List Item</li>
+<li>List Item</li>
+</ol>
+<p>You can also put lists into lists, or change the type of list numbering or bullet types. <a href="http://www.w3schools.com/Html/html_lists.asp" target="_blank">Learn more about list options here.</a></p>
+<h2>Headings</h2>
+Sometimes you want to add a bit of structure to your text with some headings. We only support two types of headings - h3 and h4. The larger ones won't display because we save their use for the main site, Google doesn't like it if you have too many h1's and h2's, and we don't want to be penalized. But don't worry h3 and h4 look awesome! Here are some examples:
+<h3>Big Heading</h3>
+&lt;h3&gt;Big Heading&lt;/h3&gt;
+<h4>Smaller Heading</h4>
+<p>&lt;h4&gt;Smaller Heading&lt;/h4&gt;</p>
+<h2>Code</h2>
+You can display code in one of two ways. If you just have a few words of code then wrap the text in &lt;code&gt; and &lt;/code&gt;. If you have a large block then you should put it on a new line and wrap it in &lt;pre&gt; and &lt;/pre&gt; like this:  <code>&lt;code&gt;Small Piece of Code&lt;/code&gt;</code>
+<pre><span style="font-size: small;">&lt;pre&gt;
+  blockquote
+    border-left: 1px solid
+    border-color= !div_border
+    padding-left: 20px
+    margin-bottom: 10px
+    font-style: italic
+    font-family: Arial, sans-serif
+    color: #777777
+  code, pre
+    font-family: Monaco, "Courier New", "DejaVu Sans Mono", "Bitstream Vera Sans Mono", </span><br><span style="font-size: small;">    monospace
+    color: #333333
+&lt;/pre&gt;<br>&nbsp;</span></pre>
+<h2>Line Breaks</h2>
+<p>You can add a line break with a very simple tag &lt;br /&gt; (which stands for Break!)</p>
+<h2>More HTML and CSS</h2>
+<p>You can do a lot of cool stuff with HTML and CSS. Not everything is allowed on the marketplaces just because we don't want to break the main page layout, but it's still worth learning it all anyway!</p>
+<p><a href="http://w3schools.com/" target="_blank">W3Schools</a> has lots of beginner tutorials on HTML and CSS.</p>
+
+    </div>
+<br />
+ <div id="emoticons">
+ <h2>Emoticons and their Codes</h2>
+<p><span>The {$domain} Marketplace allow you to use emoticons (also known as smileys) in discussion areas around the sites. You can use the below emoticons on the Marketplace profiles or on item discussion pages by typing the code listed next to the emoticon into the text entry area, when you make the post the code will be replaced with the emoticon.</span></p>
+ 
+ <table border="0" cellpadding="10" cellspacing="0" width="100%">
+<tbody>
+<tr>
+<td width="1"><img src="http://{$domain}/static/smileys/happy.png" alt="Happy"></td>
+<td>&nbsp;</td>
+<td width="99%">:happy:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/sad.png" alt="Sad"></td>
+<td>&nbsp;</td>
+<td>:sad:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/tongue.png" alt="Tongue"></td>
+<td>&nbsp;</td>
+<td>:tongue:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/wink.png" alt="Wink"></td>
+<td>&nbsp;</td>
+<td>:wink:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/angry.png" alt="Angry"></td>
+<td>&nbsp;</td>
+<td>:angry:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/expressionless.png" alt="Expressionless"></td>
+<td>&nbsp;</td>
+<td>:expressionless:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/laugh.png" alt="Laugh"></td>
+<td>&nbsp;</td>
+<td>:laugh:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/puzzled.png" alt="Puzzled"></td>
+<td>&nbsp;</td>
+<td>:puzzled:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/cool.png" alt="Cool"></td>
+<td>&nbsp;</td>
+<td>:cool:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/surprised.png" alt="Surprised"></td>
+<td>&nbsp;</td>
+<td>:surprised:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/asleep.png" alt="Asleep"></td>
+<td>&nbsp;</td>
+<td>:asleep:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/bashful.png" alt="Bashful"></td>
+<td>&nbsp;</td>
+<td>:bashful:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/bashfulcute.png" alt="Bashful Cute"></td>
+<td>&nbsp;</td>
+<td>:bashfulcute:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/bigevilgrin.png" alt="Big Evil Grin"></td>
+<td>&nbsp;</td>
+<td>:bigevilgrin:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/bigsmile.png" alt="Big Smile"></td>
+<td>&nbsp;</td>
+<td>:bigsmile:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/bigwink.png" alt="Big Wink"></td>
+<td>&nbsp;</td>
+<td>:bigwink:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/chuckle.png" alt="Chuckle"></td>
+<td>&nbsp;</td>
+<td>:chuckle:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/crying.png" alt="Crying"></td>
+<td>&nbsp;</td>
+<td>:crying:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/confused.png" alt="Confused"></td>
+<td>&nbsp;</td>
+<td>:confused:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/confusedsad.png" alt="Confused Sad"></td>
+<td>&nbsp;</td>
+<td>:confusedsad:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/dead.png" alt="Dead"></td>
+<td>&nbsp;</td>
+<td>:dead:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/delicious.png" alt="Big Evil Grin"></td>
+<td>&nbsp;</td>
+<td>:delicious:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/depressed.png" alt="Depressed"></td>
+<td>&nbsp;</td>
+<td>:depressed:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/evil.png" alt="Evil"></td>
+<td>&nbsp;</td>
+<td>:evil:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/evilgrin.png" alt="Evil Grin"></td>
+<td>&nbsp;</td>
+<td>:evilgrin:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/grin.png" alt="Grin"></td>
+<td>&nbsp;</td>
+<td>:grin:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/impatient.png" alt="Impatient"></td>
+<td>&nbsp;</td>
+<td>:impatient:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/inlove.png" alt="In Love"></td>
+<td>&nbsp;</td>
+<td>:inlove:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/kiss.png" alt="Kiss"></td>
+<td>&nbsp;</td>
+<td>:kiss:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/mad.png" alt="Mad"></td>
+<td>&nbsp;</td>
+<td>:mad:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/nerdy.png" alt="Nerdy"></td>
+<td>&nbsp;</td>
+<td>:nerdy:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/notfunny.png" alt="Not Funny"></td>
+<td>&nbsp;</td>
+<td>:notfunny:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/ohrly.png" alt="Ohrly"></td>
+<td>&nbsp;</td>
+<td>:ohrly:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/reallyevil.png" alt="Big Evil Grin"></td>
+<td>&nbsp;</td>
+<td>:reallyevil:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/sarcasm.png" alt="Sarcasm"></td>
+<td>&nbsp;</td>
+<td>:sarcasm:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/shocked.png" alt="Shocked"></td>
+<td>&nbsp;</td>
+<td>:shocked:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/sick.png" alt="Sick"></td>
+<td>&nbsp;</td>
+<td>:sick:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/silly.png" alt="Silly"></td>
+<td>&nbsp;</td>
+<td>:silly:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/sing.png" alt="Sing"></td>
+<td>&nbsp;</td>
+<td>:sing:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/smitten.png" alt="Smitten"></td>
+<td>&nbsp;</td>
+<td>:smitten:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/smug.png" alt="Smug"></td>
+<td>&nbsp;</td>
+<td>:smug:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/stress.png" alt="Stress"></td>
+<td>&nbsp;</td>
+<td>:stress:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/sunglasses.png" alt="Sunglasses"></td>
+<td>&nbsp;</td>
+<td>:sunglasses:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/sunglasses2.png" alt="Sunglasses Version 2"></td>
+<td>&nbsp;</td>
+<td>:sunglasses2:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/superbashfulcute.png" alt="Super Bashful Cute"></td>
+<td>&nbsp;</td>
+<td>:superbashfulcute:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/tired.png" alt="Tired"></td>
+<td>&nbsp;</td>
+<td>:tired:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/whistle.png" alt="Whistle"></td>
+<td>&nbsp;</td>
+<td>:whistle:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/winktongue.png" alt="Wink Tongue"></td>
+<td>&nbsp;</td>
+<td>:winktongue:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/yawn.png" alt="Yawn"></td>
+<td>&nbsp;</td>
+<td>:yawn:</td>
+</tr>
+<tr>
+<td><img src="http://{$domain}/static/smileys/zipped.png" alt="Zipped"></td>
+<td>&nbsp;</td>
+<td>:zipped:</td>
+</tr>
+</tbody>
+</table>
+ </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ </div>
+
+      </div>
+    </div>
